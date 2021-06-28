@@ -1,0 +1,13 @@
+Meeting Minutes:
+Date - 25/06/2021
+Attendees:
+-	Cameron
+-	Abrar
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Discussed UML diagram.
+•	Went through the specification in more detail.
+•	Decided upon weekly meeting time: Monday 4pm
+•	Assigned Milestone 1 roles.
