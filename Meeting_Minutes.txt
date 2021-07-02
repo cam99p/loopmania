@@ -11,3 +11,25 @@ Topics of Discussion:
 •	Went through the specification in more detail.
 •	Decided upon weekly meeting time: Monday 4pm
 •	Assigned Milestone 1 roles.
+Date - 28/06/2021
+Attendees:
+-	Cameron
+-	Abrar
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Reviewed Samuel Yau’s first draft of the UML diagram as a group.
+•	Discussed priority ratings of user stories.
+•	Discussed possible ideas for improving front end design.
+Date - 02/07/2021
+Attendees:
+-	Cameron
+-	Abrar
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Reviewed Samuel Yau's final UML and Amon Yokshida's Frontend designs as a group
+•	Reviewed and added to assumptions list
+•	Had Project Check in with Ivan
