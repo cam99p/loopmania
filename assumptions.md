@@ -19,3 +19,5 @@
 - Character and allies target the allied enemies first 
 
 - Cards can only be placed on empty tiles (cannot place buildings ontop of other buildings). 
+
+- When a Character walks onto a path tile with buildings or loot, the interactions between those should occur first before any battles with enemies.
