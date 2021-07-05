@@ -33,3 +33,13 @@ Topics of Discussion:
 •	Reviewed Samuel Yau's final UML and Amon Yokshida's Frontend designs as a group
 •	Reviewed and added to assumptions list
 •	Had Project Check in with Ivan
+Date - 05/07/2021
+Attendees:
+-	Cameron
+-	Abrar
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Discussed implementation ideas for the initial/high priority backend functions
+•	Divide up the backend functions amongst the group
