@@ -6,6 +6,11 @@ import java.util.Random;
  * a basic form of enemy in the world
  */
 public class BasicEnemy extends MovingEntity {
+    //Attributes
+    private int battleRadius;
+    private int supportRadius;
+    private int tranceTimer;
+
     // TODO = modify this, and add additional forms of enemy
     public BasicEnemy(PathPosition position) {
         super(position);
