@@ -2,6 +2,7 @@ package unsw.loopmania;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
 
 /**
  * Class which contains most of the battle logic
@@ -21,9 +22,10 @@ public class Battle {
         participants = new ArrayList<MovingEntity>();
         participants.addAll(Allies);
         participants.addAll(Enemies);
-        //participants.sort(c); //Add sorting by attack speed
+        participants.sort(Comparator.comparingInt(MovingEntity::getSpeed)); //Sorts by attack speed
     }
 
+    //Runs through the turn order, calling each entitys attack func, until battle is resolved
     public void Fight(){
         //Do actual combat work here
     }
@@ -32,34 +34,21 @@ public class Battle {
         return allies;
     }
 
-    public void setAllies(ArrayList<MovingEntity> allies) {
-        this.allies = allies;
-    }
-
     public ArrayList<MovingEntity> getEnemies() {
         return enemies;
-    }
-
-    public void setEnemies(ArrayList<MovingEntity> enemies) {
-        this.enemies = enemies;
     }
 
     public ArrayList<MovingEntity> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(ArrayList<MovingEntity> participants) {
-        this.participants = participants;
-    }
-
     public ArrayList<MovingEntity> getDefeated() {
         return defeated;
     }
 
-    public void setDefeated(ArrayList<MovingEntity> defeated) {
-        this.defeated = defeated;
+    //Removes an enemy or ally (not hero) from participants and adds it to defeated
+    public void defeatEntity(MovingEntity defeated){
+        //Called when an enemy or ally (not hero) is defeated
     }
-
-    
     
 }
