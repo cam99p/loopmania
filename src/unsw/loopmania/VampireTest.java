@@ -15,8 +15,8 @@ public class VampireTest {
         Vampire dummyVamp = new Vampire(dummyPos);
         dummyVamp.startFrenzy();
 
-        assertTrue(dummyVamp.getAttack() > 5); //TODO: change 5 to whatever the vampires attack is
-        assertTrue(dummyVamp.getAttack() < 10); //TODO: change 10 to whatever the upper limit of the frenzy buff is
+        assertTrue(dummyVamp.getAttack() >= 25); 
+        assertTrue(dummyVamp.getAttack() <= 30); 
     }
 
     @Test
@@ -27,7 +27,7 @@ public class VampireTest {
         dummyVamp.startFrenzy();
         dummyVamp.endFrenzy();
 
-        assertTrue(dummyVamp.getAttack() == 5); //TODO: change 5 to whatever the vampires attack is
+        assertTrue(dummyVamp.getAttack() == 20); 
     }
 
     @Test
@@ -37,8 +37,20 @@ public class VampireTest {
         Vampire dummyVamp = new Vampire(dummyPos);
         Character dummyChar = new Character(dummyPos);
 
-        dummyVamp.AttackTarget(dummyChar);
+        dummyVamp.AttackTarget(dummyChar, 0);
 
-        assertTrue(dummyChar.getHealth() == 195); //TODO: change 195 to whatever the heros health - vampires attack is
+        assertTrue(dummyChar.getHealth() == 180); 
+    }
+
+    @Test
+    void TestCriticalAttack(){
+        List<Pair<Integer, Integer>> dummyPath = new ArrayList<Pair<Integer, Integer>>();
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
+        Vampire dummyVamp = new Vampire(dummyPos);
+        Character dummyChar = new Character(dummyPos);
+
+        dummyVamp.AttackTarget(dummyChar, 10);
+
+        assertTrue(dummyVamp.getFrenzyTimer() != 0); 
     }
 }

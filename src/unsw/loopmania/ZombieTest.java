@@ -15,9 +15,9 @@ public class ZombieTest {
         Zombie dummyZombie = new Zombie(dummyPos);
         Character dummyChar = new Character(dummyPos);
 
-        dummyZombie.AttackTarget(dummyChar);
+        dummyZombie.AttackTarget(dummyChar, 0);
 
-        assertTrue(dummyChar.getHealth() == 195); //TODO: change 195 to whatever the heros health - slugs attack is
+        assertTrue(dummyChar.getHealth() == 190); 
     }
 
     @Test

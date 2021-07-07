@@ -15,8 +15,8 @@ public class SlugTest {
         Slug dummySlug = new Slug(dummyPos);
         Character dummyChar = new Character(dummyPos);
 
-        dummySlug.AttackTarget(dummyChar);
+        dummySlug.AttackTarget(dummyChar, 0);
 
-        assertTrue(dummyChar.getHealth() == 195); //TODO: change 195 to whatever the heros health - slugs attack is
+        assertTrue(dummyChar.getHealth() == 195); 
     }
 }

@@ -7,11 +7,18 @@ public class Vampire extends BasicEnemy implements Attack{
     //Construct enemy at certain position, and set all attributes
     public Vampire(PathPosition position) {
         super(position);
-        //Set radii and stats
+        //Set radii
+        this.setBattleRadius(2);
+        this.setSupportRadius(3);
+        //Set stats
+        this.setAttack(20);
+        this.setDefense(0);
+        this.setHealth(200);
+        this.setSpeed(10);
     }
 
     //Attacks the specified target
-    public void AttackTarget(MovingEntity target){
+    public void AttackTarget(MovingEntity target, int seed){
 
     }
 
@@ -24,4 +31,16 @@ public class Vampire extends BasicEnemy implements Attack{
     public void endFrenzy() {
 
     }
+
+    //Check how many turns left in vampires frenzy
+    public int getFrenzyTimer() {
+        return frenzyTimer;
+    }
+
+    //Set how many turns a vamp should frenzy for
+    public void setFrenzyTimer(int frenzyTimer) {
+        this.frenzyTimer = frenzyTimer;
+    }
+
+    
 }
