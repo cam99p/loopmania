@@ -5,13 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.Test;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.javatuples.Pair;
 
 public class LoopManiaWorldTest {
     @Test
     public void TestGatherAllies(){
-        LoopManiaWorld d = new LoopManiaWorld(3, 3, new ArrayList<>());
-        PathPosition dummyPos = new PathPosition(0, new ArrayList<>());
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+        LoopManiaWorld d = new LoopManiaWorld(3, 3, dummyPath);
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
         Character dummyChar = new Character(dummyPos);
         d.setCharacter(dummyChar);
         //Add ally
@@ -24,21 +28,23 @@ public class LoopManiaWorldTest {
 
     @Test
     public void TestGatherEnemies(){
-        LoopManiaWorld d = new LoopManiaWorld(3, 3, new ArrayList<>());
-        PathPosition dummyPos = new PathPosition(0, new ArrayList<>());
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+        LoopManiaWorld d = new LoopManiaWorld(3, 3, dummyPath);
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
         Character dummyChar = new Character(dummyPos);
         d.setCharacter(dummyChar);
 
         //Vampire within support range
-        PathPosition dummyPos2 = new PathPosition(3, new ArrayList<>());
+        PathPosition dummyPos2 = new PathPosition(3, dummyPath);
         Vampire dummyVamp = new Vampire(dummyPos2);
         d.addEnemy(dummyVamp);
         //Zombie within battle range
-        PathPosition dummyPos3 = new PathPosition(1, new ArrayList<>());
+        PathPosition dummyPos3 = new PathPosition(1, dummyPath);
         Zombie dummyZombie = new Zombie(dummyPos3);
         d.addEnemy(dummyZombie);
         //Slug too far away
-        PathPosition dummyPos4 = new PathPosition(5, new ArrayList<>());
+        PathPosition dummyPos4 = new PathPosition(5, dummyPath);
         Slug dummySlug = new Slug(dummyPos4);
         d.addEnemy(dummySlug);
 
@@ -47,16 +53,20 @@ public class LoopManiaWorldTest {
 
     @Test
     public void TestRunBattles(){
+        //Path
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+
         //World
-        LoopManiaWorld d = new LoopManiaWorld(3, 3, new ArrayList<>());
+        LoopManiaWorld d = new LoopManiaWorld(3, 3, dummyPath);
 
         //Character
-        PathPosition dummyPos = new PathPosition(0, new ArrayList<>());
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
         Character dummyChar = new Character(dummyPos);
         d.setCharacter(dummyChar);
 
         //Slug
-        PathPosition dummyPos2 = new PathPosition(5, new ArrayList<>());
+        PathPosition dummyPos2 = new PathPosition(5, dummyPath);
         Slug dummySlug = new Slug(dummyPos2);
         d.addEnemy(dummySlug);
 

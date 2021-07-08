@@ -6,11 +6,13 @@ import org.junit.Test;
 import java.util.List;
 import java.util.ArrayList;
 import org.javatuples.Pair;
+import java.util.Arrays;
 
 public class CharacterTest {
     @Test
     void TestUnarmedAttack(){
-        List<Pair<Integer, Integer>> dummyPath = new ArrayList<Pair<Integer, Integer>>();
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);
         Slug dummySlug = new Slug(dummyPos);
         Character dummyChar = new Character(dummyPos);
@@ -21,7 +23,8 @@ public class CharacterTest {
     }
 
     void TestSwordAttack(){
-        List<Pair<Integer, Integer>> dummyPath = new ArrayList<Pair<Integer, Integer>>();
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);
         Slug dummySlug = new Slug(dummyPos);
         Character dummyChar = new Character(dummyPos);
@@ -32,7 +35,8 @@ public class CharacterTest {
     }
 
     void TestStakeAttack(){
-        List<Pair<Integer, Integer>> dummyPath = new ArrayList<Pair<Integer, Integer>>();
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);
         Slug dummySlug = new Slug(dummyPos);
         Character dummyChar = new Character(dummyPos);
@@ -43,7 +47,8 @@ public class CharacterTest {
     }
 
     void TestStakeAttackVampire(){
-        List<Pair<Integer, Integer>> dummyPath = new ArrayList<Pair<Integer, Integer>>();
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);
         Vampire dummyVamp = new Vampire(dummyPos);
         Character dummyChar = new Character(dummyPos);
@@ -54,7 +59,8 @@ public class CharacterTest {
     }
 
     void TestStaffAttack(){
-        List<Pair<Integer, Integer>> dummyPath = new ArrayList<Pair<Integer, Integer>>();
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);
         Slug dummySlug = new Slug(dummyPos);
         Character dummyChar = new Character(dummyPos);
