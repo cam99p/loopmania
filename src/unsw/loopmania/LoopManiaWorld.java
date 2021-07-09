@@ -119,6 +119,13 @@ public class LoopManiaWorld {
     }
 
     /**
+     * Adds the specified enemy to the enemies list. For ease of testing
+     */
+    public void addEnemy(BasicEnemy enemy) {
+        enemies.add(enemy);
+    }
+
+    /**
      * kill an enemy
      * @param enemy enemy to be killed
      */
@@ -149,6 +156,25 @@ public class LoopManiaWorld {
             killEnemy(e);
         }
         return defeatedEnemies;
+    }
+
+    /**
+     * determines which allies take part in a specific fight, and adds them to a list alongside hero to pass to Battle()
+     * @return list of MovingEnititys on the side of good
+     */
+    public List<MovingEntity> gatherAllies() {
+        ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
+        return allies;
+    }
+
+    /**
+     * determines which enemies take part in a specific fight, and adds them to a list to pass to Battle()
+     * if its count is 0, no battle occurs this iteration
+     * @return list of MovingEnititys on the side of good
+     */
+    public List<MovingEntity> gatherEnemies() {
+        ArrayList<MovingEntity> enemies = new ArrayList<MovingEntity>();
+        return enemies;
     }
 
     /**
