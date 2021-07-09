@@ -50,5 +50,15 @@ public class Battle {
     public void defeatEntity(MovingEntity defeated){
         //Called when an enemy or ally (not hero) is defeated
     }
+
+    //Based on priority, returns an ally for an enemy to attack
+    public MovingEntity getTargetAlly(){
+        return null;
+    }
+
+    //Based on priority, returns an enemy for an ally to attack
+    public MovingEntity getTargetEnemy(){
+        return null;
+    }
     
 }
