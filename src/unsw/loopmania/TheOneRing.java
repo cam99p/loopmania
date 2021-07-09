@@ -12,7 +12,7 @@ public class TheOneRing extends Item {
         setValue(1);
     }
 
-    public void useItem(Character target)
+    public void useItem(MovingEntity target)
     {
         
     }

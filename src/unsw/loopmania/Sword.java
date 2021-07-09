@@ -12,9 +12,9 @@ public class Sword extends Item{
         setValue(10);
     }
 
-    public void useItem(Character target)
+    public void useItem(MovingEntity target)
     {
-
+        
     }
 
     public void onEquip(Stats stats)
