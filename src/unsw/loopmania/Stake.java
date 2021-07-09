@@ -3,18 +3,18 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
- * Defines the behaviour of a sword when used
+ * Defines the behaviour of a Stake when used
  */
-public class Sword extends Item{
-    public Sword(SimpleIntegerProperty x, SimpleIntegerProperty y)
+public class Stake extends Item {
+    public Stake(SimpleIntegerProperty x, SimpleIntegerProperty y)
     {
-        super(x,y, "Sword", Slot.RIGHT_ARM);
-        setValue(10);
+        super(x,y, "Stake", Slot.RIGHT_ARM);
+        setValue(5);
     }
 
     public void useItem(Character target)
     {
-
+        
     }
 
     public void onEquip(Stats stats)

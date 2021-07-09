@@ -3,18 +3,18 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
- * Defines the behaviour of a sword when used
+ * Defines the behaviour of a Staff when used
  */
-public class Sword extends Item{
-    public Sword(SimpleIntegerProperty x, SimpleIntegerProperty y)
+public class Staff extends Item {
+    public Staff(SimpleIntegerProperty x, SimpleIntegerProperty y)
     {
-        super(x,y, "Sword", Slot.RIGHT_ARM);
-        setValue(10);
+        super(x,y, "Staff", Slot.RIGHT_ARM);
+        setValue(2);
     }
 
     public void useItem(Character target)
     {
-
+        
     }
 
     public void onEquip(Stats stats)
