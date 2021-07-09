@@ -7,44 +7,9 @@ import java.util.Random;
  */
 public class BasicEnemy extends MovingEntity {
 
-    private String name;
-    private int health;
-    private int damage;
-
     // modify this, and add additional forms of enemy
-    public BasicEnemy(PathPosition position, String name, int health, int damage) {
+    public BasicEnemy(PathPosition position) {
         super(position);
-        this.name = name;
-        this.health = health;
-        this.damage = damage;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    /**
-     * Setter for health
-     * @param health
-     */
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    /**
-     * Setter for damage
-     * @param damage
-     */
-    public void setDamage(int damage) {
-        this.damage = damage;
     }
 
     /**
