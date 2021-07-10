@@ -16,7 +16,8 @@ public class Character extends MovingEntity implements Attack{
 
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
-
+        int damage = this.getAttack() - target.getDefense();
+        target.setHealth(target.getHealth() - damage);
     }
     
 }

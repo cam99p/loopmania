@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class SlugTest {
     @Test
-    void TestAttack(){
+    public void TestAttack(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
                                                                 new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);

@@ -1,6 +1,7 @@
 package unsw.loopmania;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Comparator;
 
@@ -20,9 +21,11 @@ public class Battle {
         this.allies = Allies;
         this.enemies = Enemies;
         participants = new ArrayList<MovingEntity>();
+        defeated = new ArrayList<MovingEntity>();
         participants.addAll(Allies);
         participants.addAll(Enemies);
-        participants.sort(Comparator.comparingInt(MovingEntity::getSpeed)); //Sorts by attack speed
+        participants.sort(Comparator.comparingInt(MovingEntity::getSpeed)); //Sorts by attack speed, lowest to highest
+        Collections.reverse(participants); //reverses list to get highest to lowest
     }
 
     //Runs through the turn order, calling each entitys attack func, until battle is resolved
@@ -46,19 +49,29 @@ public class Battle {
         return defeated;
     }
 
-    //Removes an enemy or ally (not hero) from participants and adds it to defeated
-    public void defeatEntity(MovingEntity defeated){
-        //Called when an enemy or ally (not hero) is defeated
+    //Removes an enemy from participants and enemies and adds it to defeated
+    //Ally gets handled differently, and hero leads to a game over, no need to resolve anything else
+    public void defeatEntity(MovingEntity defeatedEnemy){
+        participants.remove(defeatedEnemy);
+        enemies.remove(defeatedEnemy);
+        defeated.add(defeatedEnemy);
     }
 
     //Based on priority, returns an ally for an enemy to attack
     public MovingEntity getTargetAlly(){
+        //requires ally implementation, but essentially its ally first, hero second
+        //towers cannot be targeted
         return null;
     }
 
     //Based on priority, returns an enemy for an ally to attack
+    //In this case, priotity is simply the last element of the list
+    //Since that means it was either supporting or is the main enemy if its last
     public MovingEntity getTargetEnemy(){
-        return null;
+        if (enemies.size() == 0){
+            return null;
+        }
+        return enemies.get(enemies.size() - 1);
     }
     
 }

@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class BattleTest {
     //A hero should always beat a slug, so the initial test will use the slug enemy
     @Test
-    void TestCombat(){
+    public void TestCombat(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
                                                                 new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);
@@ -35,7 +35,7 @@ public class BattleTest {
 
     //Tests that the participants list is sorted correctly
     @Test
-    void TestTurnOrder(){
+    public void TestTurnOrder(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
                                                                 new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);
@@ -66,13 +66,13 @@ public class BattleTest {
 
     //Tests that the get target ally function works as intended
     @Test
-    void TestGetTargetAlly(){
+    public void TestGetTargetAlly(){
         //Cannot be completed till ally and tower are implemented
     }
 
     //Tests that the get target enemy function works as intended
     @Test
-    void TestGetTargetEnemy(){
+    public void TestGetTargetEnemy(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
                                                                 new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);

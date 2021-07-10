@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import java.util.Random;
+
 public class Vampire extends BasicEnemy implements Attack{
     //Unique Attributes
     private int frenzyTimer;
@@ -19,20 +21,38 @@ public class Vampire extends BasicEnemy implements Attack{
 
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
+        int damage = this.getAttack() - target.getDefense();
+        target.setHealth(target.getHealth() - damage);
 
+        //Critical
+        if (seed == 10){
+            this.startFrenzy();
+        }
+
+        //If frenzy buff has 0 turns left
+        if (frenzyTimer == 0){
+            endFrenzy();
+        }
+        //Deincrement frenzy
+        else {
+            frenzyTimer--; 
+        }
     }
 
     //For when it scores a critical hit
     public void startFrenzy() {
-
+        Random rand = new Random();
+        frenzyTimer = rand.nextInt(4); //Generates a number between 1 and 3
+        this.setAttack(this.getAttack() + rand.nextInt(7) + 4); //Increases attack by 5 to 10
     }
 
     //When critical hit buff expires
     public void endFrenzy() {
-
+        this.setAttack(20); //Reset it to its base attack
     }
 
-    //Check how many turns left in vampires frenzy
+    //Returns how many tunrs a vamp has left to frenzy
+    //If 0, the vamp is not in frenzy
     public int getFrenzyTimer() {
         return frenzyTimer;
     }
@@ -41,6 +61,5 @@ public class Vampire extends BasicEnemy implements Attack{
     public void setFrenzyTimer(int frenzyTimer) {
         this.frenzyTimer = frenzyTimer;
     }
-
     
 }
