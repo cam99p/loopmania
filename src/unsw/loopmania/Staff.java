@@ -17,12 +17,12 @@ public class Staff extends Item {
         
     }
 
-    public void onEquip(Stats stats)
+    public void onEquip(StatsInterface stats)
     {
         stats.modifyAttack(getValue());
     }
 
-    public void onDeequip(Stats stats)
+    public void onDeequip(StatsInterface stats)
     {
         stats.modifyAttack(-getValue());
     }

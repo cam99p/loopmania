@@ -12,17 +12,17 @@ public class Sword extends Item{
         setValue(10);
     }
 
-    public void useItem(MovingEntity target)
+    public void useItem(Character target)
     {
         
     }
 
-    public void onEquip(Stats stats)
+    public void onEquip(StatsInterface stats)
     {
         stats.modifyAttack(getValue());
     }
 
-    public void onDeequip(Stats stats)
+    public void onDeequip(StatsInterface stats)
     {
         stats.modifyAttack(-getValue());
     }

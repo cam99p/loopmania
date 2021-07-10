@@ -12,17 +12,17 @@ public class TheOneRing extends Item {
         setValue(1);
     }
 
-    public void useItem(MovingEntity target)
+    public void useItem(Character target)
     {
         
     }
 
-    public void onEquip(Stats stats)
+    public void onEquip(StatsInterface stats)
     {
         stats.setRevive();
     }
 
-    public void onDeequip(Stats stats)
+    public void onDeequip(StatsInterface stats)
     {
         stats.unsetRevive();
     }

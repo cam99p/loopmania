@@ -17,12 +17,12 @@ public class Gold extends Item {
         
     }
 
-    public void onEquip(Stats stats)
+    public void onEquip(StatsInterface stats)
     {
         stats.modifyGold(getValue());
     }
 
-    public void onDeequip(Stats stats)
+    public void onDeequip(StatsInterface stats)
     {
         stats.modifyGold(-getValue());
     }

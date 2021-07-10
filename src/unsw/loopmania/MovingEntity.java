@@ -19,6 +19,7 @@ public abstract class MovingEntity extends Entity {
     public MovingEntity(PathPosition position) {
         super();
         this.position = position;
+        
     }
 
     /**
@@ -50,4 +51,5 @@ public abstract class MovingEntity extends Entity {
     public int getY() {
         return y().get();
     }
+
 }

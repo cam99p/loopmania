@@ -118,6 +118,7 @@ public class LoopManiaWorldController {
     private Image basicEnemyImage;
     private Image swordImage;
     private Image basicBuildingImage;
+    private Image healthPotionImage;
 
     /**
      * the image currently being dragged, if there is one, otherwise null.
@@ -168,6 +169,7 @@ public class LoopManiaWorldController {
         basicEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
         basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
+        healthPotionImage = new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
 
@@ -291,6 +293,12 @@ public class LoopManiaWorldController {
         onLoad(sword);
     }
 
+    private void loadHealthPotion() {
+        HealthPotion healthPotion = world.addUnequippedHealthPotion();
+        onLoad(healthPotion);
+
+    }
+
     /**
      * run GUI events after an enemy is defeated, such as spawning items/experience/gold
      * @param enemy defeated enemy for which we should react to the death of
@@ -300,6 +308,7 @@ public class LoopManiaWorldController {
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
         loadSword();
+        loadHealthPotion();
         loadVampireCard();
     }
 
@@ -333,6 +342,15 @@ public class LoopManiaWorldController {
         unequippedInventory.getChildren().add(view);
     }
 
+
+    private void onLoad(HealthPotion healthPotion) {
+        ImageView view = new ImageView(healthPotionImage);
+        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+        addEntity(healthPotion, view);
+        unequippedInventory.getChildren().add(view);
+    }
+
+      
     /**
      * load an enemy into the GUI
      * @param enemy
@@ -608,6 +626,9 @@ public class LoopManiaWorldController {
                 pause();
             }
             break;
+        case P:
+            world.triggerPotionUsage();
+
         default:
             break;
         }
