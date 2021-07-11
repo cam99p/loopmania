@@ -95,6 +95,10 @@ public class LoopManiaWorld {
         this.character = character;
     }
 
+    public Character getCharacter() {
+        return character;
+    }
+
     /**
      * add a generic entity (without it's own dedicated method for adding to the world)
      * @param entity
@@ -182,6 +186,17 @@ public class LoopManiaWorld {
         shiftCardsDownFromXCoordinate(x);
     }
 
+    public Boolean usingPotion() {
+        if (!healthPotions.isEmpty() && character.characterStats.getHealth() < 200) {
+            HealthPotion hp = healthPotions.get(0);
+            hp.useItem(character);
+            removeUnequippedInventoryItemByCoordinates(hp.getX(), hp.getY());
+            healthPotions.remove(hp);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * spawn a sword in the world and return the sword entity
      * @return a sword to be spawned in the controller as a JavaFX node
@@ -217,15 +232,6 @@ public class LoopManiaWorld {
         healthPotions.add(healthPotion);
 
         return healthPotion;
-    }
-
-    public void triggerPotionUsage() {
-        HealthPotion hp = healthPotions.get(0);
-        if (hp != null) {
-            hp.useItem(character);
-            removeUnequippedInventoryItemByCoordinates(hp.getX(), hp.getY());
-            healthPotions.remove(hp);
-        }
     }
 
     /**

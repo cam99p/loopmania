@@ -6,14 +6,16 @@ public class Stats implements StatsInterface {
     private int speed;
     private int health;
     private int gold;
+    private int experience;
     private Boolean canBlock;
     private Boolean canRevive;
 
     public Stats() {
         this.attack = 5;
         this.defense = 0;
-        this.health = 200;
+        this.health = 100;
         this.gold = 0;
+        this.experience = 0;
         this.speed = 8;
         this.canBlock = false;
         this.canRevive = false;
@@ -38,6 +40,11 @@ public class Stats implements StatsInterface {
         this.gold = value; 
     }
 
+    // Modifies value of character gold stat
+    public void modifyExperience(int value) {
+        this.experience = value; 
+    }
+    
     // Makes it possible for the character to block
     public void setBlocking() {
         this.canBlock = true;

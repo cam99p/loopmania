@@ -25,15 +25,13 @@ public class HealthTest {
     @Test
     public void consumePotion() {
 
-        // When the health potion is consumed, the bar of the character will increase by 30%
         ArrayList<Pair<Integer, Integer>> path = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2)));
         PathPosition pathPosition = new PathPosition(0, path);
         Character c = new Character(pathPosition); 
         c.characterStats.modifyHealth(100);
         HealthPotion potion = new HealthPotion(new SimpleIntegerProperty(1), new SimpleIntegerProperty(0));
-        int expectedHealth = 130;
         potion.useItem(c);
-        assertTrue(c.characterStats.getHealth() == expectedHealth); 
+        assertTrue(c.characterStats.getHealth() == 200); 
 
         // When the health bar is less than 0, the player loses the game
 
