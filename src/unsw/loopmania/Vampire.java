@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import java.util.Random;
+
 public class Vampire extends BasicEnemy implements Attack{
     //Unique Attributes
     private int frenzyTimer;
@@ -42,5 +44,16 @@ public class Vampire extends BasicEnemy implements Attack{
         this.frenzyTimer = frenzyTimer;
     }
 
-    
+    /**
+     * move a vampire (10% up path, 10% down path, 80% not moving)
+     */
+    public void move(){
+        int directionChoice = (new Random()).nextInt(9);
+        if (directionChoice == 3){
+            moveUpPath();
+        }
+        else if (directionChoice == 6){
+            moveDownPath();
+        }
+    }
 }

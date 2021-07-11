@@ -111,7 +111,9 @@ public class LoopManiaWorld {
         List<BasicEnemy> spawningEnemies = new ArrayList<>();
         if (pos != null){
             int indexInPath = orderedPath.indexOf(pos);
-            BasicEnemy enemy = new BasicEnemy(new PathPosition(indexInPath, orderedPath));
+            //BasicEnemy enemy = new BasicEnemy(new PathPosition(indexInPath, orderedPath));
+            // spawn slug
+            BasicEnemy enemy = new Slug(new PathPosition(indexInPath, orderedPath));
             enemies.add(enemy);
             spawningEnemies.add(enemy);
         }
@@ -310,7 +312,6 @@ public class LoopManiaWorld {
      * move all enemies
      */
     private void moveBasicEnemies() {
-        // TODO = expand to more types of enemy
         for (BasicEnemy e: enemies){
             e.move();
         }
@@ -320,6 +321,7 @@ public class LoopManiaWorld {
      * get a randomly generated position which could be used to spawn an enemy
      * @return null if random choice is that wont be spawning an enemy or it isn't possible, or random coordinate pair if should go ahead
      */
+    // I'm guessing this is to randomly spawn a slug
     private Pair<Integer, Integer> possiblyGetBasicEnemySpawnPosition(){
         // TODO = modify this
         

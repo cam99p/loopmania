@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import java.util.Random;
+
 public class Zombie extends BasicEnemy implements Attack{
     //Construct enemy at certain position, and set all attributes
     public Zombie(PathPosition position) {
@@ -19,4 +21,16 @@ public class Zombie extends BasicEnemy implements Attack{
 
     }
 
+    /**
+     * move a vampire (20% up path, 20% down path, 60% not moving)
+     */
+    public void move(){
+        int directionChoice = (new Random()).nextInt(4);
+        if (directionChoice == 1){
+            moveUpPath();
+        }
+        else if (directionChoice == 3){
+            moveDownPath();
+        }
+    }
 }
