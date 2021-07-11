@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * a basic form of enemy in the world
  */
-public class BasicEnemy extends MovingEntity {
+public abstract class BasicEnemy extends MovingEntity{
     //Attributes
     private int battleRadius;
     private int supportRadius;

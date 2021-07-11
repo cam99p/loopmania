@@ -112,6 +112,10 @@ public class LoopManiaWorld {
         if (pos != null){
             int indexInPath = orderedPath.indexOf(pos);
             BasicEnemy enemy = new BasicEnemy(new PathPosition(indexInPath, orderedPath));
+            //This throws an error because I have declared BasicEnemy abstract, to support
+            //The implemntation of Zombie, Vamp and Slug
+            //Should be fine, since this method should be changed to support multiple enemy types
+            //Which spawn in a variety of ways - Jackson
             enemies.add(enemy);
             spawningEnemies.add(enemy);
         }
@@ -139,23 +143,38 @@ public class LoopManiaWorld {
      * @return list of enemies which have been killed
      */
     public List<BasicEnemy> runBattles() {
-        // TODO = modify this - currently the character automatically wins all battles without any damage!
-        List<BasicEnemy> defeatedEnemies = new ArrayList<BasicEnemy>();
-        for (BasicEnemy e: enemies){
-            // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-            // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
-            if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
-                // fight...
-                defeatedEnemies.add(e);
+        //old stuff
+        //// TODO = modify this - currently the character automatically wins all battles without any damage!
+        //List<BasicEnemy> defeatedEnemies = new ArrayList<BasicEnemy>();
+        //for (BasicEnemy e: enemies){
+        //    // Pythagoras: a^2+b^2 < radius^2 to see if within radius
+        //    // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
+        //    if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
+        //        // fight...
+        //        defeatedEnemies.add(e);
+        //    }
+        //}
+
+        List<MovingEntity> battleEnemies = gatherEnemies();
+        //If there is at least one enemy to fight, start a battle
+        if (battleEnemies.size() > 0){
+            List<MovingEntity> battleAllies = gatherAllies();
+            Battle battle = new Battle(battleAllies,  battleEnemies);
+            battle.Fight();
+
+            List<BasicEnemy> defeatedEnemies = battle.getDefeatedEnemies();
+            for (BasicEnemy e: defeatedEnemies){
+                // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
+                // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
+                // due to mutating list we're iterating over
+                killEnemy(e);
             }
+            return defeatedEnemies;
+        } 
+        //If theres nothing to fight, return an empty list
+        else {
+            return new ArrayList<BasicEnemy>();
         }
-        for (BasicEnemy e: defeatedEnemies){
-            // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
-            // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
-            // due to mutating list we're iterating over
-            killEnemy(e);
-        }
-        return defeatedEnemies;
     }
 
     /**
@@ -164,6 +183,9 @@ public class LoopManiaWorld {
      */
     public List<MovingEntity> gatherAllies() {
         ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
+        allies.add(character); //Add character
+        //Add ally. Probalby just a bool flag in the character
+        //Add towers. Checkk if their xy coords are close enough to chars xy coords
         return allies;
     }
 
@@ -173,8 +195,30 @@ public class LoopManiaWorld {
      * @return list of MovingEnititys on the side of good
      */
     public List<MovingEntity> gatherEnemies() {
-        ArrayList<MovingEntity> enemies = new ArrayList<MovingEntity>();
-        return enemies;
+        ArrayList<MovingEntity> battleEnemies = new ArrayList<MovingEntity>();
+
+        //Check for those in battle range
+        for (BasicEnemy e: enemies){
+            if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < (e.getBattleRadius() * e.getBattleRadius())){
+                battleEnemies.add(e);
+            }
+        }
+
+        //if there is at least one in battle range, look for additional enemies in support range
+        if (battleEnemies.size() > 0){
+            //Check for those in support range
+            for (BasicEnemy e: enemies){
+                if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < (e.getSupportRadius() * e.getSupportRadius())){
+                    //Check it wasnt already added due to being in battle range
+                    if (!battleEnemies.contains(e)){
+                        battleEnemies.add(e);
+                    }
+
+                }
+            }   
+        }
+
+        return battleEnemies;
     }
 
     /**

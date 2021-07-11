@@ -75,5 +75,7 @@ public class LoopManiaWorldTest {
 
         //Hero should always beat a slug, so check that there is 1 defeated enemy
         assertTrue(defeated.size() == 1);
+        //The only memeber of the list should be the dummy slug
+        assertTrue(defeated.get(0) == dummySlug);
     }
 }

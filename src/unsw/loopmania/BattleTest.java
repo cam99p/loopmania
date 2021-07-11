@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 public class BattleTest {
     //A hero should always beat a slug, so the initial test will use the slug enemy
+    //Currently fails because getTargetAlly is not yet implemented, because ally is not implemented
     @Test
     public void TestCombat(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),

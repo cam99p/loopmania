@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * The moving entity
  */
-public abstract class MovingEntity extends Entity {
+public abstract class MovingEntity extends Entity implements Attack{
     //Attributes
     private int attack;
     private int defense;
