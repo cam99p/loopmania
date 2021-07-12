@@ -15,15 +15,15 @@ public class HealthPotion extends Item {
     public void useItem(Character target)
     { 
         // Restore health fully
-        target.characterStats.modifyHealth(200);
+        target.modifyHealth(200);
     }
 
-    public void onEquip(StatsInterface stats)
+    public void onEquip(Stats stats)
     {
         return;
     }
 
-    public void onDeequip(StatsInterface stats)
+    public void onDeequip(Stats stats)
     {
         return;
     }

@@ -17,13 +17,13 @@ public class Shield extends Item {
         
     }
 
-    public void onEquip(StatsInterface stats)
+    public void onEquip(Stats stats)
     {
         stats.modifyDefense(getValue());
         stats.setBlocking();
     }
 
-    public void onDeequip(StatsInterface stats)
+    public void onDeequip(Stats stats)
     {
         stats.modifyDefense(-getValue());
         stats.unsetBlocking();
