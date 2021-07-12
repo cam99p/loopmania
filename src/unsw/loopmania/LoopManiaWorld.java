@@ -173,7 +173,7 @@ public class LoopManiaWorld {
         //If there is at least one enemy to fight, start a battle
         if (battleEnemies.size() > 0){
             List<MovingEntity> battleAllies = gatherAllies();
-            Battle battle = new Battle(battleAllies,  battleEnemies);
+            Battle battle = new Battle(character, battleAllies,  battleEnemies);
             battle.Fight();
 
             List<BasicEnemy> defeatedEnemies = battle.getDefeatedEnemies();
@@ -198,7 +198,9 @@ public class LoopManiaWorld {
     public List<MovingEntity> gatherAllies() {
         ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
         allies.add(character); //Add character
-        //Add ally. Probalby just a bool flag in the character
+        for (Ally ally : character.getAllies()) {
+            allies.add(ally);
+        }
         //Add towers. Checkk if their xy coords are close enough to chars xy coords
         return allies;
     }

@@ -13,12 +13,14 @@ import java.util.Random;
  */
 public class Battle {
     //Attributes
+    private Character hero;
     private List<MovingEntity> allies;
     private List<MovingEntity> enemies;
     private List<MovingEntity> participants;
     private List<MovingEntity> defeated;
 
-    public Battle(List<MovingEntity> Allies, List<MovingEntity> Enemies) {
+    public Battle(Character Hero, List<MovingEntity> Allies, List<MovingEntity> Enemies) {
+        this.hero = Hero;
         this.allies = Allies;
         this.enemies = Enemies;
         participants = new ArrayList<MovingEntity>();
@@ -32,11 +34,10 @@ public class Battle {
     //Runs through the turn order, calling each entitys attack func, until battle is resolved
     public void Fight(){
         //Do actual combat work here
-
         int i = 0;
         //While there are enemies remaining, fight
         while (enemies.size() != 0){
-            var attacker = participants.get((i%participants.size()));
+            var attacker = participants.get((i % participants.size()));
 
             //Check that its still an active combatenant
             if (attacker.getHealth() <= 0){
@@ -62,8 +63,16 @@ public class Battle {
             else if (enemies.contains(attacker)){
                 MovingEntity target = getTargetAlly();
                 attacker.AttackTarget(target, seed);
-                //Disposal of hero is handled seperately
-                //Ally must be implemented before we consider itss disposal here
+
+                //If the attack kills the ally, remove it from the heros ally list
+                if (target.getHealth() < 0){
+                    if (target == hero){
+                        //TODO: Hero died, do thing
+                    } else{
+                        //Ally dies, remove from hero's list
+                        hero.getAllies().remove(target);
+                    }
+                }
             }
             else {
                 //This shouldn't happen
@@ -111,9 +120,19 @@ public class Battle {
 
     //Based on priority, returns an ally for an enemy to attack
     public MovingEntity getTargetAlly(){
-        //requires ally implementation, but essentially its ally first, hero second
+        //Essentially its ally first, hero second
         //towers cannot be targeted
-        return null;
+
+        //If the hero has no allies, return hero
+        if (hero.getAllies().size() == 0){
+            return hero;
+        } 
+        //Otherwise return the oldest ally
+        else{
+            return hero.getAllies().get(0);
+        }
+        
+        
     }
 
     //Based on priority, returns an enemy for an ally to attack

@@ -9,7 +9,7 @@ public class Stake extends Item {
     public Stake(SimpleIntegerProperty x, SimpleIntegerProperty y)
     {
         super(x,y, "Stake", Slot.RIGHT_ARM);
-        setValue(5);
+        setValue(7);
     }
 
     public void useItem(Character target)

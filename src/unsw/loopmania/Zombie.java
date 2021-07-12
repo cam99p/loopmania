@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import java.util.Random;
 
-public class Zombie extends BasicEnemy implements Attack{
+public class Zombie extends BasicEnemy{
     //Construct enemy at certain position, and set all attributes
     public Zombie(PathPosition position) {
         super(position);

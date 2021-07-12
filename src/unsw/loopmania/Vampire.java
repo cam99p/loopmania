@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import java.util.Random;
 
-public class Vampire extends BasicEnemy implements Attack{
+public class Vampire extends BasicEnemy{
     //Unique Attributes
     private int frenzyTimer;
 
