@@ -66,19 +66,25 @@ public abstract class LoopManiaWorldLoader {
         assert indexInPath != -1;
 
         Entity entity = null;
+        Entity base = null;
         // TODO = load more entity types from the file
         switch (type) {
         case "hero_castle":
             Character character = new Character(new PathPosition(indexInPath, orderedPath));
+            HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+            onLoad(castle);
             world.setCharacter(character);
+            world.setCastle(castle);
             onLoad(character);
             entity = character;
+            base = castle;
             break;
         case "path_tile":
             throw new RuntimeException("path_tile's aren't valid entities, define the path externally.");
         // TODO Handle other possible entities
         }
         world.addEntity(entity);
+        world.addEntity(base);
     }
 
     /**
@@ -146,6 +152,7 @@ public abstract class LoopManiaWorldLoader {
 
     public abstract void onLoad(Character character);
     public abstract void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out);
+    public abstract void onLoad(HerosCastle castle);
 
     // TODO Create additional abstract methods for the other entities
 

@@ -37,6 +37,10 @@ public class LoopManiaWorld {
 
     private Character character;
 
+    private HerosCastle castle;
+
+    private int cycle;
+
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
@@ -49,7 +53,7 @@ public class LoopManiaWorld {
     private List<Entity> unequippedInventoryItems;
 
     // TODO = expand the range of buildings
-    private List<VampireCastleBuilding> buildingEntities;
+    private List<Building> buildingEntities;
 
     private List<HealthPotion> healthPotions;
 
@@ -71,6 +75,8 @@ public class LoopManiaWorld {
         this.height = height;
         nonSpecifiedEntities = new ArrayList<>();
         character = null;
+        castle = null;
+        cycle = 0;
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
@@ -316,6 +322,9 @@ public class LoopManiaWorld {
     public void runTickMoves(){
         character.moveDownPath();
         moveBasicEnemies();
+        if(character.getX() == castle.getX() && character.getY() == castle.getY()) {
+            cycle++;
+        }
     }
 
     /**
@@ -449,5 +458,17 @@ public class LoopManiaWorld {
         shiftCardsDownFromXCoordinate(cardNodeX);
 
         return newBuilding;
+    }
+
+    public int getCycle() {
+        return cycle;
+    }
+
+    public List<Building> getBuildings() {
+        return buildingEntities;
+    }
+
+    public List<BasicEnemy> getEnemy() {
+        return enemies;
     }
 }
