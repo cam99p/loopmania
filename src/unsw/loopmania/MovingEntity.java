@@ -5,7 +5,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * The moving entity
  */
-public abstract class MovingEntity extends Entity implements Stats  {
+public abstract class MovingEntity extends Entity implements Attack{
+    //Attributes
+    private int attack;
+    private int defense;
+    private int health;
+    private int speed;
 
     /**
      * object holding position in the path
@@ -59,52 +64,37 @@ public abstract class MovingEntity extends Entity implements Stats  {
         return y().get();
     }
 
-    public int getHealth() {
-        return health;
-    }
-
     public int getAttack() {
         return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
     }
 
     public int getDefense() {
         return defense;
     }
 
-    public void modifyHealth(int value) {
-        this.health += value;
+    public void setDefense(int defense) {
+        this.defense = defense;
     }
 
-    public void modifyAttack(int value) {
-        this.attack += value; 
+    public int getHealth() {
+        return health;
     }
 
-    public void modifyDefense(int value) {
-        this.defense += value;
+    public void setHealth(int health) {
+        this.health = health;
     }
 
-    public void modifyGold(int value) {
-        this.gold += value; 
+    public int getSpeed() {
+        return speed;
     }
 
-    public void modifyExperience(int value) {
-        this.experience += value; 
-    }
-    
-    public void setBlocking() {
-        this.canBlock = true;
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
-    public void unsetBlocking() {
-        this.canBlock = false; 
-    }
-
-    public void setRevive() {
-        this.canRevive = true;
-    }
-    
-    public void unsetRevive() {
-        this.canRevive = false; 
-    }
     
 }
