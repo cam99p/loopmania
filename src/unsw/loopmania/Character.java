@@ -10,7 +10,7 @@ public class Character extends MovingEntity {
         super(position);
         this.attack = 5;
         this.defense = 0;
-        this.health = 100;
+        this.health = 200;
         this.gold = 0;
         this.experience = 0;
         this.speed = 8;
