@@ -42,4 +42,15 @@ Attendees:
 -	Amon
 Topics of Discussion:
 •	Discussed implementation ideas for the initial/high priority backend functions
-•	Divide up the backend functions amongst the group
+•	Divided up the backend functions amongst the group
+Date - 12/07/2021
+Attendees:
+-	Cameron
+-	Abrar
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Presented our progress on our backend functions
+•	Merged branches with completed work, in order to continue working on sections with interdependancies
+•	Brainstormed how to handle these interdependancies (ie, how to properly integrate items with battles, and the like)
