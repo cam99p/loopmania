@@ -101,6 +101,10 @@ public class LoopManiaWorld {
         this.character = character;
     }
 
+    public void setCastle(HerosCastle castle) {
+        this.castle = castle;
+    }
+
     public Character getCharacter() {
         return character;
     }
