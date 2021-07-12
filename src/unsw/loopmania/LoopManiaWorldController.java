@@ -27,6 +27,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.control.Label;
 import javafx.util.Duration;
 import java.util.EnumMap;
 
@@ -106,6 +108,18 @@ public class LoopManiaWorldController {
      */
     private DragIcon draggedEntity;
 
+    @FXML
+    private GridPane stats;
+
+    @FXML
+    private Rectangle healthBar;
+
+    @FXML
+    private Label goldValue;
+
+    @FXML
+    private Label xpValue;
+
     private boolean isPaused;
     private LoopManiaWorld world;
 
@@ -118,6 +132,9 @@ public class LoopManiaWorldController {
     private Image basicEnemyImage;
     private Image swordImage;
     private Image basicBuildingImage;
+    private Image healthPotionImage;
+    private Image heartImage;
+    private Image goldImage;
 
     /**
      * the image currently being dragged, if there is one, otherwise null.
@@ -168,8 +185,12 @@ public class LoopManiaWorldController {
         basicEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
         basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
+        healthPotionImage = new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString());
+        heartImage = new Image((new File("src/images/heart.png")).toURI().toString());
+        goldImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
+        
 
         // initialize them all...
         gridPaneSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
@@ -215,6 +236,12 @@ public class LoopManiaWorldController {
                 unequippedInventory.add(emptySlotView, x, y);
             }
         }
+
+        // Set up the character stats 
+        ImageView heartImageView = new ImageView(heartImage);
+        ImageView goldImageView = new ImageView(goldImage);
+        stats.add(heartImageView, 1, 0);
+        stats.add(goldImageView, 1, 1);
 
         // create the draggable icon
         draggedEntity = new DragIcon();
@@ -291,6 +318,12 @@ public class LoopManiaWorldController {
         onLoad(sword);
     }
 
+    private void loadHealthPotion() {
+        HealthPotion healthPotion = world.addUnequippedHealthPotion();
+        onLoad(healthPotion);
+
+    }
+    
     /**
      * run GUI events after an enemy is defeated, such as spawning items/experience/gold
      * @param enemy defeated enemy for which we should react to the death of
@@ -300,7 +333,26 @@ public class LoopManiaWorldController {
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
         loadSword();
+        loadHealthPotion();
         loadVampireCard();
+    }
+
+    public void potionTrigger() {
+        if (world.usingPotion()) { 
+            // Restores health fully
+            double newBarLevel = 100; 
+            healthBar.setWidth(newBarLevel);
+        }
+    }
+
+    public void addXP(int xp) {
+        Integer newXp = Integer.parseInt(xpValue.getText()) + xp;  
+        xpValue.setText(newXp.toString());
+    }
+
+    public void addGold(int gold) {
+        Integer newGold = Integer.parseInt(goldValue.getText()) + gold;  
+        goldValue.setText(newGold.toString());
     }
 
     /**
@@ -333,6 +385,15 @@ public class LoopManiaWorldController {
         unequippedInventory.getChildren().add(view);
     }
 
+
+    private void onLoad(HealthPotion healthPotion) {
+        ImageView view = new ImageView(healthPotionImage);
+        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+        addEntity(healthPotion, view);
+        unequippedInventory.getChildren().add(view);
+    }
+
+      
     /**
      * load an enemy into the GUI
      * @param enemy
@@ -591,6 +652,7 @@ public class LoopManiaWorldController {
         }
     }
 
+
     /**
      * handle the pressing of keyboard keys.
      * Specifically, we should pause when pressing SPACE
@@ -608,6 +670,8 @@ public class LoopManiaWorldController {
                 pause();
             }
             break;
+        case P:
+            potionTrigger(); 
         default:
             break;
         }

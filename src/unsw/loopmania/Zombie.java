@@ -18,7 +18,13 @@ public class Zombie extends BasicEnemy implements Attack{
 
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
+        int damage = this.getAttack() - target.getDefense();
+        target.setHealth(target.getHealth() - damage);
 
+        //Critical
+        if (seed == 10){
+            //Cannot be implemented until ally is
+        }
     }
 
     /**

@@ -3,20 +3,21 @@ package unsw.loopmania;
 /**
  * represents the main character in the backend of the game world
  */
-public class Character extends MovingEntity implements Attack{
-    // TODO = potentially implement relationships between this class and other classes
+public class Character extends MovingEntity{
     public Character(PathPosition position) {
         super(position);
         //Set stats
-        this.setAttack(5);
-        this.setDefense(0);
-        this.setHealth(200);
-        this.setSpeed(8);
+        this.attack = 5;
+        this.defense = 0;
+        this.health = 200;
+        this.speed = 8;
+        this.canBlock = false;
+        this.canRevive = false;
     }
 
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
+        int damage = this.getAttack() - target.getDefense();
+        target.setHealth(target.getHealth() - damage);
 
-    }
-    
 }

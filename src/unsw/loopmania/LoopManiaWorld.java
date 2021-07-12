@@ -51,6 +51,9 @@ public class LoopManiaWorld {
     // TODO = expand the range of buildings
     private List<VampireCastleBuilding> buildingEntities;
 
+    private List<HealthPotion> healthPotions;
+
+
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse them
      */
@@ -73,6 +76,7 @@ public class LoopManiaWorld {
         unequippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
+        healthPotions = new ArrayList<>();
     }
 
     public int getWidth() {
@@ -91,6 +95,10 @@ public class LoopManiaWorld {
         this.character = character;
     }
 
+    public Character getCharacter() {
+        return character;
+    }
+
     /**
      * add a generic entity (without it's own dedicated method for adding to the world)
      * @param entity
@@ -102,8 +110,8 @@ public class LoopManiaWorld {
     }
 
     /**
-     * spawns enemies if the conditions warrant it, adds to world
-     * @return list of the enemies to be displayed on screen
+     * spawns slugs if the conditions warrant it, adds to world
+     * @return list of the slugs to be displayed on screen
      */
     public List<BasicEnemy> possiblySpawnEnemies(){
         // TODO = expand this very basic version
@@ -111,8 +119,6 @@ public class LoopManiaWorld {
         List<BasicEnemy> spawningEnemies = new ArrayList<>();
         if (pos != null){
             int indexInPath = orderedPath.indexOf(pos);
-            //BasicEnemy enemy = new BasicEnemy(new PathPosition(indexInPath, orderedPath));
-            // spawn slug
             BasicEnemy enemy = new Slug(new PathPosition(indexInPath, orderedPath));
             enemies.add(enemy);
             spawningEnemies.add(enemy);
@@ -141,23 +147,38 @@ public class LoopManiaWorld {
      * @return list of enemies which have been killed
      */
     public List<BasicEnemy> runBattles() {
-        // TODO = modify this - currently the character automatically wins all battles without any damage!
-        List<BasicEnemy> defeatedEnemies = new ArrayList<BasicEnemy>();
-        for (BasicEnemy e: enemies){
-            // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-            // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
-            if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
-                // fight...
-                defeatedEnemies.add(e);
+        //old stuff
+        //// TODO = modify this - currently the character automatically wins all battles without any damage!
+        //List<BasicEnemy> defeatedEnemies = new ArrayList<BasicEnemy>();
+        //for (BasicEnemy e: enemies){
+        //    // Pythagoras: a^2+b^2 < radius^2 to see if within radius
+        //    // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
+        //    if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
+        //        // fight...
+        //        defeatedEnemies.add(e);
+        //    }
+        //}
+
+        List<MovingEntity> battleEnemies = gatherEnemies();
+        //If there is at least one enemy to fight, start a battle
+        if (battleEnemies.size() > 0){
+            List<MovingEntity> battleAllies = gatherAllies();
+            Battle battle = new Battle(battleAllies,  battleEnemies);
+            battle.Fight();
+
+            List<BasicEnemy> defeatedEnemies = battle.getDefeatedEnemies();
+            for (BasicEnemy e: defeatedEnemies){
+                // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
+                // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
+                // due to mutating list we're iterating over
+                killEnemy(e);
             }
+            return defeatedEnemies;
+        } 
+        //If theres nothing to fight, return an empty list
+        else {
+            return new ArrayList<BasicEnemy>();
         }
-        for (BasicEnemy e: defeatedEnemies){
-            // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
-            // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
-            // due to mutating list we're iterating over
-            killEnemy(e);
-        }
-        return defeatedEnemies;
     }
 
     /**
@@ -166,6 +187,9 @@ public class LoopManiaWorld {
      */
     public List<MovingEntity> gatherAllies() {
         ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
+        allies.add(character); //Add character
+        //Add ally. Probalby just a bool flag in the character
+        //Add towers. Checkk if their xy coords are close enough to chars xy coords
         return allies;
     }
 
@@ -175,8 +199,30 @@ public class LoopManiaWorld {
      * @return list of MovingEnititys on the side of good
      */
     public List<MovingEntity> gatherEnemies() {
-        ArrayList<MovingEntity> enemies = new ArrayList<MovingEntity>();
-        return enemies;
+        ArrayList<MovingEntity> battleEnemies = new ArrayList<MovingEntity>();
+
+        //Check for those in battle range
+        for (BasicEnemy e: enemies){
+            if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < (e.getBattleRadius() * e.getBattleRadius())){
+                battleEnemies.add(e);
+            }
+        }
+
+        //if there is at least one in battle range, look for additional enemies in support range
+        if (battleEnemies.size() > 0){
+            //Check for those in support range
+            for (BasicEnemy e: enemies){
+                if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < (e.getSupportRadius() * e.getSupportRadius())){
+                    //Check it wasnt already added due to being in battle range
+                    if (!battleEnemies.contains(e)){
+                        battleEnemies.add(e);
+                    }
+
+                }
+            }   
+        }
+
+        return battleEnemies;
     }
 
     /**
@@ -206,6 +252,17 @@ public class LoopManiaWorld {
         shiftCardsDownFromXCoordinate(x);
     }
 
+    public Boolean usingPotion() {
+        if (!healthPotions.isEmpty() && character.getHealth() < 200) {
+            HealthPotion hp = healthPotions.get(0);
+            hp.useItem(character);
+            removeUnequippedInventoryItemByCoordinates(hp.getX(), hp.getY());
+            healthPotions.remove(hp);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * spawn a sword in the world and return the sword entity
      * @return a sword to be spawned in the controller as a JavaFX node
@@ -224,6 +281,23 @@ public class LoopManiaWorld {
         Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(sword);
         return sword;
+    }
+
+    public HealthPotion addUnequippedHealthPotion() {
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null){
+            // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
+            // TODO = give some cash/experience rewards for the discarding of the oldest sword
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+        
+        // now we insert the new sword, as we know we have at least made a slot available...
+        HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(healthPotion);
+        healthPotions.add(healthPotion);
+
+        return healthPotion;
     }
 
     /**

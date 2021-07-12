@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class VampireTest {
     @Test
-    void TestFrenzy(){
+    public void TestFrenzy(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
                                                                 new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);
@@ -22,7 +22,7 @@ public class VampireTest {
     }
 
     @Test
-    void TestEndFrenzy(){
+    public void TestEndFrenzy(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
                                                                 new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);
@@ -34,7 +34,7 @@ public class VampireTest {
     }
 
     @Test
-    void TestAttack(){
+    public void TestAttack(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
                                                                 new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);
@@ -47,7 +47,7 @@ public class VampireTest {
     }
 
     @Test
-    void TestCriticalAttack(){
+    public void TestCriticalAttack(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
                                                                 new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
         PathPosition dummyPos = new PathPosition(0, dummyPath);

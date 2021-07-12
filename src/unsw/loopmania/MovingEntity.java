@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * The moving entity
  */
-public abstract class MovingEntity extends Entity {
+public abstract class MovingEntity extends Entity implements Attack{
     //Attributes
     private int attack;
     private int defense;
@@ -16,6 +16,14 @@ public abstract class MovingEntity extends Entity {
      * object holding position in the path
      */
     private PathPosition position;
+    protected int attack;
+    protected int defense;
+    protected int speed;
+    protected int health;
+    protected int gold;
+    protected int experience;
+    protected Boolean canBlock;
+    protected Boolean canRevive;
 
     /**
      * Create a moving entity which moves up and down the path in position
@@ -23,7 +31,7 @@ public abstract class MovingEntity extends Entity {
      */
     public MovingEntity(PathPosition position) {
         super();
-        this.position = position;
+        this.position = position;        
     }
 
     /**
