@@ -102,8 +102,8 @@ public class LoopManiaWorld {
     }
 
     /**
-     * spawns enemies if the conditions warrant it, adds to world
-     * @return list of the enemies to be displayed on screen
+     * spawns slugs if the conditions warrant it, adds to world
+     * @return list of the slugs to be displayed on screen
      */
     public List<BasicEnemy> possiblySpawnEnemies(){
         // TODO = expand this very basic version
@@ -111,11 +111,7 @@ public class LoopManiaWorld {
         List<BasicEnemy> spawningEnemies = new ArrayList<>();
         if (pos != null){
             int indexInPath = orderedPath.indexOf(pos);
-            BasicEnemy enemy = new BasicEnemy(new PathPosition(indexInPath, orderedPath));
-            //This throws an error because I have declared BasicEnemy abstract, to support
-            //The implemntation of Zombie, Vamp and Slug
-            //Should be fine, since this method should be changed to support multiple enemy types
-            //Which spawn in a variety of ways - Jackson
+            BasicEnemy enemy = new Slug(new PathPosition(indexInPath, orderedPath));
             enemies.add(enemy);
             spawningEnemies.add(enemy);
         }
