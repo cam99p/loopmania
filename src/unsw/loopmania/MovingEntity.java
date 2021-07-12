@@ -90,17 +90,17 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     }
 
     public void modifyHealth(int value) {
-        this.health = value;
+        health += value;
     }
 
     // Modifies value to character attack stat
     public void modifyAttack(int value) {
-        this.attack = value; 
+        attack += value; 
     }
 
     // Modifies value to character defense stat
     public void modifyDefense(int value) {
-        this.defense = value;
+        defense += value;
     }
     
     // Makes it possible for the character to block
