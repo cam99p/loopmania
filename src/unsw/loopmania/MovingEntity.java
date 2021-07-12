@@ -5,23 +5,16 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * The moving entity
  */
-public abstract class MovingEntity extends Entity implements Attack{
+public abstract class MovingEntity extends Entity implements Attack, Stats{
     //Attributes
     private int attack;
     private int defense;
     private int health;
     private int speed;
-
     /**
      * object holding position in the path
      */
     private PathPosition position;
-    protected int attack;
-    protected int defense;
-    protected int speed;
-    protected int health;
-    protected int gold;
-    protected int experience;
     protected Boolean canBlock;
     protected Boolean canRevive;
 
@@ -96,5 +89,38 @@ public abstract class MovingEntity extends Entity implements Attack{
         this.speed = speed;
     }
 
+    public void modifyHealth(int value) {
+        this.health = value;
+    }
+
+    // Modifies value to character attack stat
+    public void modifyAttack(int value) {
+        this.attack = value; 
+    }
+
+    // Modifies value to character defense stat
+    public void modifyDefense(int value) {
+        this.defense = value;
+    }
     
+    // Makes it possible for the character to block
+    public void setBlocking() {
+        this.canBlock = true;
+    }
+
+    // Makes it impossible for the character to block
+    public void unsetBlocking() {
+        this.canBlock = false; 
+    }
+
+    // Makes it possible for the character to be revived
+    public void setRevive() {
+        this.canRevive = true;
+    }
+    
+    // Makes it impossible for the character to be revived
+    public void unsetRevive() {
+        this.canRevive = false; 
+    }
+
 }
