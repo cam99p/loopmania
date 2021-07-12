@@ -552,6 +552,7 @@ public class BuildingsTest {
         }
 
         assertEquals(1, world.getCycle());
+        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -588,6 +589,7 @@ public class BuildingsTest {
         }
 
         assertEquals(1, world.getCycle());
+        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -624,6 +626,7 @@ public class BuildingsTest {
         }
 
         assertEquals(1, world.getCycle());
+        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -660,6 +663,7 @@ public class BuildingsTest {
         }
 
         assertEquals(1, world.getCycle());
+        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
     }
@@ -696,6 +700,7 @@ public class BuildingsTest {
         }
 
         assertEquals(1, world.getCycle());
+        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(3), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
     }
@@ -732,6 +737,7 @@ public class BuildingsTest {
         }
 
         assertEquals(1, world.getCycle());
+        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
     }
@@ -768,6 +774,7 @@ public class BuildingsTest {
         }
 
         assertEquals(1, world.getCycle());
+        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -805,5 +812,8 @@ public class BuildingsTest {
 
         assertEquals(5, world.getCycle());
         assertEquals(5, world.getEnemy().size());
+        for(int i = 0; i < 5; i++) {
+            assertEquals(Zombie.class, world.getEnemy().get(i).getClass());
+        }
     }
 }
