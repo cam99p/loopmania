@@ -29,10 +29,11 @@ public class Character extends MovingEntity{
         target.setHealth(target.getHealth() - damage);
     }
 
+    //TODO: Passing through barracks should make a new ally and call this
     //Adds an ally to the list of the charcters allies, if there is room
     public void AddAlly(Ally ally){
         //Should the ally be made here, or passed in?
-        //Assuming passed in for noe
+        //Assuming passed in for now
         if (allies.size() < 3){
             allies.add(ally);
         }

@@ -201,7 +201,7 @@ public class LoopManiaWorld {
         for (Ally ally : character.getAllies()) {
             allies.add(ally);
         }
-        //Add towers. Checkk if their xy coords are close enough to chars xy coords
+        //TODO: Add towers. Check if their xy coords are close enough to chars xy coords
         return allies;
     }
 

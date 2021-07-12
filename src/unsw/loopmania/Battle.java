@@ -74,10 +74,6 @@ public class Battle {
                     }
                 }
             }
-            else {
-                //This shouldn't happen
-                //Log error? Or remove final else statement?
-            }
 
             //Increment to move onto next entity in turn order
             i++;

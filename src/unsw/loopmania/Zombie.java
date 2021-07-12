@@ -23,7 +23,7 @@ public class Zombie extends BasicEnemy{
 
         //Critical
         if (seed == 10){
-            //Cannot be implemented until ally is
+            //TODO: implement zombification
         }
     }
 
