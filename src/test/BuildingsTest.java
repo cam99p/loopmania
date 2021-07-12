@@ -477,7 +477,7 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleBuilding vamp = new ZombiePitBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+        ZombiePitBuilding zombie = new ZombiePitBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
 
         for(int i = 0; i < 9; i++) {
             world.runTickMoves();

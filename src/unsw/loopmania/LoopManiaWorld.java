@@ -370,4 +370,8 @@ public class LoopManiaWorld {
     public List<Building> getBuildings() {
         return buildingEntities;
     }
+
+    public List<BasicEnemy> getEnemy() {
+        return enemies;
+    }
 }
