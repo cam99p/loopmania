@@ -19,6 +19,8 @@ import unsw.loopmania.ZombiePitBuilding;
 import unsw.loopmania.Character;
 import unsw.loopmania.HerosCastle;
 import unsw.loopmania.VampireCastleCard;
+import unsw.loopmania.Vampire;
+import unsw.loopmania.Zombie;
 
 public class BuildingsTest {
     @Test
@@ -148,8 +150,10 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Vampire vamp = new Vampire(pos);
+
         assertEquals(1, world.getEnemy().size());
-        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
+        assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
     }
 
     @Test
@@ -179,7 +183,8 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
-        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
+        Vampire vamp = new Vampire(pos);
+        assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -215,8 +220,9 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Vampire vamp = new Vampire(pos);
         assertEquals(5, world.getCycle());
-        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
+        assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -251,9 +257,10 @@ public class BuildingsTest {
         for(int i = 0; i < 45; i++) {
             world.runTickMoves();
         }
+        Vampire vamp = new Vampire(pos);
 
         assertEquals(5, world.getCycle());
-        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
+        assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -288,9 +295,10 @@ public class BuildingsTest {
         for(int i = 0; i < 45; i++) {
             world.runTickMoves();
         }
+        Vampire vamp = new Vampire(pos);
 
         assertEquals(5, world.getCycle());
-        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
+        assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
     }
@@ -326,8 +334,9 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Vampire vamp = new Vampire(pos);
         assertEquals(5, world.getCycle());
-        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
+        assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(3), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
     }
@@ -363,8 +372,9 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Vampire vamp = new Vampire(pos);
         assertEquals(5, world.getCycle());
-        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
+        assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
     }
@@ -400,8 +410,9 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Vampire vamp = new Vampire(pos);
         assertEquals(5, world.getCycle());
-        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
+        assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -437,10 +448,11 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Vampire vamp = new Vampire(pos);
         assertEquals(10, world.getCycle());
         assertEquals(2, world.getEnemy().size());
-        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
-        assertEquals(Vampire.class, world.getEnemy().get(1).getClass());
+        assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
+        assertEquals(vamp.getClass(), world.getEnemy().get(1).getClass());
     }
 
     @Test
@@ -520,8 +532,10 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Zombie zombie = new Zombie(pos);
+
         assertEquals(1, world.getEnemy().size());
-        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
+        assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
     }
 
     @Test
@@ -551,8 +565,10 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Zombie zombie = new Zombie(pos);
+
         assertEquals(1, world.getCycle());
-        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
+        assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -588,8 +604,10 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+
+        Zombie zombie = new Zombie(pos);
         assertEquals(1, world.getCycle());
-        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
+        assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -625,8 +643,10 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Zombie zombie = new Zombie(pos);
+
         assertEquals(1, world.getCycle());
-        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
+        assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -662,8 +682,10 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Zombie zombie = new Zombie(pos);
+
         assertEquals(1, world.getCycle());
-        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
+        assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
     }
@@ -699,8 +721,10 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Zombie zombie = new Zombie(pos);
+
         assertEquals(1, world.getCycle());
-        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
+        assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(3), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
     }
@@ -736,8 +760,10 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Zombie zombie = new Zombie(pos);
+
         assertEquals(1, world.getCycle());
-        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
+        assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
     }
@@ -773,8 +799,10 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Zombie zombie = new Zombie(pos);
+
         assertEquals(1, world.getCycle());
-        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
+        assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -810,10 +838,12 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        Zombie zombie = new Zombie(pos);
+
         assertEquals(5, world.getCycle());
         assertEquals(5, world.getEnemy().size());
         for(int i = 0; i < 5; i++) {
-            assertEquals(Zombie.class, world.getEnemy().get(i).getClass());
+            assertEquals(zombie.getClass(), world.getEnemy().get(i).getClass());
         }
     }
 }
