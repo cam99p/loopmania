@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import java.util.Random;
+
 public class Slug extends BasicEnemy implements Attack {
     //Construct enemy at certain position, and set all attributes
     public Slug(PathPosition position) {
@@ -18,5 +20,19 @@ public class Slug extends BasicEnemy implements Attack {
     public void AttackTarget(MovingEntity target, int seed){
         int damage = this.getAttack() - target.getDefense();
         target.setHealth(target.getHealth() - damage);
+    }
+
+    /**
+     * move a slug (50% up path 50% down path)
+     * slug will always move
+     */
+    public void move(){
+        int directionChoice = (new Random()).nextInt(1);
+        if (directionChoice == 0){
+            moveUpPath();
+        }
+        else if (directionChoice == 1){
+            moveDownPath();
+        }
     }
 }

@@ -61,5 +61,17 @@ public class Vampire extends BasicEnemy implements Attack{
     public void setFrenzyTimer(int frenzyTimer) {
         this.frenzyTimer = frenzyTimer;
     }
-    
+
+    /**
+     * move a vampire (10% up path, 10% down path, 80% not moving)
+     */
+    public void move(){
+        int directionChoice = (new Random()).nextInt(9);
+        if (directionChoice == 3){
+            moveUpPath();
+        }
+        else if (directionChoice == 6){
+            moveDownPath();
+        }
+    }
 }
