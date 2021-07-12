@@ -3,12 +3,12 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
- * Defines the behaviour of a sword when used
+ * Defines the behaviour of an Armour when used
  */
-public class Sword extends Item{
-    public Sword(SimpleIntegerProperty x, SimpleIntegerProperty y)
+public class Armour extends Item {
+    public Armour(SimpleIntegerProperty x, SimpleIntegerProperty y)
     {
-        super(x,y, "Sword", Slot.RIGHT_ARM);
+        super(x,y, "Armour", Slot.CHEST);
         setValue(10);
     }
 
@@ -19,11 +19,11 @@ public class Sword extends Item{
 
     public void onEquip(Stats stats)
     {
-        stats.modifyAttack(getValue());
+        stats.modifyDefense(getValue());
     }
 
     public void onDeequip(Stats stats)
     {
-        stats.modifyAttack(-getValue());
+        stats.modifyDefense(-getValue());
     }
 }
