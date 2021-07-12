@@ -323,7 +323,7 @@ public class LoopManiaWorldController {
         onLoad(healthPotion);
 
     }
-
+    
     /**
      * run GUI events after an enemy is defeated, such as spawning items/experience/gold
      * @param enemy defeated enemy for which we should react to the death of

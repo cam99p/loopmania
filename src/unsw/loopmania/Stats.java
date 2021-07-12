@@ -1,75 +1,25 @@
 package unsw.loopmania;
 
-public class Stats implements StatsInterface {
-    private int attack;
-    private int defense;
-    private int speed;
-    private int health;
-    private int gold;
-    private int experience;
-    private Boolean canBlock;
-    private Boolean canRevive;
-
-    public Stats() {
-        this.attack = 5;
-        this.defense = 0;
-        this.health = 100;
-        this.gold = 0;
-        this.experience = 0;
-        this.speed = 8;
-        this.canBlock = false;
-        this.canRevive = false;
-    }
-
-    public void modifyHealth(int value) {
-        this.health = value;
-    }
-
+/**
+ * An interface for methods to modify stats of a character
+ */
+public interface Stats {
+    // Modifies health to 'current health'
+    public void modifyHealth(int value);
     // Modifies value to character attack stat
-    public void modifyAttack(int value) {
-        this.attack = value; 
-    }
-
+    public void modifyAttack(int value);
     // Modifies value to character defense stat
-    public void modifyDefense(int value) {
-        this.defense = value;
-    }
-
+    public void modifyDefense(int value);
     // Modifies value of character gold stat
-    public void modifyGold(int value) {
-        this.gold = value; 
-    }
-
-    // Modifies value of character gold stat
-    public void modifyExperience(int value) {
-        this.experience = value; 
-    }
-    
+    public void modifyGold(int value);
+    // Modifies value of character experience stat
+    public void modifyExperience(int value);
     // Makes it possible for the character to block
-    public void setBlocking() {
-        this.canBlock = true;
-    }
-
+    public void setBlocking();
     // Makes it impossible for the character to block
-    public void unsetBlocking() {
-        this.canBlock = false; 
-    }
-
+    public void unsetBlocking();
     // Makes it possible for the character to be revived
-    public void setRevive() {
-        this.canRevive = true;
-    }
-    
+    public void setRevive();
     // Makes it impossible for the character to be revived
-    public void unsetRevive() {
-        this.canRevive = false; 
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public int getGold() {
-        return gold;
-    }
+    public void unsetRevive();
 }

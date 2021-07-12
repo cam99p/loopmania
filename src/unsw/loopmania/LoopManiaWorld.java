@@ -187,7 +187,7 @@ public class LoopManiaWorld {
     }
 
     public Boolean usingPotion() {
-        if (!healthPotions.isEmpty() && character.characterStats.getHealth() < 200) {
+        if (!healthPotions.isEmpty() && character.getHealth() < 200) {
             HealthPotion hp = healthPotions.get(0);
             hp.useItem(character);
             removeUnequippedInventoryItemByCoordinates(hp.getX(), hp.getY());

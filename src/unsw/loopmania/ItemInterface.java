@@ -5,6 +5,6 @@ package unsw.loopmania;
  */
 public interface ItemInterface {
     public void useItem(Character target);
-    public void onEquip(StatsInterface stats);
-    public void onDeequip(StatsInterface stats);
+    public void onEquip(Stats stats);
+    public void onDeequip(Stats stats);
 }
