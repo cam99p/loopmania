@@ -51,6 +51,9 @@ public class LoopManiaWorld {
     // TODO = expand the range of buildings
     private List<VampireCastleBuilding> buildingEntities;
 
+    private List<HealthPotion> healthPotions;
+
+
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse them
      */
@@ -73,6 +76,7 @@ public class LoopManiaWorld {
         unequippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
+        healthPotions = new ArrayList<>();
     }
 
     public int getWidth() {
@@ -89,6 +93,10 @@ public class LoopManiaWorld {
      */
     public void setCharacter(Character character) {
         this.character = character;
+    }
+
+    public Character getCharacter() {
+        return character;
     }
 
     /**
@@ -244,6 +252,17 @@ public class LoopManiaWorld {
         shiftCardsDownFromXCoordinate(x);
     }
 
+    public Boolean usingPotion() {
+        if (!healthPotions.isEmpty() && character.getHealth() < 200) {
+            HealthPotion hp = healthPotions.get(0);
+            hp.useItem(character);
+            removeUnequippedInventoryItemByCoordinates(hp.getX(), hp.getY());
+            healthPotions.remove(hp);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * spawn a sword in the world and return the sword entity
      * @return a sword to be spawned in the controller as a JavaFX node
@@ -262,6 +281,23 @@ public class LoopManiaWorld {
         Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(sword);
         return sword;
+    }
+
+    public HealthPotion addUnequippedHealthPotion() {
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null){
+            // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
+            // TODO = give some cash/experience rewards for the discarding of the oldest sword
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+        
+        // now we insert the new sword, as we know we have at least made a slot available...
+        HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(healthPotion);
+        healthPotions.add(healthPotion);
+
+        return healthPotion;
     }
 
     /**
