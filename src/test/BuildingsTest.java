@@ -18,6 +18,7 @@ import unsw.loopmania.VampireCastleBuilding;
 import unsw.loopmania.ZombiePitBuilding;
 import unsw.loopmania.Character;
 import unsw.loopmania.HerosCastle;
+import unsw.loopmania.VampireCastleCard;
 
 public class BuildingsTest {
     @Test
@@ -90,10 +91,12 @@ public class BuildingsTest {
         HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
         world.setCharacter(character);
         world.setCastle(castle);
-
         
-        assertDoesNotThrow(()-> new VampireCastleBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1)));
+        VampireCastleCard vampCard = world.loadVampireCard();
+
+        VampireCastleBuilding vampBuilding = world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
         assertEquals(2, world.getBuildings().size());
+        assertEquals(vampBuilding, world.getBuildings().get(1));
     }
 
     @Test
@@ -137,13 +140,16 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleBuilding vamp = new VampireCastleBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+        VampireCastleCard vampCard = world.loadVampireCard();
+
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
 
         for(int i = 0; i < 45; i++) {
             world.runTickMoves();
         }
 
         assertEquals(1, world.getEnemy().size());
+        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
     }
 
     @Test
@@ -165,12 +171,15 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleBuilding vamp = new VampireCastleBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+        VampireCastleCard vampCard = world.loadVampireCard();
+
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
 
         for(int i = 0; i < 45; i++) {
             world.runTickMoves();
         }
 
+        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -198,13 +207,16 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleBuilding vamp = new VampireCastleBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+        VampireCastleCard vampCard = world.loadVampireCard();
+
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
 
         for(int i = 0; i < 45; i++) {
             world.runTickMoves();
         }
 
         assertEquals(5, world.getCycle());
+        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -232,13 +244,16 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleBuilding vamp = new VampireCastleBuilding(new SimpleIntegerProperty(2), new SimpleIntegerProperty(1));
+        VampireCastleCard vampCard = world.loadVampireCard();
+
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 1);
 
         for(int i = 0; i < 45; i++) {
             world.runTickMoves();
         }
 
         assertEquals(5, world.getCycle());
+        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -266,13 +281,16 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleBuilding vamp = new VampireCastleBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
+        VampireCastleCard vampCard = world.loadVampireCard();
+
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 2);
 
         for(int i = 0; i < 45; i++) {
             world.runTickMoves();
         }
 
         assertEquals(5, world.getCycle());
+        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
     }
@@ -300,13 +318,16 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleBuilding vamp = new VampireCastleBuilding(new SimpleIntegerProperty(2), new SimpleIntegerProperty(2));
+        VampireCastleCard vampCard = world.loadVampireCard();
+
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 2);
 
         for(int i = 0; i < 45; i++) {
             world.runTickMoves();
         }
 
         assertEquals(5, world.getCycle());
+        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(3), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
     }
@@ -334,13 +355,16 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleBuilding vamp = new VampireCastleBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
+        VampireCastleCard vampCard = world.loadVampireCard();
+
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 2);
 
         for(int i = 0; i < 45; i++) {
             world.runTickMoves();
         }
 
         assertEquals(5, world.getCycle());
+        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
     }
@@ -368,13 +392,16 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleBuilding vamp = new VampireCastleBuilding(new SimpleIntegerProperty(2), new SimpleIntegerProperty(1));
+        VampireCastleCard vampCard = world.loadVampireCard();
+
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 1);
 
         for(int i = 0; i < 45; i++) {
             world.runTickMoves();
         }
 
         assertEquals(5, world.getCycle());
+        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
         assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -402,7 +429,9 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleBuilding vamp = new VampireCastleBuilding(new SimpleIntegerProperty(2), new SimpleIntegerProperty(1));
+        VampireCastleCard vampCard = world.loadVampireCard();
+
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 1);
 
         for(int i = 0; i < 90; i++) {
             world.runTickMoves();
@@ -410,6 +439,8 @@ public class BuildingsTest {
 
         assertEquals(10, world.getCycle());
         assertEquals(2, world.getEnemy().size());
+        assertEquals(Vampire.class, world.getEnemy().get(0).getClass());
+        assertEquals(Vampire.class, world.getEnemy().get(1).getClass());
     }
 
     @Test
@@ -431,9 +462,11 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        
-        assertDoesNotThrow(()-> new ZombiePitBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1)));
+        ZombiePitCard zombieCard = world.loadZombieCard();
+
+        ZombiePitBuilding zombieBuilding = world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
         assertEquals(2, world.getBuildings().size());
+        assertEquals(zombieBuilding, world.getBuildings().get(1));
     }
 
     @Test
@@ -455,7 +488,9 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
         
-        assertThrows(IllegalArgumentException.class, () -> new ZombiePitBuilding(new SimpleIntegerProperty(0), new SimpleIntegerProperty(1)));
+        ZombiePitCard zombieCard = world.loadZombieCard();
+
+        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 0, 1);
     }
 
     @Test
@@ -477,13 +512,16 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitBuilding zombie = new ZombiePitBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+        ZombiePitCard zombieCard = world.loadZombieCard();
+
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
 
         for(int i = 0; i < 9; i++) {
             world.runTickMoves();
         }
 
         assertEquals(1, world.getEnemy().size());
+        assertEquals(Zombie.class, world.getEnemy().get(0).getClass());
     }
 
     @Test
@@ -505,12 +543,15 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitBuilding zombie = new ZombiePitBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+        ZombiePitCard zombieCard = world.loadZombieCard();
+
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
 
         for(int i = 0; i < 9; i++) {
             world.runTickMoves();
         }
 
+        assertEquals(1, world.getCycle());
         assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
         assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
     }
@@ -538,7 +579,9 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitBuilding zombie = new ZombiePitBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(1));
+        ZombiePitCard zombieCard = world.loadZombieCard();
+
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
 
         for(int i = 0; i < 9; i++) {
             world.runTickMoves();
@@ -572,8 +615,9 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitBuilding zombie = new ZombiePitBuilding(new SimpleIntegerProperty(2), new SimpleIntegerProperty(1));
+        ZombiePitCard zombieCard = world.loadZombieCard();
 
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 1);
 
         for(int i = 0; i < 9; i++) {
             world.runTickMoves();
@@ -607,7 +651,9 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitBuilding zombie = new ZombiePitBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
+        ZombiePitCard zombieCard = world.loadZombieCard();
+
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 2);
 
         for(int i = 0; i < 9; i++) {
             world.runTickMoves();
@@ -641,8 +687,9 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitBuilding zombie = new ZombiePitBuilding(new SimpleIntegerProperty(2), new SimpleIntegerProperty(2));
+        ZombiePitCard zombieCard = world.loadZombieCard();
 
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 2);
 
         for(int i = 0; i < 9; i++) {
             world.runTickMoves();
@@ -676,8 +723,9 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitBuilding zombie = new ZombiePitBuilding(new SimpleIntegerProperty(1), new SimpleIntegerProperty(2));
+        ZombiePitCard zombieCard = world.loadZombieCard();
 
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 2);
 
         for(int i = 0; i < 9; i++) {
             world.runTickMoves();
@@ -711,7 +759,9 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitBuilding zombie = new ZombiePitBuilding(new SimpleIntegerProperty(2), new SimpleIntegerProperty(1));
+        ZombiePitCard zombieCard = world.loadZombieCard();
+
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 1);
 
         for(int i = 0; i < 9; i++) {
             world.runTickMoves();
@@ -745,7 +795,9 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitBuilding zombie = new ZombiePitBuilding(new SimpleIntegerProperty(2), new SimpleIntegerProperty(1));
+        ZombiePitCard zombieCard = world.loadZombieCard();
+
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 1);
 
         for(int i = 0; i < 45; i++) {
             world.runTickMoves();
