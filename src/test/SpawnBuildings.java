@@ -24,7 +24,7 @@ import unsw.loopmania.Zombie;
 import unsw.loopmania.Building;
 import unsw.loopmania.ZombiePitCard;
 
-public class BuildingsTest {
+public class SpawnBuildings {
     @Test
     public void castleTest() {
         List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
