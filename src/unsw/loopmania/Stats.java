@@ -10,10 +10,6 @@ public interface Stats {
     public void modifyAttack(int value);
     // Modifies value to character defense stat
     public void modifyDefense(int value);
-    // Modifies value of character gold stat
-    public void modifyGold(int value);
-    // Modifies value of character experience stat
-    public void modifyExperience(int value);
     // Makes it possible for the character to block
     public void setBlocking();
     // Makes it impossible for the character to block

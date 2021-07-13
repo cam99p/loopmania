@@ -37,6 +37,10 @@ public class LoopManiaWorld {
 
     private Character character;
 
+    private HerosCastle castle;
+
+    private int cycle;
+
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
@@ -49,7 +53,7 @@ public class LoopManiaWorld {
     private List<Entity> unequippedInventoryItems;
 
     // TODO = expand the range of buildings
-    private List<VampireCastleBuilding> buildingEntities;
+    private List<Building> buildingEntities;
 
     private List<HealthPotion> healthPotions;
 
@@ -71,6 +75,8 @@ public class LoopManiaWorld {
         this.height = height;
         nonSpecifiedEntities = new ArrayList<>();
         character = null;
+        castle = null;
+        cycle = 0;
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
@@ -95,6 +101,10 @@ public class LoopManiaWorld {
         this.character = character;
     }
 
+    public void setCastle(HerosCastle castle) {
+        this.castle = castle;
+    }
+
     public Character getCharacter() {
         return character;
     }
@@ -110,8 +120,8 @@ public class LoopManiaWorld {
     }
 
     /**
-     * spawns enemies if the conditions warrant it, adds to world
-     * @return list of the enemies to be displayed on screen
+     * spawns slugs if the conditions warrant it, adds to world
+     * @return list of the slugs to be displayed on screen
      */
     public List<BasicEnemy> possiblySpawnEnemies(){
         // TODO = expand this very basic version
@@ -119,11 +129,18 @@ public class LoopManiaWorld {
         List<BasicEnemy> spawningEnemies = new ArrayList<>();
         if (pos != null){
             int indexInPath = orderedPath.indexOf(pos);
-            BasicEnemy enemy = new BasicEnemy(new PathPosition(indexInPath, orderedPath));
+            BasicEnemy enemy = new Slug(new PathPosition(indexInPath, orderedPath));
             enemies.add(enemy);
             spawningEnemies.add(enemy);
         }
         return spawningEnemies;
+    }
+
+    /**
+     * Adds the specified enemy to the enemies list. For ease of testing
+     */
+    public void addEnemy(BasicEnemy enemy) {
+        enemies.add(enemy);
     }
 
     /**
@@ -140,23 +157,82 @@ public class LoopManiaWorld {
      * @return list of enemies which have been killed
      */
     public List<BasicEnemy> runBattles() {
-        // TODO = modify this - currently the character automatically wins all battles without any damage!
-        List<BasicEnemy> defeatedEnemies = new ArrayList<BasicEnemy>();
+        //old stuff
+        //// TODO = modify this - currently the character automatically wins all battles without any damage!
+        //List<BasicEnemy> defeatedEnemies = new ArrayList<BasicEnemy>();
+        //for (BasicEnemy e: enemies){
+        //    // Pythagoras: a^2+b^2 < radius^2 to see if within radius
+        //    // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
+        //    if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
+        //        // fight...
+        //        defeatedEnemies.add(e);
+        //    }
+        //}
+
+        List<MovingEntity> battleEnemies = gatherEnemies();
+        //If there is at least one enemy to fight, start a battle
+        if (battleEnemies.size() > 0){
+            List<MovingEntity> battleAllies = gatherAllies();
+            Battle battle = new Battle(battleAllies,  battleEnemies);
+            battle.Fight();
+
+            List<BasicEnemy> defeatedEnemies = battle.getDefeatedEnemies();
+            for (BasicEnemy e: defeatedEnemies){
+                // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
+                // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
+                // due to mutating list we're iterating over
+                killEnemy(e);
+            }
+            return defeatedEnemies;
+        } 
+        //If theres nothing to fight, return an empty list
+        else {
+            return new ArrayList<BasicEnemy>();
+        }
+    }
+
+    /**
+     * determines which allies take part in a specific fight, and adds them to a list alongside hero to pass to Battle()
+     * @return list of MovingEnititys on the side of good
+     */
+    public List<MovingEntity> gatherAllies() {
+        ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
+        allies.add(character); //Add character
+        //Add ally. Probalby just a bool flag in the character
+        //Add towers. Checkk if their xy coords are close enough to chars xy coords
+        return allies;
+    }
+
+    /**
+     * determines which enemies take part in a specific fight, and adds them to a list to pass to Battle()
+     * if its count is 0, no battle occurs this iteration
+     * @return list of MovingEnititys on the side of good
+     */
+    public List<MovingEntity> gatherEnemies() {
+        ArrayList<MovingEntity> battleEnemies = new ArrayList<MovingEntity>();
+
+        //Check for those in battle range
         for (BasicEnemy e: enemies){
-            // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-            // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
-            if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
-                // fight...
-                defeatedEnemies.add(e);
+            if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < (e.getBattleRadius() * e.getBattleRadius())){
+                battleEnemies.add(e);
             }
         }
-        for (BasicEnemy e: defeatedEnemies){
-            // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
-            // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
-            // due to mutating list we're iterating over
-            killEnemy(e);
+
+        //if there is at least one in battle range, look for additional enemies in support range
+        if (battleEnemies.size() > 0){
+            //Check for those in support range
+            for (BasicEnemy e: enemies){
+                if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < (e.getSupportRadius() * e.getSupportRadius())){
+                    //Check it wasnt already added due to being in battle range
+                    if (!battleEnemies.contains(e)){
+                        battleEnemies.add(e);
+                    }
+
+                }
+            }   
         }
-        return defeatedEnemies;
+
+        return battleEnemies;
     }
 
     /**
@@ -250,6 +326,9 @@ public class LoopManiaWorld {
     public void runTickMoves(){
         character.moveDownPath();
         moveBasicEnemies();
+        if(character.getX() == castle.getX() && character.getY() == castle.getY()) {
+            cycle++;
+        }
     }
 
     /**
@@ -320,7 +399,6 @@ public class LoopManiaWorld {
      * move all enemies
      */
     private void moveBasicEnemies() {
-        // TODO = expand to more types of enemy
         for (BasicEnemy e: enemies){
             e.move();
         }
@@ -330,6 +408,7 @@ public class LoopManiaWorld {
      * get a randomly generated position which could be used to spawn an enemy
      * @return null if random choice is that wont be spawning an enemy or it isn't possible, or random coordinate pair if should go ahead
      */
+    // I'm guessing this is to randomly spawn a slug
     private Pair<Integer, Integer> possiblyGetBasicEnemySpawnPosition(){
         // TODO = modify this
         
@@ -383,5 +462,17 @@ public class LoopManiaWorld {
         shiftCardsDownFromXCoordinate(cardNodeX);
 
         return newBuilding;
+    }
+
+    public int getCycle() {
+        return cycle;
+    }
+
+    public List<Building> getBuildings() {
+        return buildingEntities;
+    }
+
+    public List<BasicEnemy> getEnemy() {
+        return enemies;
     }
 }

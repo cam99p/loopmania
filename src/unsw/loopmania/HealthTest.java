@@ -33,7 +33,7 @@ public class HealthTest {
         HealthPotion potion = new HealthPotion(new SimpleIntegerProperty(1), new SimpleIntegerProperty(0));
         potion.useItem(c);
         assertTrue(c.characterStats.getHealth() == 200); 
-
+        
         // When the health bar is less than 0, the player loses the game
 
         //
