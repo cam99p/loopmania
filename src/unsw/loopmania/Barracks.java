@@ -1,13 +1,10 @@
 package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import java.util.List;
 
-public class Barracks extends Building implements SpawnBuildingStrategy {
+public class Barracks extends Building {
     public Barracks(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
-    }
-
-    public void spawn() {
-        
     }
 }

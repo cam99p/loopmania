@@ -21,6 +21,8 @@ import unsw.loopmania.HerosCastle;
 import unsw.loopmania.VampireCastleCard;
 import unsw.loopmania.Vampire;
 import unsw.loopmania.Zombie;
+import unsw.loopmania.Building;
+import unsw.loopmania.ZombiePitCard;
 
 public class BuildingsTest {
     @Test
@@ -68,10 +70,8 @@ public class BuildingsTest {
         assertEquals(world.getCycle(), 0);
 
         for(int i = 0; i < 9; i++) {
-            System.out.println("( " + character.getX() + " " + character.getY() + " )");
             world.runTickMoves();
         }
-        System.out.println(world.getCycle());
         assertEquals(1, world.getCycle());
     }
 
@@ -96,7 +96,7 @@ public class BuildingsTest {
         
         VampireCastleCard vampCard = world.loadVampireCard();
 
-        VampireCastleBuilding vampBuilding = world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
+        Building vampBuilding = world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
         assertEquals(2, world.getBuildings().size());
         assertEquals(vampBuilding, world.getBuildings().get(1));
     }
@@ -120,7 +120,9 @@ public class BuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
         
-        assertThrows(IllegalArgumentException.class, () -> new VampireCastleBuilding(new SimpleIntegerProperty(0), new SimpleIntegerProperty(1)));
+        VampireCastleCard vampCard = world.loadVampireCard();
+
+        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 0, 1));
     }
 
     @Test
@@ -150,6 +152,8 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        world.spawnEnemies();
+
         Vampire vamp = new Vampire(pos);
 
         assertEquals(1, world.getEnemy().size());
@@ -157,7 +161,7 @@ public class BuildingsTest {
     }
 
     @Test
-    public void vampireBuildingSpawnDown() {
+    public void vampireBuildingSpawnLeft() {
         List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
         dummyPath.add(new Pair<>(0, 0));
         dummyPath.add(new Pair<>(0, 1));
@@ -183,14 +187,16 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        world.spawnEnemies();
+
         Vampire vamp = new Vampire(pos);
         assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
+        assertEquals(0, world.getEnemy().get(0).getX());
+        assertEquals(1, world.getEnemy().get(0).getY());
     }
 
     @Test
-    public void vampireBuildingSpawnDown1() {
+    public void vampireBuildingSpawnUp() {
         List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
         dummyPath.add(new Pair<>(0, 0));
         dummyPath.add(new Pair<>(0, 1));
@@ -214,93 +220,19 @@ public class BuildingsTest {
 
         VampireCastleCard vampCard = world.loadVampireCard();
 
-        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 2);
 
-        for(int i = 0; i < 45; i++) {
+        for(int i = 0; i < 60; i++) {
             world.runTickMoves();
         }
+
+        world.spawnEnemies();
 
         Vampire vamp = new Vampire(pos);
         assertEquals(5, world.getCycle());
         assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
-    }
-
-    @Test
-    public void vampireBuildingSpawnDown2() {
-        List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
-        dummyPath.add(new Pair<>(0, 0));
-        dummyPath.add(new Pair<>(0, 1));
-        dummyPath.add(new Pair<>(0, 2));
-        dummyPath.add(new Pair<>(0, 3));
-        dummyPath.add(new Pair<>(1, 3));
-        dummyPath.add(new Pair<>(2, 3));
-        dummyPath.add(new Pair<>(3, 3));
-        dummyPath.add(new Pair<>(3, 2));
-        dummyPath.add(new Pair<>(3, 1));
-        dummyPath.add(new Pair<>(3, 0));
-        dummyPath.add(new Pair<>(1, 0));
-        dummyPath.add(new Pair<>(2, 0));
-
-        LoopManiaWorld world = new LoopManiaWorld(4, 4, dummyPath);
-        PathPosition pos = new PathPosition(0, dummyPath);
-        Character character = new Character(pos);
-        HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        world.setCharacter(character);
-        world.setCastle(castle);
-
-        VampireCastleCard vampCard = world.loadVampireCard();
-
-        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 1);
-
-        for(int i = 0; i < 45; i++) {
-            world.runTickMoves();
-        }
-        Vampire vamp = new Vampire(pos);
-
-        assertEquals(5, world.getCycle());
-        assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
-    }
-
-    @Test
-    public void vampireBuildingSpawnLeft() {
-        List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
-        dummyPath.add(new Pair<>(0, 0));
-        dummyPath.add(new Pair<>(0, 1));
-        dummyPath.add(new Pair<>(0, 2));
-        dummyPath.add(new Pair<>(0, 3));
-        dummyPath.add(new Pair<>(1, 3));
-        dummyPath.add(new Pair<>(2, 3));
-        dummyPath.add(new Pair<>(3, 3));
-        dummyPath.add(new Pair<>(3, 2));
-        dummyPath.add(new Pair<>(3, 1));
-        dummyPath.add(new Pair<>(3, 0));
-        dummyPath.add(new Pair<>(1, 0));
-        dummyPath.add(new Pair<>(2, 0));
-
-        LoopManiaWorld world = new LoopManiaWorld(4, 4, dummyPath);
-        PathPosition pos = new PathPosition(0, dummyPath);
-        Character character = new Character(pos);
-        HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        world.setCharacter(character);
-        world.setCastle(castle);
-
-        VampireCastleCard vampCard = world.loadVampireCard();
-
-        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 2);
-
-        for(int i = 0; i < 45; i++) {
-            world.runTickMoves();
-        }
-        Vampire vamp = new Vampire(pos);
-
-        assertEquals(5, world.getCycle());
-        assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
+        assertEquals(2, world.getEnemy().get(0).getX());
+        assertEquals(3, world.getEnemy().get(0).getY());
     }
 
     @Test
@@ -328,21 +260,23 @@ public class BuildingsTest {
 
         VampireCastleCard vampCard = world.loadVampireCard();
 
-        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 2);
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 1);
 
-        for(int i = 0; i < 45; i++) {
+        for(int i = 0; i < 60; i++) {
             world.runTickMoves();
         }
+
+        world.spawnEnemies();
 
         Vampire vamp = new Vampire(pos);
         assertEquals(5, world.getCycle());
         assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(3), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
+        assertEquals(3, world.getEnemy().get(0).getX());
+        assertEquals(1, world.getEnemy().get(0).getY());
     }
-
+    
     @Test
-    public void vampireBuildingSpawnLeft1() {
+    public void vampireBuildingSpawnDown() {
         List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
         dummyPath.add(new Pair<>(0, 0));
         dummyPath.add(new Pair<>(0, 1));
@@ -351,43 +285,9 @@ public class BuildingsTest {
         dummyPath.add(new Pair<>(0, 4));
         dummyPath.add(new Pair<>(1, 4));
         dummyPath.add(new Pair<>(2, 4));
-        dummyPath.add(new Pair<>(2, 3));
-        dummyPath.add(new Pair<>(2, 2));
-        dummyPath.add(new Pair<>(2, 1));
-        dummyPath.add(new Pair<>(2, 0));
-        dummyPath.add(new Pair<>(1, 0));
-
-        LoopManiaWorld world = new LoopManiaWorld(3, 5, dummyPath);
-        PathPosition pos = new PathPosition(0, dummyPath);
-        Character character = new Character(pos);
-        HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        world.setCharacter(character);
-        world.setCastle(castle);
-
-        VampireCastleCard vampCard = world.loadVampireCard();
-
-        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 2);
-
-        for(int i = 0; i < 45; i++) {
-            world.runTickMoves();
-        }
-
-        Vampire vamp = new Vampire(pos);
-        assertEquals(5, world.getCycle());
-        assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
-    }
-
-    @Test
-    public void vampireBuildingSpawnDown3() {
-        List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
-        dummyPath.add(new Pair<>(0, 0));
-        dummyPath.add(new Pair<>(0, 1));
-        dummyPath.add(new Pair<>(0, 2));
-        dummyPath.add(new Pair<>(1, 2));
-        dummyPath.add(new Pair<>(2, 2));
-        dummyPath.add(new Pair<>(3, 2));
+        dummyPath.add(new Pair<>(3, 4));
+        dummyPath.add(new Pair<>(4, 4));
+        dummyPath.add(new Pair<>(4, 3));
         dummyPath.add(new Pair<>(4, 2));
         dummyPath.add(new Pair<>(4, 1));
         dummyPath.add(new Pair<>(4, 0));
@@ -395,7 +295,7 @@ public class BuildingsTest {
         dummyPath.add(new Pair<>(2, 0));
         dummyPath.add(new Pair<>(1, 0));
 
-        LoopManiaWorld world = new LoopManiaWorld(5, 3, dummyPath);
+        LoopManiaWorld world = new LoopManiaWorld(5, 5, dummyPath);
         PathPosition pos = new PathPosition(0, dummyPath);
         Character character = new Character(pos);
         HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
@@ -406,15 +306,17 @@ public class BuildingsTest {
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 1);
 
-        for(int i = 0; i < 45; i++) {
+        for(int i = 0; i < 80; i++) {
             world.runTickMoves();
         }
+
+        world.spawnEnemies();
 
         Vampire vamp = new Vampire(pos);
         assertEquals(5, world.getCycle());
         assertEquals(vamp.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
+        assertEquals(2, world.getEnemy().get(0).getX());
+        assertEquals(0, world.getEnemy().get(0).getY());
     }
 
     @Test
@@ -425,15 +327,11 @@ public class BuildingsTest {
         dummyPath.add(new Pair<>(0, 2));
         dummyPath.add(new Pair<>(1, 2));
         dummyPath.add(new Pair<>(2, 2));
-        dummyPath.add(new Pair<>(3, 2));
-        dummyPath.add(new Pair<>(4, 2));
-        dummyPath.add(new Pair<>(4, 1));
-        dummyPath.add(new Pair<>(4, 0));
-        dummyPath.add(new Pair<>(3, 0));
+        dummyPath.add(new Pair<>(2, 1));
         dummyPath.add(new Pair<>(2, 0));
         dummyPath.add(new Pair<>(1, 0));
 
-        LoopManiaWorld world = new LoopManiaWorld(5, 3, dummyPath);
+        LoopManiaWorld world = new LoopManiaWorld(3, 3, dummyPath);
         PathPosition pos = new PathPosition(0, dummyPath);
         Character character = new Character(pos);
         HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
@@ -442,11 +340,19 @@ public class BuildingsTest {
 
         VampireCastleCard vampCard = world.loadVampireCard();
 
-        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 1);
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
 
-        for(int i = 0; i < 90; i++) {
+        for(int i = 0; i < 45; i++) {
             world.runTickMoves();
         }
+
+        world.spawnEnemies();
+
+        for(int i = 0; i < 36; i++) {
+            world.runTickMoves();
+        }
+
+        world.spawnEnemies();
 
         Vampire vamp = new Vampire(pos);
         assertEquals(10, world.getCycle());
@@ -455,6 +361,11 @@ public class BuildingsTest {
         assertEquals(vamp.getClass(), world.getEnemy().get(1).getClass());
     }
 
+    @Test
+    public void vampireSpawnDiagonal() {
+
+    }
+    
     @Test
     public void zombieBuildingNonPathTileTest() {
         List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
@@ -476,7 +387,7 @@ public class BuildingsTest {
 
         ZombiePitCard zombieCard = world.loadZombieCard();
 
-        ZombiePitBuilding zombieBuilding = world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
+        Building zombieBuilding = world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
         assertEquals(2, world.getBuildings().size());
         assertEquals(zombieBuilding, world.getBuildings().get(1));
     }
@@ -502,7 +413,7 @@ public class BuildingsTest {
         
         ZombiePitCard zombieCard = world.loadZombieCard();
 
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 0, 1);
+        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 0, 1));
     }
 
     @Test
@@ -532,6 +443,7 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
+        world.spawnEnemies();
         Zombie zombie = new Zombie(pos);
 
         assertEquals(1, world.getEnemy().size());
@@ -539,7 +451,7 @@ public class BuildingsTest {
     }
 
     @Test
-    public void zombieBuildingSpawnDown() {
+    public void zombieBuildingSpawnLeft() {
         List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
         dummyPath.add(new Pair<>(0, 0));
         dummyPath.add(new Pair<>(0, 1));
@@ -565,129 +477,14 @@ public class BuildingsTest {
             world.runTickMoves();
         }
 
-        Zombie zombie = new Zombie(pos);
-
-        assertEquals(1, world.getCycle());
-        assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
-    }
-
-    @Test
-    public void zombieBuildingSpawnDown1() {
-        List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
-        dummyPath.add(new Pair<>(0, 0));
-        dummyPath.add(new Pair<>(0, 1));
-        dummyPath.add(new Pair<>(0, 2));
-        dummyPath.add(new Pair<>(0, 3));
-        dummyPath.add(new Pair<>(1, 3));
-        dummyPath.add(new Pair<>(2, 3));
-        dummyPath.add(new Pair<>(3, 3));
-        dummyPath.add(new Pair<>(3, 2));
-        dummyPath.add(new Pair<>(3, 1));
-        dummyPath.add(new Pair<>(3, 0));
-        dummyPath.add(new Pair<>(1, 0));
-        dummyPath.add(new Pair<>(2, 0));
-
-        LoopManiaWorld world = new LoopManiaWorld(4, 4, dummyPath);
-        PathPosition pos = new PathPosition(0, dummyPath);
-        Character character = new Character(pos);
-        HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        world.setCharacter(character);
-        world.setCastle(castle);
-
-        ZombiePitCard zombieCard = world.loadZombieCard();
-
-        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
-
-        for(int i = 0; i < 9; i++) {
-            world.runTickMoves();
-        }
-
-
-        Zombie zombie = new Zombie(pos);
-        assertEquals(1, world.getCycle());
-        assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(1), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
-    }
-
-    @Test
-    public void zombieBuildingSpawnDown2() {
-        List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
-        dummyPath.add(new Pair<>(0, 0));
-        dummyPath.add(new Pair<>(0, 1));
-        dummyPath.add(new Pair<>(0, 2));
-        dummyPath.add(new Pair<>(0, 3));
-        dummyPath.add(new Pair<>(1, 3));
-        dummyPath.add(new Pair<>(2, 3));
-        dummyPath.add(new Pair<>(3, 3));
-        dummyPath.add(new Pair<>(3, 2));
-        dummyPath.add(new Pair<>(3, 1));
-        dummyPath.add(new Pair<>(3, 0));
-        dummyPath.add(new Pair<>(1, 0));
-        dummyPath.add(new Pair<>(2, 0));
-
-        LoopManiaWorld world = new LoopManiaWorld(4, 4, dummyPath);
-        PathPosition pos = new PathPosition(0, dummyPath);
-        Character character = new Character(pos);
-        HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        world.setCharacter(character);
-        world.setCastle(castle);
-
-        ZombiePitCard zombieCard = world.loadZombieCard();
-
-        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 1);
-
-        for(int i = 0; i < 9; i++) {
-            world.runTickMoves();
-        }
+        world.spawnEnemies();
 
         Zombie zombie = new Zombie(pos);
 
         assertEquals(1, world.getCycle());
         assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
-    }
-
-    @Test
-    public void zombieBuildingSpawnLeft() {
-        List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
-        dummyPath.add(new Pair<>(0, 0));
-        dummyPath.add(new Pair<>(0, 1));
-        dummyPath.add(new Pair<>(0, 2));
-        dummyPath.add(new Pair<>(0, 3));
-        dummyPath.add(new Pair<>(1, 3));
-        dummyPath.add(new Pair<>(2, 3));
-        dummyPath.add(new Pair<>(3, 3));
-        dummyPath.add(new Pair<>(3, 2));
-        dummyPath.add(new Pair<>(3, 1));
-        dummyPath.add(new Pair<>(3, 0));
-        dummyPath.add(new Pair<>(1, 0));
-        dummyPath.add(new Pair<>(2, 0));
-
-        LoopManiaWorld world = new LoopManiaWorld(4, 4, dummyPath);
-        PathPosition pos = new PathPosition(0, dummyPath);
-        Character character = new Character(pos);
-        HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
-        world.setCharacter(character);
-        world.setCastle(castle);
-
-        ZombiePitCard zombieCard = world.loadZombieCard();
-
-        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 2);
-
-        for(int i = 0; i < 9; i++) {
-            world.runTickMoves();
-        }
-
-        Zombie zombie = new Zombie(pos);
-
-        assertEquals(1, world.getCycle());
-        assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
+        assertEquals(0, world.getEnemy().get(0).getX());
+        assertEquals(1, world.getEnemy().get(0).getY());
     }
 
     @Test
@@ -715,37 +512,39 @@ public class BuildingsTest {
 
         ZombiePitCard zombieCard = world.loadZombieCard();
 
-        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 2);
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 1);
 
-        for(int i = 0; i < 9; i++) {
+        for(int i = 0; i < 12; i++) {
             world.runTickMoves();
         }
+
+        world.spawnEnemies();
 
         Zombie zombie = new Zombie(pos);
 
         assertEquals(1, world.getCycle());
         assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(3), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
+        assertEquals(3, world.getEnemy().get(0).getX());
+        assertEquals(1, world.getEnemy().get(0).getY());
     }
 
     @Test
-    public void zombieBuildingSpawnLeft1() {
+    public void zombieBuildingSpawnUp() {
         List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
         dummyPath.add(new Pair<>(0, 0));
         dummyPath.add(new Pair<>(0, 1));
         dummyPath.add(new Pair<>(0, 2));
         dummyPath.add(new Pair<>(0, 3));
-        dummyPath.add(new Pair<>(0, 4));
-        dummyPath.add(new Pair<>(1, 4));
-        dummyPath.add(new Pair<>(2, 4));
+        dummyPath.add(new Pair<>(1, 3));
         dummyPath.add(new Pair<>(2, 3));
-        dummyPath.add(new Pair<>(2, 2));
-        dummyPath.add(new Pair<>(2, 1));
-        dummyPath.add(new Pair<>(2, 0));
+        dummyPath.add(new Pair<>(3, 3));
+        dummyPath.add(new Pair<>(3, 2));
+        dummyPath.add(new Pair<>(3, 1));
+        dummyPath.add(new Pair<>(3, 0));
         dummyPath.add(new Pair<>(1, 0));
+        dummyPath.add(new Pair<>(2, 0));
 
-        LoopManiaWorld world = new LoopManiaWorld(3, 5, dummyPath);
+        LoopManiaWorld world = new LoopManiaWorld(4, 4, dummyPath);
         PathPosition pos = new PathPosition(0, dummyPath);
         Character character = new Character(pos);
         HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
@@ -754,29 +553,35 @@ public class BuildingsTest {
 
         ZombiePitCard zombieCard = world.loadZombieCard();
 
-        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 2);
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 2);
 
-        for(int i = 0; i < 9; i++) {
+        for(int i = 0; i < 12; i++) {
             world.runTickMoves();
         }
 
+        world.spawnEnemies();
+        
         Zombie zombie = new Zombie(pos);
 
         assertEquals(1, world.getCycle());
         assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).y());
+        assertEquals(2, world.getEnemy().get(0).getX());
+        assertEquals(3, world.getEnemy().get(0).getY());
     }
 
     @Test
-    public void zombieBuildingSpawnDown3() {
+    public void zombieBuildingSpawnDown() {
         List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
         dummyPath.add(new Pair<>(0, 0));
         dummyPath.add(new Pair<>(0, 1));
         dummyPath.add(new Pair<>(0, 2));
-        dummyPath.add(new Pair<>(1, 2));
-        dummyPath.add(new Pair<>(2, 2));
-        dummyPath.add(new Pair<>(3, 2));
+        dummyPath.add(new Pair<>(0, 3));
+        dummyPath.add(new Pair<>(0, 4));
+        dummyPath.add(new Pair<>(1, 4));
+        dummyPath.add(new Pair<>(2, 4));
+        dummyPath.add(new Pair<>(3, 4));
+        dummyPath.add(new Pair<>(4, 4));
+        dummyPath.add(new Pair<>(4, 3));
         dummyPath.add(new Pair<>(4, 2));
         dummyPath.add(new Pair<>(4, 1));
         dummyPath.add(new Pair<>(4, 0));
@@ -784,7 +589,7 @@ public class BuildingsTest {
         dummyPath.add(new Pair<>(2, 0));
         dummyPath.add(new Pair<>(1, 0));
 
-        LoopManiaWorld world = new LoopManiaWorld(5, 3, dummyPath);
+        LoopManiaWorld world = new LoopManiaWorld(5, 5, dummyPath);
         PathPosition pos = new PathPosition(0, dummyPath);
         Character character = new Character(pos);
         HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
@@ -795,16 +600,17 @@ public class BuildingsTest {
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 1);
 
-        for(int i = 0; i < 9; i++) {
+        for(int i = 0; i < 16; i++) {
             world.runTickMoves();
         }
 
-        Zombie zombie = new Zombie(pos);
+        world.spawnEnemies();
 
+        Zombie zombie = new Zombie(pos);
         assertEquals(1, world.getCycle());
         assertEquals(zombie.getClass(), world.getEnemy().get(0).getClass());
-        assertEquals(new SimpleIntegerProperty(2), world.getEnemy().get(0).x());
-        assertEquals(new SimpleIntegerProperty(0), world.getEnemy().get(0).y());
+        assertEquals(2, world.getEnemy().get(0).getX());
+        assertEquals(0, world.getEnemy().get(0).getY());
     }
 
     @Test
@@ -815,15 +621,11 @@ public class BuildingsTest {
         dummyPath.add(new Pair<>(0, 2));
         dummyPath.add(new Pair<>(1, 2));
         dummyPath.add(new Pair<>(2, 2));
-        dummyPath.add(new Pair<>(3, 2));
-        dummyPath.add(new Pair<>(4, 2));
-        dummyPath.add(new Pair<>(4, 1));
-        dummyPath.add(new Pair<>(4, 0));
-        dummyPath.add(new Pair<>(3, 0));
+        dummyPath.add(new Pair<>(2, 1));
         dummyPath.add(new Pair<>(2, 0));
         dummyPath.add(new Pair<>(1, 0));
 
-        LoopManiaWorld world = new LoopManiaWorld(5, 3, dummyPath);
+        LoopManiaWorld world = new LoopManiaWorld(3, 3, dummyPath);
         PathPosition pos = new PathPosition(0, dummyPath);
         Character character = new Character(pos);
         HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
@@ -832,10 +634,13 @@ public class BuildingsTest {
 
         ZombiePitCard zombieCard = world.loadZombieCard();
 
-        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 1);
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
 
-        for(int i = 0; i < 45; i++) {
-            world.runTickMoves();
+        for(int i = 0; i < 5; i++) {
+            for(int j = 0; j < 9; j++) {
+                world.runTickMoves();
+            }
+            world.spawnEnemies();
         }
 
         Zombie zombie = new Zombie(pos);
@@ -845,5 +650,10 @@ public class BuildingsTest {
         for(int i = 0; i < 5; i++) {
             assertEquals(zombie.getClass(), world.getEnemy().get(i).getClass());
         }
+    }
+
+    @Test
+    public void zombieSpawnDiagonal() {
+
     }
 }

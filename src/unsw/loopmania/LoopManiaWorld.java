@@ -103,6 +103,7 @@ public class LoopManiaWorld {
 
     public void setCastle(HerosCastle castle) {
         this.castle = castle;
+        buildingEntities.add(castle);
     }
 
     public Character getCharacter() {
@@ -248,6 +249,16 @@ public class LoopManiaWorld {
         VampireCastleCard vampireCastleCard = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         cardEntities.add(vampireCastleCard);
         return vampireCastleCard;
+    }
+
+    public ZombiePitCard loadZombieCard() {
+        if (cardEntities.size() >= getWidth()){
+            // TODO = give some cash/experience/item rewards for the discarding of the oldest card
+            removeCard(0);
+        }
+        ZombiePitCard zombiePitCard = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        cardEntities.add(zombiePitCard);
+        return zombiePitCard;
     }
 
     /**
@@ -442,7 +453,7 @@ public class LoopManiaWorld {
      * @param buildingNodeX x index from 0 to width-1 of building to be added
      * @param buildingNodeY y index from 0 to height-1 of building to be added
      */
-    public VampireCastleBuilding convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
+    public Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
         // start by getting card
         Card card = null;
         for (Card c: cardEntities){
@@ -453,8 +464,36 @@ public class LoopManiaWorld {
         }
         
         // now spawn building
-        VampireCastleBuilding newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-        buildingEntities.add(newBuilding);
+        Pair<Integer, Integer> pos = new Pair<Integer, Integer>(buildingNodeX, buildingNodeY);
+        Building newBuilding = null;
+        boolean checkAdjacent = checkIfAdjacentPathTile(buildingNodeX, buildingNodeY);
+        if(card instanceof ZombiePitCard || card instanceof VampireCastleCard || card instanceof TowerCard) {
+            if(card instanceof VampireCastleCard) {
+                if(!orderedPath.contains(pos) && checkAdjacent) {
+                    newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                } else {
+                    throw new IllegalArgumentException();
+                }
+            } else if(card instanceof ZombiePitCard) {
+                if(!orderedPath.contains(pos) && checkAdjacent) {
+                    newBuilding = new ZombiePitBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                } else {
+                    throw new IllegalArgumentException();
+                }
+            } else {
+                if(!orderedPath.contains(pos) && checkAdjacent) {
+                    newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                } else {
+                    throw new IllegalArgumentException();
+                }
+            }
+        } else {
+
+        }
+
+        if(newBuilding != null) {
+            buildingEntities.add(newBuilding);
+        }
 
         // destroy the card
         card.destroy();
@@ -474,5 +513,38 @@ public class LoopManiaWorld {
 
     public List<BasicEnemy> getEnemy() {
         return enemies;
+    }
+
+    public List<BasicEnemy> spawnEnemies() {
+        List<BasicEnemy> spawnedEnemies = null;
+
+        for(Building b : buildingEntities) {
+            if(b instanceof VampireCastleBuilding) {
+                spawnedEnemies = ((VampireCastleBuilding) b).spawn(enemies, orderedPath, cycle);
+            } else if(b instanceof ZombiePitBuilding) {
+                spawnedEnemies = ((ZombiePitBuilding) b).spawn(enemies, orderedPath, cycle);
+            }
+        }
+
+        return spawnedEnemies;
+    }
+
+    public boolean checkIfAdjacentPathTile(int x, int y) {
+        Pair<Integer, Integer> posLeft = new Pair<Integer, Integer>(x - 1, y);
+        Pair<Integer, Integer> posRight = new Pair<Integer, Integer>(x + 1, y);
+        Pair<Integer, Integer> posUp  = new Pair<Integer, Integer>(x, y + 1);
+        Pair<Integer, Integer> posDown = new Pair<Integer, Integer>(x, y - 1);
+        Pair<Integer, Integer> posLeftUp = new Pair<Integer, Integer>(x - 1, y + 1);
+        Pair<Integer, Integer> posRightUp = new Pair<Integer, Integer>(x + 1, y + 1);
+        Pair<Integer, Integer> posLeftDown = new Pair<Integer, Integer>(x - 1, y - 1);
+        Pair<Integer, Integer> posRightDown = new Pair<Integer, Integer>(x + 1, y - 1);
+
+        if(orderedPath.contains(posLeft) || orderedPath.contains(posRight) || orderedPath.contains(posUp) || orderedPath.contains(posDown) ||
+            orderedPath.contains(posLeftUp) || orderedPath.contains(posRightUp) || orderedPath.contains(posLeftDown) || orderedPath.contains(posRightDown)) {
+                return true;
+            } else {
+                return false;
+            }
+
     }
 }
