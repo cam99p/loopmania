@@ -57,40 +57,6 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
         return y().get();
     }
     
-    public void modifyHealth(int value) {
-        this.health = value;
-    }
-
-    // Modifies value to character attack stat
-    public void modifyAttack(int value) {
-        this.attack = value; 
-    }
-
-    // Modifies value to character defense stat
-    public void modifyDefense(int value) {
-        this.defense = value;
-    }
-
-    // Modifies value of character gold stat
-    public void modifyGold(int value) {
-        this.gold = value; 
-    }
-
-    // Modifies value of character gold stat
-    public void modifyExperience(int value) {
-        this.experience = value; 
-    }
-    
-    // Makes it possible for the character to block
-    public void setBlocking() {
-        this.canBlock = true;
-    }
-
-    // Makes it impossible for the character to block
-    public void unsetBlocking() {
-        this.canBlock = false; 
-    }
-
     public int getAttack() {
         return attack;
     }
