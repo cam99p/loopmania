@@ -516,16 +516,14 @@ public class LoopManiaWorld {
     }
 
     public List<BasicEnemy> spawnEnemies() {
-        List<BasicEnemy> spawnedEnemies = null;
-
+        List<BasicEnemy> spawnedEnemies = new ArrayList<>();
         for(Building b : buildingEntities) {
             if(b instanceof VampireCastleBuilding) {
-                spawnedEnemies = ((VampireCastleBuilding) b).spawn(enemies, orderedPath, cycle);
+                spawnedEnemies.add(((VampireCastleBuilding) b).spawn(enemies, orderedPath, cycle));
             } else if(b instanceof ZombiePitBuilding) {
-                spawnedEnemies = ((ZombiePitBuilding) b).spawn(enemies, orderedPath, cycle);
+                spawnedEnemies.add(((ZombiePitBuilding) b).spawn(enemies, orderedPath, cycle));
             }
         }
-
         return spawnedEnemies;
     }
 

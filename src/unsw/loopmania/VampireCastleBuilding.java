@@ -15,17 +15,15 @@ public class VampireCastleBuilding extends Building implements SpawnBuilding {
     }
 
     @Override
-    public List<BasicEnemy> spawn(List<BasicEnemy> enemies, List<Pair<Integer, Integer>> path, int cycle) {
-        List<BasicEnemy> spawningEnemies = null;
+    public BasicEnemy spawn(List<BasicEnemy> enemies, List<Pair<Integer, Integer>> path, int cycle) {
+        Vampire newVamp = null;
         if(cycle%5 == 0) {
             PathPosition pos = possiblyGetSpawnPosition(path);
             if(pos != null) {
-                spawningEnemies = new ArrayList<>();
-                Vampire newVamp = new Vampire(pos);
+                newVamp = new Vampire(pos);
                 enemies.add(newVamp);
-                spawningEnemies.add(newVamp);
             }
         }
-        return spawningEnemies;
+        return newVamp;
     }
 }
