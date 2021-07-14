@@ -251,14 +251,53 @@ public class LoopManiaWorld {
         return vampireCastleCard;
     }
 
+    /**
+     * spawn a card in the world and return the card entity
+     * @return a card to be spawned in the controller as a node
+     */
     public ZombiePitCard loadZombieCard() {
         if (cardEntities.size() >= getWidth()){
-            // TODO = give some cash/experience/item rewards for the discarding of the oldest card
+            cardRemovalLoot();
             removeCard(0);
         }
         ZombiePitCard zombiePitCard = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         cardEntities.add(zombiePitCard);
         return zombiePitCard;
+    }
+
+    /**
+     * spawn a card in the world and return the card entity
+     * @return a card to be spawned in the controller as a node
+     */
+    public VillageCard loadVillageCard() {
+        if (cardEntities.size() >= getWidth()){
+            cardRemovalLoot();
+            removeCard(0);
+        }
+        VillageCard villageCard = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        cardEntities.add(villageCard);
+        return villageCard;
+    }
+
+    /**
+     * spawn a card in the world and return the card entity
+     * @return a card to be spawned in the controller as a node
+     */
+    public CampfireCard loadCampfireCard() {
+        if (cardEntities.size() >= getWidth()){
+            cardRemovalLoot();
+            removeCard(0);
+        }
+        CampfireCard campfireCard = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        cardEntities.add(campfireCard);
+        return campfireCard;
+    }
+
+    /**
+     * Give gold/experience/item rewards for the discarding of the oldest card
+     */
+    private void cardRemovalLoot() {
+
     }
 
     /**
