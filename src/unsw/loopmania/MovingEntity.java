@@ -123,4 +123,8 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
         this.canRevive = false; 
     }
 
+    public void damageHealth(int value) {
+        health -= value;
+    }
+
 }
