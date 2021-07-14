@@ -607,8 +607,8 @@ public class LoopManiaWorld {
     public List<BasicEnemy> spawnEnemies() {
         List<BasicEnemy> spawnedEnemies = new ArrayList<>();
         for(Building b : buildingEntities) {
-            BasicEnemy temp = b.spawn(enemies, orderedPath, cycle);
-            if(temp != null) {
+            if(b instanceof VampireCastleBuilding || b instanceof ZombiePitBuilding) {
+                BasicEnemy temp = b.spawn(enemies, orderedPath, cycle);
                 spawnedEnemies.add(temp);
             }
         }
@@ -628,7 +628,9 @@ public class LoopManiaWorld {
 
     public void buffCharacter() {
         for(Building b : buildingEntities) {
-            b.buff(character);
+            if(b instanceof CampfireBuilding || b instanceof VillageBuilding) {
+                b.buff(character);
+            }
         }
     }
 
