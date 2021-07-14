@@ -7,11 +7,11 @@ public class Character extends MovingEntity{
     public Character(PathPosition position) {
         super(position);
         //Set stats
-        this.attack = 5;
-        this.defense = 0;
-        this.health = 200;
-        this.speed = 8;
-        this.canBlock = false;
+        setAttack(5);
+        setDefense(0);
+        setHealth(200);
+        setSpeed(8);
+        canBlock = false;
         this.canRevive = false;
     }
 
@@ -19,5 +19,5 @@ public class Character extends MovingEntity{
     public void AttackTarget(MovingEntity target, int seed){
         int damage = this.getAttack() - target.getDefense();
         target.setHealth(target.getHealth() - damage);
-
+    }
 }
