@@ -637,8 +637,10 @@ public class LoopManiaWorld {
     public void damageEnemy(Battle battle) {
         List<Building> buildingsToRemove = new ArrayList<>();
         for(Building b : buildingEntities) {
-            if(b.damage(enemies, buildingEntities, battle) != null) {
-                buildingsToRemove.add(b);
+            if(b instanceof TrapBuilding || b instanceof TowerBuilding) {
+                if(b.damage(enemies, buildingEntities, battle) != null) {
+                    buildingsToRemove.add(b);
+                }
             }
         }
         for(Building b : buildingsToRemove) {

@@ -23,7 +23,7 @@ public class TowerBuilding extends Building implements DamageBuilding {
             target.setHealth(target.getHealth() - damage);
         }
 
-        return this;
+        return null;
     }
 
     public boolean isInBattle() {
