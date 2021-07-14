@@ -266,6 +266,20 @@ public class LoopManiaWorld {
     }
 
     /**
+     * spawn a barracks card in the world and return the card entity
+     * @return a card to be spawned in the controller as a node
+     */
+    public BarracksCard loadBarracksCard() {
+        if (cardEntities.size() >= getWidth()){
+            cardRemovalLoot();
+            removeCard(0);
+        }
+        BarracksCard barracksCard = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+        cardEntities.add(barracksCard);
+        return barracksCard;
+    }
+
+    /**
      * spawn a village card in the world and return the card entity
      * @return a card to be spawned in the controller as a node
      */
@@ -593,34 +607,36 @@ public class LoopManiaWorld {
     public List<BasicEnemy> spawnEnemies() {
         List<BasicEnemy> spawnedEnemies = new ArrayList<>();
         for(Building b : buildingEntities) {
-            if(b instanceof VampireCastleBuilding) {
-                spawnedEnemies.add(((VampireCastleBuilding) b).spawn(enemies, orderedPath, cycle));
-            } else if(b instanceof ZombiePitBuilding) {
-                spawnedEnemies.add(((ZombiePitBuilding) b).spawn(enemies, orderedPath, cycle));
+            BasicEnemy temp = b.spawn(enemies, orderedPath, cycle);
+            if(temp != null) {
+                spawnedEnemies.add(temp);
             }
         }
         return spawnedEnemies;
     }
 
+    public Ally spawnAllies() {
+        Ally newAlly = null;
+        for(Building b : buildingEntities) {
+            if(b instanceof BarracksBuilding) {
+                newAlly = ((BarracksBuilding) b).spawn(character);
+            }
+        }
+
+        return newAlly;
+    }
+
     public void buffCharacter() {
         for(Building b : buildingEntities) {
-            if(b instanceof VillageBuilding) {
-                ((VillageBuilding) b).buff(character);
-            } else if(b instanceof CampfireBuilding) {
-                ((CampfireBuilding) b).buff(character);
-            }
+            b.buff(character);
         }
     }
 
     public void damageEnemy(Battle battle) {
         List<Building> buildingsToRemove = new ArrayList<>();
         for(Building b : buildingEntities) {
-            if(b instanceof TrapBuilding) {
-                if(((TrapBuilding) b).damage(enemies, buildingEntities, null) != null) {
-                    buildingsToRemove.add(b);
-                };
-            } else if(b instanceof TowerBuilding) {
-                ((TowerBuilding) b).damage(enemies, buildingEntities, battle);
+            if(b.damage(enemies, buildingEntities, battle) != null) {
+                buildingsToRemove.add(b);
             }
         }
         for(Building b : buildingsToRemove) {

@@ -18,4 +18,6 @@ public interface Stats {
     public void setRevive();
     // Makes it impossible for the character to be revived
     public void unsetRevive();
+    // Damages the character with the value
+    public void damageHealth(int value);
 }

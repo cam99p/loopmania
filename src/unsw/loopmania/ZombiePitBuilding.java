@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 import org.javatuples.Pair;
 
-public class ZombiePitBuilding extends Building implements SpawnBuilding {
+public class ZombiePitBuilding extends Building implements SpawnEnemyBuilding {
     public ZombiePitBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }

@@ -8,7 +8,7 @@ import org.javatuples.Pair;
 /**
  * a basic form of building in the world
  */
-public class VampireCastleBuilding extends Building implements SpawnBuilding {
+public class VampireCastleBuilding extends Building implements SpawnEnemyBuilding {
 
     public VampireCastleBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);

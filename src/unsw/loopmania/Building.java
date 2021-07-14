@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import java.util.List;
 import org.javatuples.Pair;
 
-public class Building extends StaticEntity {
+public abstract class Building extends StaticEntity implements SpawnEnemyBuilding, BuffBuilding, DamageBuilding {
 
     public Building(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
@@ -80,5 +80,17 @@ public class Building extends StaticEntity {
         }
         
         return spawnPos;
+    }
+
+    public void buff(Character character) {
+
+    }
+
+    public Building damage(List<BasicEnemy> enemies, List<Building> building, Battle battle) {
+        return null;
+    }
+
+    public BasicEnemy spawn(List<BasicEnemy> enemies, List<Pair<Integer, Integer>> path, int cycle) {
+        return null;
     }
 }
