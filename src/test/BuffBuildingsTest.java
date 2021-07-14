@@ -23,7 +23,7 @@ import unsw.loopmania.Building;
 import unsw.loopmania.CampfireBuilding;
 import unsw.loopmania.CampfireCard;
 
-public class BuffBuildings {
+public class BuffBuildingsTest {
     @Test
     public void villagePathTileTest() {
         List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
