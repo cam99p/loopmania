@@ -3,6 +3,7 @@ package test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,6 @@ import org.javatuples.Pair;
 import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.VampireCastleBuilding;
-import unsw.loopmania.ZombiePitBuilding;
 import unsw.loopmania.Character;
 import unsw.loopmania.HerosCastle;
 import unsw.loopmania.VampireCastleCard;
@@ -96,9 +96,9 @@ public class SpawnBuildings {
         
         VampireCastleCard vampCard = world.loadVampireCard();
 
-        Building vampBuilding = world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
+        assertDoesNotThrow(() -> world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1));
         assertEquals(2, world.getBuildings().size());
-        assertEquals(vampBuilding, world.getBuildings().get(1));
+        assertTrue(world.getBuildings().get(1) instanceof VampireCastleBuilding);
     }
 
     @Test

@@ -527,7 +527,19 @@ public class LoopManiaWorld {
                 }
             }
         } else {
-
+            if(card instanceof VillageCard) {
+                if(orderedPath.contains(pos)) {
+                    newBuilding = new VillageBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                } else {
+                    throw new IllegalArgumentException();
+                }
+            } else if(card instanceof CampfireCard) {
+                if(!orderedPath.contains(pos)) {
+                    newBuilding = new CampfireBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                } else {
+                    throw new IllegalArgumentException();
+                }
+            }
         }
 
         if(newBuilding != null) {
@@ -564,6 +576,16 @@ public class LoopManiaWorld {
             }
         }
         return spawnedEnemies;
+    }
+
+    public void buffCharacter() {
+        for(Building b : buildingEntities) {
+            if(b instanceof VillageBuilding) {
+                ((VillageBuilding) b).buff(character);
+            } else if(b instanceof CampfireBuilding) {
+                ((CampfireBuilding) b).buff(character);
+            }
+        }
     }
 
     public boolean checkIfAdjacentPathTile(int x, int y) {

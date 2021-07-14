@@ -13,7 +13,7 @@ public class CampfireBuilding extends Building implements BuffBuilding {
 
     @Override
     public void buff(Character character) {
-        if(Math.pow(this.getX() - character.getX(), 2) + Math.pow(this.getY() - character.getY(), 2) >= Math.pow(buffRadius, 2) &&
+        if(Math.pow(this.getX() - character.getX(), 2) + Math.pow(this.getY() - character.getY(), 2) < Math.pow(buffRadius, 2) &&
            character.getDoubleDamage() == false) {
                 character.setDoubleDamage(true);
                 character.modifyAttack(character.getAttack());

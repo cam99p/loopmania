@@ -17,11 +17,10 @@ import unsw.loopmania.LoopManiaWorld;
 import unsw.loopmania.PathPosition;
 import unsw.loopmania.Character;
 import unsw.loopmania.HerosCastle;
-import unsw.loopmania.MovingEntity;
 import unsw.loopmania.Slug;
 import unsw.loopmania.VillageCard;
-import unsw.loopmania.Battle;
 import unsw.loopmania.Building;
+import unsw.loopmania.CampfireBuilding;
 import unsw.loopmania.CampfireCard;
 
 public class BuffBuildings {
@@ -99,7 +98,9 @@ public class BuffBuildings {
         VillageCard villageCard = world.loadVillageCard();
         world.convertCardToBuildingByCoordinates(villageCard.getX(), villageCard.getY(), 0, 1);
 
-        world.runTickMoves();
+        character.moveDownPath();
+
+        world.buffCharacter();
 
         assertTrue(character.getHealth() == 200);
     }
@@ -132,6 +133,8 @@ public class BuffBuildings {
         world.convertCardToBuildingByCoordinates(villageCard.getX(), villageCard.getY(), 0, 2);
 
         slug.moveDownPath();
+
+        world.buffCharacter();
 
         assertTrue(slug.getHealth() == 30);
     
@@ -180,10 +183,9 @@ public class BuffBuildings {
         world.setCastle(castle);
 
         CampfireCard campfireCard = world.loadCampfireCard();
-        Building campfire = world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 1, 1);
-
+        assertDoesNotThrow(() -> world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 1, 1));
         assertEquals(2, world.getBuildings().size());
-        assertEquals(campfire, world.getBuildings().get(1));
+        assertTrue(world.getBuildings().get(1) instanceof CampfireBuilding);
     }
 
     @Test
@@ -208,7 +210,9 @@ public class BuffBuildings {
         assertTrue(character.getAttack() == 5);
 
         CampfireCard campfireCard = world.loadCampfireCard();
-        Building campfire = world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 1, 1);
+        world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 1, 1);
+
+        world.buffCharacter();
 
         assertTrue(character.getAttack() == 10);
     }
@@ -243,7 +247,9 @@ public class BuffBuildings {
         assertTrue(character.getAttack() == 5);
 
         CampfireCard campfireCard = world.loadCampfireCard();
-        Building campfire = world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 3, 1);
+        world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 3, 1);
+
+        world.buffCharacter();
 
         assertTrue(character.getAttack() == 5);
     }
