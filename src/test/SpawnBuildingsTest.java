@@ -21,6 +21,8 @@ import unsw.loopmania.HerosCastle;
 import unsw.loopmania.VampireCastleCard;
 import unsw.loopmania.Vampire;
 import unsw.loopmania.Zombie;
+import unsw.loopmania.BarracksBuilding;
+import unsw.loopmania.BarracksCard;
 import unsw.loopmania.Building;
 import unsw.loopmania.ZombiePitCard;
 
@@ -654,6 +656,119 @@ public class SpawnBuildingsTest {
 
     @Test
     public void zombieSpawnDiagonal() {
+        
+    }
 
+    @Test
+    public void barracksPathTileTest() {
+        List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
+        dummyPath.add(new Pair<>(0, 0));
+        dummyPath.add(new Pair<>(0, 1));
+        dummyPath.add(new Pair<>(0, 2));
+        dummyPath.add(new Pair<>(1, 2));
+        dummyPath.add(new Pair<>(2, 2));
+        dummyPath.add(new Pair<>(2, 1));
+        dummyPath.add(new Pair<>(2, 0));
+        dummyPath.add(new Pair<>(1, 0));
+
+        LoopManiaWorld world = new LoopManiaWorld(3, 3, dummyPath);
+        PathPosition pos = new PathPosition(0, dummyPath);
+        Character character = new Character(pos);
+        HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        world.setCharacter(character);
+        world.setCastle(castle);
+
+        BarracksCard barracksCard = world.loadBarracksCard();
+        assertDoesNotThrow(() -> world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1));
+        assertEquals(2, world.getBuildings().size());
+        assertTrue(world.getBuildings().get(1) instanceof BarracksBuilding);
+    }
+
+    @Test
+    public void barracksNonPathTileTest() {
+        List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
+        dummyPath.add(new Pair<>(0, 0));
+        dummyPath.add(new Pair<>(0, 1));
+        dummyPath.add(new Pair<>(0, 2));
+        dummyPath.add(new Pair<>(1, 2));
+        dummyPath.add(new Pair<>(2, 2));
+        dummyPath.add(new Pair<>(2, 1));
+        dummyPath.add(new Pair<>(2, 0));
+        dummyPath.add(new Pair<>(1, 0));
+
+        LoopManiaWorld world = new LoopManiaWorld(3, 3, dummyPath);
+        PathPosition pos = new PathPosition(0, dummyPath);
+        Character character = new Character(pos);
+        HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        world.setCharacter(character);
+        world.setCastle(castle);
+
+        BarracksCard barracksCard = world.loadBarracksCard();
+        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 1, 1));
+    }
+
+    @Test
+    public void barracksSpawnAllyTest() {
+        List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
+        dummyPath.add(new Pair<>(0, 0));
+        dummyPath.add(new Pair<>(0, 1));
+        dummyPath.add(new Pair<>(0, 2));
+        dummyPath.add(new Pair<>(1, 2));
+        dummyPath.add(new Pair<>(2, 2));
+        dummyPath.add(new Pair<>(2, 1));
+        dummyPath.add(new Pair<>(2, 0));
+        dummyPath.add(new Pair<>(1, 0));
+
+        LoopManiaWorld world = new LoopManiaWorld(3, 3, dummyPath);
+        PathPosition pos = new PathPosition(0, dummyPath);
+        Character character = new Character(pos);
+        HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        world.setCharacter(character);
+        world.setCastle(castle);
+
+        BarracksCard barracksCard = world.loadBarracksCard();
+        Building barracksBuilding = world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1));
+
+        character.moveDownPath();
+        
+        world.spawnAllies();
+
+        assertEquals(1, character.getAllies().size());
+        // Add more asserts to test the basic stats of an ally
+    }
+
+    @Test
+    public void barracksMaxAlliesTest() {
+        List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
+        dummyPath.add(new Pair<>(0, 0));
+        dummyPath.add(new Pair<>(0, 1));
+        dummyPath.add(new Pair<>(0, 2));
+        dummyPath.add(new Pair<>(1, 2));
+        dummyPath.add(new Pair<>(2, 2));
+        dummyPath.add(new Pair<>(2, 1));
+        dummyPath.add(new Pair<>(2, 0));
+        dummyPath.add(new Pair<>(1, 0));
+
+        LoopManiaWorld world = new LoopManiaWorld(3, 3, dummyPath);
+        PathPosition pos = new PathPosition(0, dummyPath);
+        Character character = new Character(pos);
+        HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        world.setCharacter(character);
+        world.setCastle(castle);
+
+        BarracksCard barracksCard = world.loadBarracksCard();
+        Building barracksBuilding = world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1));
+
+        character.moveDownPath();
+        for(int i = 1; i <= 3; i++) {
+            world.spawnAllies();
+            assertEquals(i, character.getAllies().size());
+            for(int j = 0; j < 9; j++) {
+                world.runTickMoves();
+            }
+        }
+        // Does not increase past 3
+        world.spawnAllies();
+        assertEquals(3, character.getAllies().size());
     }
 }
