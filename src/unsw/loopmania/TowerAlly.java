@@ -1,13 +1,16 @@
 package unsw.loopmania;
 
-public class Ally extends MovingEntity{
-    public Ally(PathPosition position) {
+/* Since all combatanants are Moving Entitys, 
+we generate a class to stand in for towers in Battle
+*/
+public class TowerAlly extends MovingEntity{
+    public TowerAlly(PathPosition position) {
         super(position);
         //Set stats
-        setAttack(5);
-        setDefense(0);
-        setHealth(50);
-        setSpeed(7);
+        setAttack(10);
+        setDefense(9999); //Tower should never be attacked
+        setHealth(9999);
+        setSpeed(1);
         this.canBlock = false;
         this.canRevive = false;
     }
@@ -17,7 +20,4 @@ public class Ally extends MovingEntity{
         int damage = this.getAttack() - target.getDefense();
         target.setHealth(target.getHealth() - damage);
     }
-
 }
-
-

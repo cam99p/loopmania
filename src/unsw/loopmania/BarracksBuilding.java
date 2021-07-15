@@ -14,8 +14,8 @@ public class BarracksBuilding extends Building {
     public Ally spawn(Character character) {
         Ally newAlly = null;
         if(character.getX() == this.getX() && character.getY() == this.getY() && character.getAllies().size() < MAX_ALLIES) {
-            newAlly = new Ally();
-            character.getAllies().add(newAlly);
+            newAlly = new Ally(null); //Path position is unimportant to an ally
+            character.AddAlly(newAlly);
         }
 
         return newAlly;

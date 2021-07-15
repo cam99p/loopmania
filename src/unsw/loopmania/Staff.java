@@ -9,7 +9,7 @@ public class Staff extends Item {
     public Staff(SimpleIntegerProperty x, SimpleIntegerProperty y)
     {
         super(x,y, "Staff", Slot.RIGHT_ARM);
-        setValue(2);
+        setValue(5);
     }
 
     public void useItem(Character target)

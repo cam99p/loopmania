@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import java.util.Random;
 
-public class Slug extends BasicEnemy implements Attack {
+public class Slug extends BasicEnemy{
     //Construct enemy at certain position, and set all attributes
     public Slug(PathPosition position) {
         super(position);
