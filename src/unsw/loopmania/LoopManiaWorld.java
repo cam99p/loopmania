@@ -198,11 +198,29 @@ public class LoopManiaWorld {
      */
     public List<MovingEntity> gatherAllies() {
         ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
-        allies.add(character); //Add character
+        
+        //Add character
+        allies.add(character);
+
+        //Add allies
         for (Ally ally : character.getAllies()) {
             allies.add(ally);
         }
-        //TODO: Add towers. Check if their xy coords are close enough to chars xy coords
+        
+        //Add towers
+        for (Building building : buildingEntities) {
+            //Check building type
+            if (building instanceof TowerBuilding){
+                //Check distance
+                //Radius of tower support is 8 tiles 8^2 = 64
+                if (Math.pow((character.getX()-building.getX()), 2) + Math.pow((character.getY()-building.getY()), 2) < (64)){
+                    TowerAlly tempTower = new TowerAlly(null);
+                    allies.add(tempTower);
+                }
+                
+            }
+        }
+
         return allies;
     }
 
@@ -216,7 +234,7 @@ public class LoopManiaWorld {
 
         //Check for those in battle range
         for (BasicEnemy e: enemies){
-            if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < (e.getBattleRadius() * e.getBattleRadius())){
+            if (Math.pow((character.getX()-e.getX()), 2) + Math.pow((character.getY()-e.getY()), 2) < (e.getBattleRadius() * e.getBattleRadius())){
                 battleEnemies.add(e);
             }
         }

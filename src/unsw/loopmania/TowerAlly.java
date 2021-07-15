@@ -17,6 +17,7 @@ public class TowerAlly extends MovingEntity{
     
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
-        
+        int damage = this.getAttack() - target.getDefense();
+        target.setHealth(target.getHealth() - damage);
     }
 }
