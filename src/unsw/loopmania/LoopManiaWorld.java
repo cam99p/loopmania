@@ -277,106 +277,128 @@ public class LoopManiaWorld {
      * spawn a vampire castle card in the world and return the card entity
      * @return a card to be spawned in the controller as a JavaFX node
      */
-    public VampireCastleCard loadVampireCard(){
+    public Pair<VampireCastleCard, Item> loadVampireCard(){
         // if adding more cards than have, remove the first card...
+        Item item = null;
         if (cardEntities.size() >= getWidth()){
-            // TODO = give some cash/experience/item rewards for the discarding of the oldest card
             removeCard(0);
+            item = cardRemovalLoot();
         }
         VampireCastleCard vampireCastleCard = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         cardEntities.add(vampireCastleCard);
-        return vampireCastleCard;
+        Pair<VampireCastleCard, Item> card = new Pair<>(vampireCastleCard, item);
+        return card;
     }
 
     /**
      * spawn a zombie pit card in the world and return the card entity
      * @return a card to be spawned in the controller as a node
      */
-    public ZombiePitCard loadZombieCard() {
+    public Pair<ZombiePitCard, Item> loadZombieCard() {
+        Item item = null;
         if (cardEntities.size() >= getWidth()){
-            cardRemovalLoot();
             removeCard(0);
+            item = cardRemovalLoot();
         }
         ZombiePitCard zombiePitCard = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         cardEntities.add(zombiePitCard);
-        return zombiePitCard;
+        Pair<ZombiePitCard, Item> card = new Pair<>(zombiePitCard, item);
+        return card;
     }
 
     /**
      * spawn a barracks card in the world and return the card entity
      * @return a card to be spawned in the controller as a node
      */
-    public BarracksCard loadBarracksCard() {
+    public Pair<BarracksCard, Item> loadBarracksCard() {
+        Item item = null;
         if (cardEntities.size() >= getWidth()){
-            cardRemovalLoot();
             removeCard(0);
+            item = cardRemovalLoot();
         }
         BarracksCard barracksCard = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         cardEntities.add(barracksCard);
-        return barracksCard;
+        Pair<BarracksCard, Item> card = new Pair<>(barracksCard, item);
+        return card;
     }
 
     /**
      * spawn a village card in the world and return the card entity
      * @return a card to be spawned in the controller as a node
      */
-    public VillageCard loadVillageCard() {
+    public Pair<VillageCard, Item> loadVillageCard() {
+        Item item = null;
         if (cardEntities.size() >= getWidth()){
-            cardRemovalLoot();
             removeCard(0);
+            item = cardRemovalLoot();
         }
         VillageCard villageCard = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         cardEntities.add(villageCard);
-        return villageCard;
+        Pair<VillageCard, Item> card = new Pair<>(villageCard, item);
+        return card;
     }
 
     /**
      * spawn a campfire card in the world and return the card entity
      * @return a card to be spawned in the controller as a node
      */
-    public CampfireCard loadCampfireCard() {
+    public Pair<CampfireCard, Item> loadCampfireCard() {
+        Item item = null;
         if (cardEntities.size() >= getWidth()){
-            cardRemovalLoot();
             removeCard(0);
+            item = cardRemovalLoot();
         }
         CampfireCard campfireCard = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         cardEntities.add(campfireCard);
-        return campfireCard;
+        Pair<CampfireCard, Item> card = new Pair<>(campfireCard, item);
+        return card;
     }
 
     /**
      * spawn a trap card in the world and return the card entity
      * @return a card to be spawned in the controller as a node
      */
-    public TrapCard loadTrapCard() {
+    public Pair<TrapCard, Item> loadTrapCard() {
+        Item item = null;
         if (cardEntities.size() >= getWidth()){
-            cardRemovalLoot();
             removeCard(0);
+            item = cardRemovalLoot();
         }
         TrapCard trapCard = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         cardEntities.add(trapCard);
-        return trapCard;
+        Pair<TrapCard, Item> card = new Pair<>(trapCard, item);
+        return card;
     }
 
     /**
      * spawn a tower card in the world and return the card entity
      * @return a card to be spawned in the controller as a node
      */
-    public TowerCard loadTowerCard() {
+    public Pair<TowerCard, Item> loadTowerCard() {
+        Item item = null;
         if (cardEntities.size() >= getWidth()){
-            cardRemovalLoot();
             removeCard(0);
+            item = cardRemovalLoot();
         }
         TowerCard towerCard = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
         cardEntities.add(towerCard);
-        return towerCard;
+        Pair<TowerCard, Item> card = new Pair<>(towerCard, item);
+        return card;
     }
 
     /**
      * Give gold/experience/item rewards for the discarding of the oldest card
      */
-    private void cardRemovalLoot() {
-
+    private Item cardRemovalLoot() {
+        Item item = null;
+        setGold(getGold() + 10);
+        setExp(getExp() + 100);
+        Random rand = new Random();
+        int seed = rand.nextInt(11);
+        if(seed == 10) {
+            item = randomItem();
+        }
+        return item;
     }
 
     /**
@@ -736,5 +758,30 @@ public class LoopManiaWorld {
                 return false;
             }
 
+    }
+
+    public Item randomItem() {
+        /*
+        Item item = null;
+        Random rand = new Random();
+        int seed = rand.nextInt(8);
+        if(seed == 1) {
+            item = addUnequippedHealthPotion();
+        } else if(seed == 2) {
+            item = addUnequippedSword();
+        } else if(seed == 3) {
+            item = addUnequippedStake();
+        } else if(seed == 4) {
+            item = addUnequippedStaff();
+        } else if(seed == 5) {
+            item = addUnequippedArmour();
+        } else if(seed == 6) {
+            item = addUnequippedShield();
+        } else {
+            item = addUnequippedHelmet();
+        }
+        return item;
+        */
+        return null;
     }
 }

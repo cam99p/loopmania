@@ -95,7 +95,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
         
-        VampireCastleCard vampCard = world.loadVampireCard();
+        VampireCastleCard vampCard = world.loadVampireCard().getValue0();
 
         assertDoesNotThrow(() -> world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1));
         assertEquals(2, world.getBuildings().size());
@@ -121,7 +121,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
         
-        VampireCastleCard vampCard = world.loadVampireCard();
+        VampireCastleCard vampCard = world.loadVampireCard().getValue0();
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 0, 1);
         assertEquals(1, world.getCards().size());
@@ -147,7 +147,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleCard vampCard = world.loadVampireCard();
+        VampireCastleCard vampCard = world.loadVampireCard().getValue0();
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
 
@@ -182,7 +182,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleCard vampCard = world.loadVampireCard();
+        VampireCastleCard vampCard = world.loadVampireCard().getValue0();
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
 
@@ -221,7 +221,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleCard vampCard = world.loadVampireCard();
+        VampireCastleCard vampCard = world.loadVampireCard().getValue0();
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 2);
 
@@ -261,7 +261,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleCard vampCard = world.loadVampireCard();
+        VampireCastleCard vampCard = world.loadVampireCard().getValue0();
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 1);
 
@@ -305,7 +305,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleCard vampCard = world.loadVampireCard();
+        VampireCastleCard vampCard = world.loadVampireCard().getValue0();
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 1);
 
@@ -341,7 +341,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleCard vampCard = world.loadVampireCard();
+        VampireCastleCard vampCard = world.loadVampireCard().getValue0();;
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
 
@@ -388,7 +388,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        ZombiePitCard zombieCard = world.loadZombieCard().getValue0();
 
         Building zombieBuilding = world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
         assertEquals(2, world.getBuildings().size());
@@ -414,7 +414,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
         
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        ZombiePitCard zombieCard = world.loadZombieCard().getValue0();
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 0, 1);
         assertEquals(1, world.getCards().size());
@@ -440,7 +440,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        ZombiePitCard zombieCard = world.loadZombieCard().getValue0();
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
 
@@ -474,7 +474,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        ZombiePitCard zombieCard = world.loadZombieCard().getValue0();
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
 
@@ -515,7 +515,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        ZombiePitCard zombieCard = world.loadZombieCard().getValue0();
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 1);
 
@@ -556,7 +556,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        ZombiePitCard zombieCard = world.loadZombieCard().getValue0();
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 2);
 
@@ -601,7 +601,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        ZombiePitCard zombieCard = world.loadZombieCard().getValue0();
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 1);
 
@@ -637,7 +637,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        ZombiePitCard zombieCard = world.loadZombieCard().getValue0();;
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
 
@@ -681,7 +681,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        BarracksCard barracksCard = world.loadBarracksCard();
+        BarracksCard barracksCard = world.loadBarracksCard().getValue0();
         assertDoesNotThrow(() -> world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1));
         assertEquals(2, world.getBuildings().size());
         assertTrue(world.getBuildings().get(1) instanceof BarracksBuilding);
@@ -706,7 +706,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        BarracksCard barracksCard = world.loadBarracksCard();
+        BarracksCard barracksCard = world.loadBarracksCard().getValue0();
         world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 1, 1);
         assertEquals(1, world.getCards().size());
         assertEquals(barracksCard, world.getCards().get(0));
@@ -732,7 +732,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        BarracksCard barracksCard = world.loadBarracksCard();
+        BarracksCard barracksCard = world.loadBarracksCard().getValue0();
         world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1);
 
         character.moveDownPath();
@@ -743,7 +743,7 @@ public class SpawnBuildingsTest {
         assertEquals(5, character.getAllies().get(0).getAttack());
         assertEquals(50, character.getAllies().get(0).getHealth());
         assertEquals(0, character.getAllies().get(0).getDefense());
-        assertEquals(7, character.getAllies().get(0).getDefense());
+        assertEquals(7, character.getAllies().get(0).getSpeed());
     }
 
     @Test
@@ -765,7 +765,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        BarracksCard barracksCard = world.loadBarracksCard();
+        BarracksCard barracksCard = world.loadBarracksCard().getValue0();
         world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1);
 
         character.moveDownPath();
