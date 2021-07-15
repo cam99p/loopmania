@@ -3,6 +3,9 @@ package unsw.loopmania;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
+
+import javafx.beans.property.SimpleIntegerProperty;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,9 +23,9 @@ public class LoopManiaWorldTest {
         d.setCharacter(dummyChar);
         Ally dummyAlly = new Ally(dummyPos);
         dummyChar.AddAlly(dummyAlly);
-        //Add tower
-        //Add tower too far away from battle
-        //Cannot be completed till ally and tower are implemented
+        TowerCard towerCard = d.loadTowerCard();
+        Building towerBuilding = d.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), 1, 1);
+
         assertTrue(d.gatherAllies().size() == 3);
     }
 
