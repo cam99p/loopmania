@@ -41,6 +41,10 @@ public class LoopManiaWorld {
 
     private int cycle;
 
+    private int exp;
+
+    private int gold;
+
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
@@ -77,6 +81,8 @@ public class LoopManiaWorld {
         character = null;
         castle = null;
         cycle = 0;
+        exp = 0;
+        gold = 0;
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
@@ -255,6 +261,14 @@ public class LoopManiaWorld {
 
         return battleEnemies;
     }
+
+    /** Given a list of enemies defeated in battle, calculates rewards and
+     *  updates trackers in world state accordingly
+     */
+    public void GainBattleRewards(List<BasicEnemy> enemies){
+
+    }
+    
 
     /**
      * spawn a vampire castle card in the world and return the card entity
@@ -614,6 +628,22 @@ public class LoopManiaWorld {
 
     public int getCycle() {
         return cycle;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 
     public List<Building> getBuildings() {

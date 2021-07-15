@@ -80,4 +80,34 @@ public class LoopManiaWorldTest {
         //The only memeber of the list should be the dummy slug
         assertTrue(defeated.get(0) == dummySlug);
     }
+
+    @Test
+    public void TestBattleRewards(){
+        //Path
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+
+        //World
+        LoopManiaWorld d = new LoopManiaWorld(3, 3, dummyPath);
+
+        //Character
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
+        Character dummyChar = new Character(dummyPos);
+        d.setCharacter(dummyChar);
+
+        //Slug
+        Slug dummySlug = new Slug(dummyPos);
+        d.addEnemy(dummySlug);
+
+        //Run battles
+        List<BasicEnemy> defeated = d.runBattles();
+
+        //Rewards
+        d.GainBattleRewards(defeated);
+
+        //Check that numbers have gone up
+        assertTrue(d.getExp() == 50);
+        assertTrue(d.getGold() == 50);
+
+    }
 }
