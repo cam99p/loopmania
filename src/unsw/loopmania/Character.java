@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Character extends MovingEntity{
 
+    private boolean doubleDamage;
     private List<Ally> allies;
 
     public Character(PathPosition position) {
@@ -20,6 +21,7 @@ public class Character extends MovingEntity{
         setSpeed(8);
         this.canBlock = false;
         this.canRevive = false;
+        this.doubleDamage = false;
         this.allies = new ArrayList<>();
     }
 
@@ -27,6 +29,14 @@ public class Character extends MovingEntity{
     public void AttackTarget(MovingEntity target, int seed){
         int damage = this.getAttack() - target.getDefense();
         target.setHealth(target.getHealth() - damage);
+    }
+
+    public void setDoubleDamage(boolean bool) {
+        doubleDamage = bool;
+    }
+
+    public boolean getDoubleDamage() {
+        return doubleDamage;
     }
 
     //TODO: Passing through barracks should make a new ally and call this

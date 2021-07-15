@@ -7,5 +7,4 @@ public class HerosCastle extends Building {
         super(x, y);
     }
 
-
 }

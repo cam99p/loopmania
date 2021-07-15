@@ -408,7 +408,7 @@ public class LoopManiaWorldController {
      * load a building into the GUI
      * @param building
      */
-    private void onLoad(VampireCastleBuilding building){
+    private void onLoad(Building building){
         ImageView view = new ImageView(basicBuildingImage);
         addEntity(building, view);
         squares.getChildren().add(view);
@@ -456,7 +456,7 @@ public class LoopManiaWorldController {
                             case CARD:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                 // TODO = spawn a building here of different types
-                                VampireCastleBuilding newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
+                                Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
                                 onLoad(newBuilding);
                                 break;
                             case ITEM:
@@ -537,7 +537,7 @@ public class LoopManiaWorldController {
      * @param buildingNodeY the y coordinate of the drop location for the card, where the building will spawn, from 0 to height-1
      * @return building entity returned from the world
      */
-    private VampireCastleBuilding convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
+    private Building convertCardToBuildingByCoordinates(int cardNodeX, int cardNodeY, int buildingNodeX, int buildingNodeY) {
         return world.convertCardToBuildingByCoordinates(cardNodeX, cardNodeY, buildingNodeX, buildingNodeY);
     }
 
