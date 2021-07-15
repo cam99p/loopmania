@@ -733,14 +733,17 @@ public class SpawnBuildingsTest {
         world.setCastle(castle);
 
         BarracksCard barracksCard = world.loadBarracksCard();
-        Building barracksBuilding = world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1));
+        world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1);
 
         character.moveDownPath();
         
         world.spawnAllies();
 
         assertEquals(1, character.getAllies().size());
-        // Add more asserts to test the basic stats of an ally
+        assertEquals(5, character.getAllies().get(0).getAttack());
+        assertEquals(50, character.getAllies().get(0).getHealth());
+        assertEquals(0, character.getAllies().get(0).getDefense());
+        assertEquals(7, character.getAllies().get(0).getDefense());
     }
 
     @Test
@@ -763,13 +766,13 @@ public class SpawnBuildingsTest {
         world.setCastle(castle);
 
         BarracksCard barracksCard = world.loadBarracksCard();
-        Building barracksBuilding = world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1));
+        world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1);
 
         character.moveDownPath();
         for(int i = 1; i <= 3; i++) {
             world.spawnAllies();
             assertEquals(i, character.getAllies().size());
-            for(int j = 0; j < 9; j++) {
+            for(int j = 0; j < 8; j++) {
                 world.runTickMoves();
             }
         }

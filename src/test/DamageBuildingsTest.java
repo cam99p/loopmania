@@ -17,13 +17,13 @@ import unsw.loopmania.PathPosition;
 import unsw.loopmania.Character;
 import unsw.loopmania.HerosCastle;
 import unsw.loopmania.Slug;
+import unsw.loopmania.TowerAlly;
 import unsw.loopmania.TrapBuilding;
 import unsw.loopmania.TrapCard;
 import unsw.loopmania.Building;
 import unsw.loopmania.TowerBuilding;
 import unsw.loopmania.TowerCard;
 import unsw.loopmania.MovingEntity;
-import unsw.loopmania.Entity;
 import unsw.loopmania.Battle;
 
 public class DamageBuildingsTest {
@@ -216,21 +216,20 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TowerCard towerCard = world.loadTowerCard();
-        Building towerBuilding = world.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), 1, 1);
+        TowerAlly towerAlly = new TowerAlly(new PathPosition(0, dummyPath));
 
         Slug dummySlug = new Slug(pos);
 
-        // ArrayList<Moving> allies = new ArrayList<Entity>();
-        // allies.add(character);
-        // allies.add(towerBuilding);
-        // ArrayList<MovingEntity> enemies = new ArrayList<MovingEntity>();
-        // enemies.add(dummySlug);
+        ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
+        allies.add(character);
+        allies.add(towerAlly);
+        ArrayList<MovingEntity> enemies = new ArrayList<MovingEntity>();
+        enemies.add(dummySlug);
 
-        // Battle dummyBattle = new Battle(allies, enemies);
+        Battle dummyBattle = new Battle(character, allies, enemies);
 
-        // //Check that the character, slug and tower are in the battle
-        // assertTrue(dummyBattle.getParticipants().size() == 3);
-        // dummyBattle.Fight();
+        //Check that the character, slug and tower are in the battle
+        assertTrue(dummyBattle.getParticipants().size() == 3);
+        dummyBattle.Fight();
     }
 }
