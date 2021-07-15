@@ -240,7 +240,7 @@ public class LoopManiaWorld {
 
         //Check for those in battle range
         for (BasicEnemy e: enemies){
-            if (Math.pow((character.getX()-e.getX()), 2) + Math.pow((character.getY()-e.getY()), 2) < (e.getBattleRadius() * e.getBattleRadius())){
+            if (Math.pow((character.getX()-e.getX()), 2) + Math.pow((character.getY()-e.getY()), 2) <= (e.getBattleRadius() * e.getBattleRadius())){
                 battleEnemies.add(e);
             }
         }
@@ -249,7 +249,7 @@ public class LoopManiaWorld {
         if (battleEnemies.size() > 0){
             //Check for those in support range
             for (BasicEnemy e: enemies){
-                if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < (e.getSupportRadius() * e.getSupportRadius())){
+                if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) <= (e.getSupportRadius() * e.getSupportRadius())){
                     //Check it wasnt already added due to being in battle range
                     if (!battleEnemies.contains(e)){
                         battleEnemies.add(e);
