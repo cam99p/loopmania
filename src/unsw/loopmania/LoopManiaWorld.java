@@ -7,6 +7,7 @@ import java.util.Random;
 import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.ItemFactory.ItemType;
 
 /**
  * A backend world.
@@ -54,12 +55,14 @@ public class LoopManiaWorld {
     private List<Card> cardEntities;
 
     // TODO = expand the range of items
-    private List<Entity> unequippedInventoryItems;
+    private List<Item> unequippedInventoryItems;
 
     // TODO = expand the range of buildings
     private List<Building> buildingEntities;
 
     private List<HealthPotion> healthPotions;
+
+    private ItemFactory itemFactory = new ItemFactory();
 
 
     /**
@@ -270,6 +273,8 @@ public class LoopManiaWorld {
             setExp(getExp() + 50);
             setGold(getGold() + 50);
         }
+
+
     }
     
 
@@ -402,41 +407,27 @@ public class LoopManiaWorld {
         return false;
     }
 
+    //TODO: Refactor Item spawning code to reduce redundant code
     /**
-     * spawn a sword in the world and return the sword entity
+     * spawn an item in the world and return the sword entity
      * @return a sword to be spawned in the controller as a JavaFX node
      */
-    public Sword addUnequippedSword(){
+    public Item addUnequippedItem(ItemType itemType){
         // TODO = expand this - we would like to be able to add multiple types of items, apart from swords
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null){
             // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
-            // TODO = give some cash/experience rewards for the discarding of the oldest sword
+            // TODO = give some cash/experience rewards for the discarding of the oldest item
             removeItemByPositionInUnequippedInventoryItems(0);
+            setExp(getExp() + 50);
+            setGold(getGold() + 50);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
         
         // now we insert the new sword, as we know we have at least made a slot available...
-        Sword sword = new Sword(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-        unequippedInventoryItems.add(sword);
-        return sword;
-    }
-
-    public HealthPotion addUnequippedHealthPotion() {
-        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
-        if (firstAvailableSlot == null){
-            // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
-            // TODO = give some cash/experience rewards for the discarding of the oldest sword
-            removeItemByPositionInUnequippedInventoryItems(0);
-            firstAvailableSlot = getFirstAvailableSlotForItem();
-        }
-        
-        // now we insert the new sword, as we know we have at least made a slot available...
-        HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
-        unequippedInventoryItems.add(healthPotion);
-        healthPotions.add(healthPotion);
-
-        return healthPotion;
+        Item item = itemFactory.createItem(itemType, new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(item);
+        return item;
     }
 
     /**

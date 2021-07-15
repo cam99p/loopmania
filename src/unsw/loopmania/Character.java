@@ -2,7 +2,11 @@ package unsw.loopmania;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+
+import unsw.loopmania.Item.Slot;
 
 /**
  * represents the main character in the backend of the game world
@@ -11,6 +15,7 @@ public class Character extends MovingEntity{
 
     private boolean doubleDamage;
     private List<Ally> allies;
+    private Map <Slot, Item> equipment;
 
     public Character(PathPosition position) {
         super(position);
@@ -23,6 +28,7 @@ public class Character extends MovingEntity{
         this.canRevive = false;
         this.doubleDamage = false;
         this.allies = new ArrayList<>();
+        initialiseEquipment();
     }
 
     //Attacks the specified target
@@ -60,4 +66,13 @@ public class Character extends MovingEntity{
         return allies;
     }
     
+    private void initialiseEquipment(){
+        equipment = new EnumMap<Slot, Item>(Slot.class);
+        equipment.put(Slot.HEAD, null);
+        equipment.put(Slot.CHEST, null);
+        equipment.put(Slot.RIGHT_ARM, null);
+        equipment.put(Slot.LEFT_ARM, null);
+        equipment.put(Slot.POTION, null);
+        equipment.put(Slot.SPECIAL, null);
+    }
 }
