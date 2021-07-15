@@ -28,6 +28,12 @@ public class Character extends MovingEntity{
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
         int damage = this.getAttack() - target.getDefense();
+
+        //TODO: Account for stake vs vampire case
+
+        if (doubleDamage){
+            damage = damage*2;
+        }
         target.setHealth(target.getHealth() - damage);
     }
 
