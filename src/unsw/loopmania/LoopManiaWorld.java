@@ -665,6 +665,10 @@ public class LoopManiaWorld {
         return newBuilding;
     }
 
+    public void addCycle() {
+        cycle++;
+    }
+
     public int getCycle() {
         return cycle;
     }
@@ -737,6 +741,7 @@ public class LoopManiaWorld {
             }
         }
         for(Building b : buildingsToRemove) {
+            b.destroy();
             buildingEntities.remove(b);
         }
     }
@@ -758,6 +763,22 @@ public class LoopManiaWorld {
                 return false;
             }
 
+    }
+
+    public int getCharacterX() {
+        return character.getX();
+    }
+
+    public int getCharacterY() {
+        return character.getY();
+    }
+
+    public int getHerosCastleX() {
+        return castle.getX();
+    }
+
+    public int getHerosCastleY() {
+        return castle.getY();
     }
 
     public Item randomItem() {

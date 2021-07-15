@@ -3,6 +3,7 @@ package unsw.loopmania;
 import java.util.ArrayList;
 import java.util.List;
 import org.javatuples.Pair;
+import java.util.Random;
 
 import org.codefx.libfx.listener.handle.ListenerHandle;
 import org.codefx.libfx.listener.handle.ListenerHandles;
@@ -121,6 +122,9 @@ public class LoopManiaWorldController {
     @FXML
     private Label xpValue;
 
+    @FXML
+    private Label cycle;
+
     private boolean isPaused;
     private LoopManiaWorld world;
 
@@ -144,6 +148,9 @@ public class LoopManiaWorldController {
     private Image campfireCardImage;
     private Image campfireImage;
     private Image basicEnemyImage;
+    private Image slugImage;
+    private Image vampireImage;
+    private Image zombieImage;
     private Image swordImage;
     private Image basicBuildingImage;
     private Image healthPotionImage;
@@ -210,6 +217,9 @@ public class LoopManiaWorldController {
         campfireCardImage = new Image((new File("src/images/campfire_card.png")).toURI().toString());
         campfireImage = new Image((new File("src/images/campfire.png")).toURI().toString());
         basicEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
+        slugImage = new Image((new File("src/images/slug.png")).toURI().toString());
+        vampireImage = new Image((new File("src/images/vampire.png")).toURI().toString());
+        zombieImage = new Image((new File("src/images/zombie.png")).toURI().toString());
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
         basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
         healthPotionImage = new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString());
@@ -287,14 +297,35 @@ public class LoopManiaWorldController {
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             world.runTickMoves();
+            world.damageEnemy(null);
+            world.buffCharacter();
+            world.spawnAllies();
+
+            // Battle enemies
             List<BasicEnemy> defeatedEnemies = world.runBattles();
             for (BasicEnemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
             }
             world.GainBattleRewards(defeatedEnemies);
+
+            // Spawn Enemies
             List<BasicEnemy> newEnemies = world.possiblySpawnEnemies();
+            List<BasicEnemy> newZombiesVampires = new ArrayList<>();
+            if(world.getCharacterX() == world.getHerosCastleX() && world.getCharacterY() == world.getHerosCastleY()) {
+                addCycle();
+                newZombiesVampires = world.spawnEnemies();
+            }
             for (BasicEnemy newEnemy: newEnemies){
-                onLoad(newEnemy);
+                if(newEnemy instanceof Slug) {
+                    onLoad(((Slug) newEnemy));
+                }
+            }
+            for (BasicEnemy enemy : newZombiesVampires) {
+                if(enemy instanceof Vampire) {
+                    onLoad(((Vampire) enemy));
+                } else if(enemy instanceof Zombie) {
+                    onLoad((Zombie) enemy);
+                }
             }
             printThreadingNotes("HANDLED TIMER");
         }));
@@ -419,7 +450,25 @@ public class LoopManiaWorldController {
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
         loadSword();
         loadHealthPotion();
-        loadVampireCard();
+        addXP(50);
+        addGold(20);
+        Random rand = new Random();
+        int seed = rand.nextInt(8);
+        if(seed == 1) {
+            loadVampireCard();
+        } else if(seed == 2) {
+            loadZombiePitCard();
+        } else if(seed == 3) {
+            loadBarracksCard();
+        } else if(seed == 4) {
+            loadCampfireCard();
+        } else if(seed == 5) {
+            loadTowerCard();   
+        } else if(seed == 6) {
+            loadTrapCard();
+        } else {
+            loadVillageCard();
+        }
     }
 
     public void potionTrigger() {
@@ -438,6 +487,11 @@ public class LoopManiaWorldController {
     public void addGold(int gold) {
         Integer newGold = Integer.parseInt(goldValue.getText()) + gold;  
         goldValue.setText(newGold.toString());
+    }
+
+    public void addCycle() {
+        Integer newCycle = Integer.parseInt(cycle.getText()) + 1;
+        cycle.setText(newCycle.toString());
     }
 
     /**
@@ -549,6 +603,24 @@ public class LoopManiaWorldController {
         squares.getChildren().add(view);
     }
 
+    private void onLoad(Slug slug) {
+        ImageView view = new ImageView(slugImage);
+        addEntity(slug, view);
+        squares.getChildren().add(view);
+    }
+
+    private void onLoad(Vampire vampire) {
+        ImageView view = new ImageView(vampireImage);
+        addEntity(vampire, view);
+        squares.getChildren().add(view);
+    }
+
+    private void onLoad(Zombie zombie) {
+        ImageView view = new ImageView(zombieImage);
+        addEntity(zombie, view);
+        squares.getChildren().add(view);
+    }
+
     /**
      * load a building into the GUI
      * @param building
@@ -618,9 +690,10 @@ public class LoopManiaWorldController {
                         switch (draggableType){
                             case CARD:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                // TODO = spawn a building here of different types
                                 Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
-                                onLoad(newBuilding);
+                                if(newBuilding != null) {
+                                    onLoad(newBuilding);
+                                }
                                 break;
                             case ITEM:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);

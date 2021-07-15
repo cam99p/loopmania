@@ -25,6 +25,7 @@ public class TrapBuilding extends Building implements DamageBuilding {
         // Remove all enemies killed off by traps
         if(potentialDeadEnemy != null) {
             enemies.remove(potentialDeadEnemy);
+            potentialDeadEnemy.destroy();
             return this;
         } else {
             return null;
