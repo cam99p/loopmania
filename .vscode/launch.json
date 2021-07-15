@@ -8,6 +8,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch HealthTest",
+            "request": "launch",
+            "mainClass": "unsw.loopmania.HealthTest",
+            "projectName": "21T2-cs2511-project_16ce61dd"
+        },
+        {
+            "type": "java",
+            "name": "Launch test",
+            "request": "launch",
+            "mainClass": "unsw.loopmania.test",
+            "projectName": "21T2-cs2511-project_16ce61dd"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - LoopManiaApplication",
             "request": "launch",
             "vmArgs": "--module-path ./lib --add-modules javafx.controls,javafx.fxml -enableassertions",

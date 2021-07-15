@@ -9,10 +9,10 @@ public class Sword extends Item{
     public Sword(SimpleIntegerProperty x, SimpleIntegerProperty y)
     {
         super(x,y, "Sword", Slot.RIGHT_ARM);
-        setValue(10);
+        setValue(15);
     }
 
-    public void useItem(MovingEntity target)
+    public void useItem(Character target)
     {
         
     }
