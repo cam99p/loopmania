@@ -1,6 +1,5 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -71,7 +70,11 @@ public class BuffBuildingsTest {
 
         VillageCard villageCard = world.loadVillageCard();
 
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(villageCard.getX(), villageCard.getY(), 1, 1));
+        world.convertCardToBuildingByCoordinates(villageCard.getX(), villageCard.getY(), 1, 1);
+
+        assertEquals(1, world.getBuildings().size());
+        assertEquals(1, world.getCards().size());
+        assertEquals(villageCard, world.getCards().get(0));
     }
 
     @Test
@@ -160,7 +163,10 @@ public class BuffBuildingsTest {
 
         CampfireCard campfireCard = world.loadCampfireCard();
 
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 0, 1));
+        world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 0, 1);
+        assertEquals(1, world.getBuildings().size());
+        assertEquals(1, world.getCards().size());
+        assertEquals(campfireCard, world.getCards().get(0));
     }
 
     @Test

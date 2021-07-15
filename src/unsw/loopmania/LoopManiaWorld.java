@@ -543,51 +543,65 @@ public class LoopManiaWorld {
                 break;
             }
         }
-        
+
+        // Check if coordinates are already taken by another building
+        boolean alrTaken = false;
+        for (Building b : buildingEntities) {
+            if(b.getX() == buildingNodeX && b.getY() == buildingNodeY) {
+                alrTaken = true;
+            }
+        }
+
         // now spawn building
-        Pair<Integer, Integer> pos = new Pair<Integer, Integer>(buildingNodeX, buildingNodeY);
         Building newBuilding = null;
-        boolean checkAdjacent = checkIfAdjacentPathTile(buildingNodeX, buildingNodeY);
-        if(card instanceof VampireCastleCard) {
-            if(!orderedPath.contains(pos) && checkAdjacent) {
-                newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-            }
-        } else if(card instanceof ZombiePitCard) {
-            if(!orderedPath.contains(pos) && checkAdjacent) {
-                newBuilding = new ZombiePitBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-            }
-        } else if(card instanceof BarracksCard) {
-            if(orderedPath.contains(pos)) {
-                newBuilding = new BarracksBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-            }
-        } else if(card instanceof TowerCard) {
-            if(!orderedPath.contains(pos) && checkAdjacent) {
-                newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-            }
-        } else if(card instanceof VillageCard) {
-            if(orderedPath.contains(pos)) {
-                newBuilding = new VillageBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-            }
-        } else if(card instanceof CampfireCard) {
-            if(!orderedPath.contains(pos)) {
-                newBuilding = new CampfireBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-            }
-        } else if(card instanceof TrapCard) {
-            if(orderedPath.contains(pos)) {
-                newBuilding = new TrapBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+        if(!alrTaken) {
+            Pair<Integer, Integer> pos = new Pair<Integer, Integer>(buildingNodeX, buildingNodeY);
+            boolean checkAdjacent = checkIfAdjacentPathTile(buildingNodeX, buildingNodeY);
+            if(card instanceof VampireCastleCard) {
+                if(!orderedPath.contains(pos) && checkAdjacent) {
+                    newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
+            } else if(card instanceof ZombiePitCard) {
+                if(!orderedPath.contains(pos) && checkAdjacent) {
+                    newBuilding = new ZombiePitBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
+            } else if(card instanceof BarracksCard) {
+                if(orderedPath.contains(pos)) {
+                    newBuilding = new BarracksBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
+            } else if(card instanceof TowerCard) {
+                if(!orderedPath.contains(pos) && checkAdjacent) {
+                    newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
+            } else if(card instanceof VillageCard) {
+                if(orderedPath.contains(pos)) {
+                    newBuilding = new VillageBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
+            } else if(card instanceof CampfireCard) {
+                if(!orderedPath.contains(pos)) {
+                    newBuilding = new CampfireBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
+            } else if(card instanceof TrapCard) {
+                if(orderedPath.contains(pos)) {
+                    newBuilding = new TrapBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
             }
         }
 
         if(newBuilding != null) {
             buildingEntities.add(newBuilding);
-        } else {
-            throw new IllegalArgumentException();
-        }
 
-        // destroy the card
-        card.destroy();
-        cardEntities.remove(card);
-        shiftCardsDownFromXCoordinate(cardNodeX);
+            // destroy the card
+            card.destroy();
+            cardEntities.remove(card);
+            shiftCardsDownFromXCoordinate(cardNodeX);
+        } else {
+            try {
+                throw new IllegalArgumentException();
+            } catch (IllegalArgumentException e) {
+                System.out.println("Cannot place building there");
+            }
+        }
 
         return newBuilding;
     }
@@ -602,6 +616,10 @@ public class LoopManiaWorld {
 
     public List<BasicEnemy> getEnemy() {
         return enemies;
+    }
+
+    public List<Card> getCards() {
+        return cardEntities;
     }
 
     public List<BasicEnemy> spawnEnemies() {
@@ -638,8 +656,9 @@ public class LoopManiaWorld {
         List<Building> buildingsToRemove = new ArrayList<>();
         for(Building b : buildingEntities) {
             if(b instanceof TrapBuilding || b instanceof TowerBuilding) {
-                b.damage(enemies, buildingEntities, battle);
-                buildingsToRemove.add(b);
+                if(b.damage(enemies, buildingEntities, battle) != null) {
+                    buildingsToRemove.add(b);
+                }
             }
         }
         for(Building b : buildingsToRemove) {

@@ -1,6 +1,5 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -124,7 +123,9 @@ public class SpawnBuildingsTest {
         
         VampireCastleCard vampCard = world.loadVampireCard();
 
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 0, 1));
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 0, 1);
+        assertEquals(1, world.getCards().size());
+        assertEquals(vampCard, world.getCards().get(0));
     }
 
     @Test
@@ -415,7 +416,9 @@ public class SpawnBuildingsTest {
         
         ZombiePitCard zombieCard = world.loadZombieCard();
 
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 0, 1));
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 0, 1);
+        assertEquals(1, world.getCards().size());
+        assertEquals(zombieCard, world.getCards().get(0));
     }
 
     @Test
@@ -704,7 +707,9 @@ public class SpawnBuildingsTest {
         world.setCastle(castle);
 
         BarracksCard barracksCard = world.loadBarracksCard();
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 1, 1));
+        world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 1, 1);
+        assertEquals(1, world.getCards().size());
+        assertEquals(barracksCard, world.getCards().get(0));
     }
 
     
