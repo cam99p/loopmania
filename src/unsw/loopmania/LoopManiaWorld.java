@@ -407,10 +407,9 @@ public class LoopManiaWorld {
         return false;
     }
 
-    //TODO: Refactor Item spawning code to reduce redundant code
     /**
      * spawn an item in the world and return the sword entity
-     * @return a sword to be spawned in the controller as a JavaFX node
+     * @return an item to be spawned in the controller as a JavaFX node
      */
     public Item addUnequippedItem(ItemType itemType){
         // TODO = expand this - we would like to be able to add multiple types of items, apart from swords
@@ -438,6 +437,13 @@ public class LoopManiaWorld {
     public void removeUnequippedInventoryItemByCoordinates(int x, int y){
         Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
         removeUnequippedInventoryItem(item);
+    }
+
+    /**
+     * equip an item (move from unequipped inventory to character equipment)
+     */
+    public void equipItem(Item item){
+        character.equipItem(item);
     }
 
     /**

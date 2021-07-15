@@ -65,6 +65,27 @@ public class Character extends MovingEntity{
     public List<Ally> getAllies() {
         return allies;
     }
+
+    public Item getEquipment(Slot slot)
+    {
+        return equipment.get(slot);
+    }
+
+    public Map<Slot, Item> getMap()
+    {
+        return equipment;
+    }
+
+    public void equipItem(Item item)
+    {
+        if(equipment.get(item.getSlot()) != null)
+        {
+            equipment.get(item.getSlot()).onDeequip(this);
+            equipment.get(item.getSlot()).destroy();
+        }
+        equipment.put(item.getSlot(), item);
+        equipment.get(item.getSlot()).onEquip(this);
+    }
     
     private void initialiseEquipment(){
         equipment = new EnumMap<Slot, Item>(Slot.class);
