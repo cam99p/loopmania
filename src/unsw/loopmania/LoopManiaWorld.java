@@ -41,6 +41,10 @@ public class LoopManiaWorld {
 
     private int cycle;
 
+    private int exp;
+
+    private int gold;
+
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
@@ -77,6 +81,8 @@ public class LoopManiaWorld {
         character = null;
         castle = null;
         cycle = 0;
+        exp = 0;
+        gold = 0;
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
@@ -198,11 +204,29 @@ public class LoopManiaWorld {
      */
     public List<MovingEntity> gatherAllies() {
         ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
-        allies.add(character); //Add character
+        
+        //Add character
+        allies.add(character);
+
+        //Add allies
         for (Ally ally : character.getAllies()) {
             allies.add(ally);
         }
-        //TODO: Add towers. Check if their xy coords are close enough to chars xy coords
+        
+        //Add towers
+        for (Building building : buildingEntities) {
+            //Check building type
+            if (building instanceof TowerBuilding){
+                //Check distance
+                //Radius of tower support is 8 tiles 8^2 = 64
+                if (Math.pow((character.getX()-building.getX()), 2) + Math.pow((character.getY()-building.getY()), 2) < (64)){
+                    TowerAlly tempTower = new TowerAlly(null);
+                    allies.add(tempTower);
+                }
+                
+            }
+        }
+
         return allies;
     }
 
@@ -216,7 +240,7 @@ public class LoopManiaWorld {
 
         //Check for those in battle range
         for (BasicEnemy e: enemies){
-            if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < (e.getBattleRadius() * e.getBattleRadius())){
+            if (Math.pow((character.getX()-e.getX()), 2) + Math.pow((character.getY()-e.getY()), 2) < (e.getBattleRadius() * e.getBattleRadius())){
                 battleEnemies.add(e);
             }
         }
@@ -237,6 +261,17 @@ public class LoopManiaWorld {
 
         return battleEnemies;
     }
+
+    /** Given a list of enemies defeated in battle, calculates rewards and
+     *  updates trackers in world state accordingly
+     */
+    public void GainBattleRewards(List<BasicEnemy> enemies){
+        for (BasicEnemy basicEnemy : enemies) {
+            setExp(getExp() + 50);
+            setGold(getGold() + 50);
+        }
+    }
+    
 
     /**
      * spawn a vampire castle card in the world and return the card entity
@@ -596,6 +631,22 @@ public class LoopManiaWorld {
 
     public int getCycle() {
         return cycle;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 
     public List<Building> getBuildings() {

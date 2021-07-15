@@ -45,11 +45,12 @@ public class BattleTest {
         Zombie dummyZombie = new Zombie(dummyPos);
         Character dummyChar = new Character(dummyPos);
         Ally dummyAlly = new Ally(dummyPos);
-        //Add tower
+        TowerAlly dummyTower = new TowerAlly(dummyPos);
 
         ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
         allies.add(dummyChar);
         allies.add(dummyAlly);
+        allies.add(dummyTower);
         ArrayList<MovingEntity> enemies = new ArrayList<MovingEntity>();
         enemies.add(dummySlug);
         enemies.add(dummyVamp);
@@ -62,14 +63,38 @@ public class BattleTest {
         assertTrue(dummyBattle.getParticipants().get(2) == dummySlug);
         assertTrue(dummyBattle.getParticipants().get(3) == dummyAlly);
         assertTrue(dummyBattle.getParticipants().get(4) == dummyZombie);
-        //Add tower check
-        //Cannot be completed till tower is implemented
+        assertTrue(dummyBattle.getParticipants().get(5) == dummyTower);
     }
 
     //Tests that the get target ally function works as intended
     @Test
     public void TestGetTargetAlly(){
         //TODO: Cannot be completed till ally and tower are implemented
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
+        Slug dummySlug = new Slug(dummyPos);
+        Vampire dummyVamp = new Vampire(dummyPos);
+        Zombie dummyZombie = new Zombie(dummyPos);
+        Character dummyChar = new Character(dummyPos);
+        Ally dummyAlly = new Ally(dummyPos);
+        TowerAlly dummyTower = new TowerAlly(dummyPos);
+
+        dummyChar.AddAlly(dummyAlly);
+
+        ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
+        allies.add(dummyChar);
+        allies.add(dummyAlly);
+        allies.add(dummyTower);
+        ArrayList<MovingEntity> enemies = new ArrayList<MovingEntity>();
+        enemies.add(dummySlug);
+        enemies.add(dummyVamp);
+        enemies.add(dummyZombie);
+
+        Battle dummyBattle = new Battle(dummyChar, allies, enemies);
+
+        //An ally exists, so it should be targeted first
+        assertTrue(dummyBattle.getTargetAlly() == dummyAlly);
     }
 
     //Tests that the get target enemy function works as intended
@@ -92,7 +117,7 @@ public class BattleTest {
 
         Battle dummyBattle = new Battle(dummyChar, allies, enemies);
 
-        //dummyZombie, being added last, is an ally of the main enemy, and thus should be targted first
+        //dummyZombie, being added last, is an ally of the main enemy, and thus should be targeted first
         assertTrue(dummyBattle.getTargetEnemy() == dummyZombie);
     }
 }

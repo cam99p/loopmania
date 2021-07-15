@@ -109,4 +109,19 @@ public class CharacterTest {
 
         assertTrue(dummyChar.getAllies().size() == 1);
     }
+
+    //Tests that the characters attack is doubled when the doubledDamage is true
+    @Test
+    public void TestDoubleDamage(){
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
+        Slug dummySlug = new Slug(dummyPos);
+        Character dummyChar = new Character(dummyPos);
+
+        dummyChar.setDoubleDamage(true);
+        dummyChar.AttackTarget(dummySlug, 0);
+
+        assertTrue(dummySlug.getHealth() == 40); 
+    }
 }
