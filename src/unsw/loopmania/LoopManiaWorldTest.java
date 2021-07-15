@@ -18,12 +18,12 @@ public class LoopManiaWorldTest {
         PathPosition dummyPos = new PathPosition(0, dummyPath);
         Character dummyChar = new Character(dummyPos);
         d.setCharacter(dummyChar);
-        //Add ally
+        Ally dummyAlly = new Ally(dummyPos);
+        dummyChar.AddAlly(dummyAlly);
         //Add tower
         //Add tower too far away from battle
         //Cannot be completed till ally and tower are implemented
         assertTrue(d.gatherAllies().size() == 3);
-
     }
 
     @Test
@@ -66,8 +66,7 @@ public class LoopManiaWorldTest {
         d.setCharacter(dummyChar);
 
         //Slug
-        PathPosition dummyPos2 = new PathPosition(5, dummyPath);
-        Slug dummySlug = new Slug(dummyPos2);
+        Slug dummySlug = new Slug(dummyPos);
         d.addEnemy(dummySlug);
 
         //Run battles

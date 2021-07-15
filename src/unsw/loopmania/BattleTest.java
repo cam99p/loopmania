@@ -24,7 +24,7 @@ public class BattleTest {
         ArrayList<MovingEntity> enemies = new ArrayList<MovingEntity>();
         enemies.add(dummySlug);
 
-        Battle dummyBattle = new Battle(allies, enemies);
+        Battle dummyBattle = new Battle(dummyChar, allies, enemies);
 
         assertTrue(dummyBattle.getParticipants().size() == 2); //Check that both hero and slug are in the battle order
 
@@ -44,31 +44,32 @@ public class BattleTest {
         Vampire dummyVamp = new Vampire(dummyPos);
         Zombie dummyZombie = new Zombie(dummyPos);
         Character dummyChar = new Character(dummyPos);
-        //Add ally
+        Ally dummyAlly = new Ally(dummyPos);
         //Add tower
 
         ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
         allies.add(dummyChar);
+        allies.add(dummyAlly);
         ArrayList<MovingEntity> enemies = new ArrayList<MovingEntity>();
         enemies.add(dummySlug);
         enemies.add(dummyVamp);
         enemies.add(dummyZombie);
 
-        Battle dummyBattle = new Battle(allies, enemies);
+        Battle dummyBattle = new Battle(dummyChar, allies, enemies);
 
         assertTrue(dummyBattle.getParticipants().get(0) == dummyVamp);
         assertTrue(dummyBattle.getParticipants().get(1) == dummyChar);
         assertTrue(dummyBattle.getParticipants().get(2) == dummySlug);
-        assertTrue(dummyBattle.getParticipants().get(3) == dummyZombie);
-        //Add ally check
+        assertTrue(dummyBattle.getParticipants().get(3) == dummyAlly);
+        assertTrue(dummyBattle.getParticipants().get(4) == dummyZombie);
         //Add tower check
-        //Cannot be completed till ally and tower are implemented
+        //Cannot be completed till tower is implemented
     }
 
     //Tests that the get target ally function works as intended
     @Test
     public void TestGetTargetAlly(){
-        //Cannot be completed till ally and tower are implemented
+        //TODO: Cannot be completed till ally and tower are implemented
     }
 
     //Tests that the get target enemy function works as intended
@@ -89,7 +90,7 @@ public class BattleTest {
         enemies.add(dummySlug);
         enemies.add(dummyZombie);
 
-        Battle dummyBattle = new Battle(allies, enemies);
+        Battle dummyBattle = new Battle(dummyChar, allies, enemies);
 
         //dummyZombie, being added last, is an ally of the main enemy, and thus should be targted first
         assertTrue(dummyBattle.getTargetEnemy() == dummyZombie);
