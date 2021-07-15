@@ -266,7 +266,10 @@ public class LoopManiaWorld {
      *  updates trackers in world state accordingly
      */
     public void GainBattleRewards(List<BasicEnemy> enemies){
-
+        for (BasicEnemy basicEnemy : enemies) {
+            setExp(getExp() + 50);
+            setGold(getGold() + 50);
+        }
     }
     
 
