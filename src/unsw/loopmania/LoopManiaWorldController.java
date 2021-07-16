@@ -138,12 +138,6 @@ public class LoopManiaWorldController {
     // ITEMS IMAGES
 
     private Image swordImage;
-    private Image armourImage;
-    private Image helmetImage;
-    private Image shieldImage;
-    private Image stakeImage;
-    private Image staffImage;
-    private Image oneRingImage;
     private Image healthPotionImage;
 
 
@@ -204,12 +198,6 @@ public class LoopManiaWorldController {
 
         // Load items images
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
-        stakeImage = new Image((new File("src/images/stake.png")).toURI().toString());
-        staffImage = new Image((new File("src/images/staff.png")).toURI().toString());
-        shieldImage = new Image((new File("src/images/shield.png")).toURI().toString());
-        armourImage = new Image((new File("src/images/armour.png")).toURI().toString());
-        helmetImage = new Image((new File("src/images/helmet.png")).toURI().toString());
-        oneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
         healthPotionImage = new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString());
 
         // initialize them all...
@@ -347,36 +335,6 @@ public class LoopManiaWorldController {
         onLoad(sword);
     }
 
-    private void loadStaff() {
-        Staff staff = world.addUnequippedStaff();
-        onLoad(staff);
-    }
-
-    private void loadStake() {
-        Stake stake = world.addUnequippedStake();
-        onLoad(stake);
-    }
-
-    private void loadArmour() {
-        Armour armour = world.addUnequippedArmour();
-        onLoad(armour);
-    }
-
-    private void loadHelmet() {
-        Helmet helmet = world.addUnequippedHelmet();
-        onLoad(helmet);
-    }
-
-    private void loadShield() {
-        Shield shield = world.addUnequippedShield();
-        onLoad(shield);
-    }
-
-    private void loadOneRing() {
-        TheOneRing oneRing = world.addUnequippedOneRing();
-        onLoad(oneRing);
-    }
-
     private void loadHealthPotion() {
         HealthPotion healthPotion = world.addUnequippedHealthPotion();
         onLoad(healthPotion);
@@ -444,10 +402,7 @@ public class LoopManiaWorldController {
         ImageView view = new ImageView(swordImage);
        // addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, squares, unequippedInventory);
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        
-        
         addEntity(sword, view);
-
         // Place item on the path 
        // squares.add(view, world.getCharacter().getX(), world.getCharacter().getY());
 
@@ -459,49 +414,6 @@ public class LoopManiaWorldController {
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, equippedItems, unequippedInventory);
         addEntity(sword, view);
         equippedItems.add(view, sword.getX(), sword.getY());
-    }
-
-  private void onLoad(Stake stake) {
-        ImageView view = new ImageView(stakeImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(stake, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-    private void onLoad(Staff staff) {
-        ImageView view = new ImageView(staffImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(staff, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-    private void onLoad(Armour armour) {
-        ImageView view = new ImageView(armourImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(armour, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-    private void onLoad(Helmet helmet) {
-        ImageView view = new ImageView(helmetImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(helmet, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-    private void onLoad(Shield shield) {
-        ImageView view = new ImageView(shieldImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(shield, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-
-    private void onLoad(TheOneRing oneRing) {
-        ImageView view = new ImageView(oneRingImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(oneRing, view);
-        unequippedInventory.getChildren().add(view);
     }
 
     private void onLoad(HealthPotion healthPotion) {
@@ -694,14 +606,6 @@ public class LoopManiaWorldController {
     private void removeInventoryItemByCoordinates(int nodeX, int nodeY) {
         world.removeEquippedInventoryItemByCoordinates(nodeX, nodeY);
         
-    }
-    
-    private void moveFromUnequippedToEquipped(int nodeX, int nodeY) {
-     //   world.moveFromUnequippedToEquipped(nodeX, nodeY);
-    }
-
-    private void moveFromEquippedToUnequipped(int nodeX, int nodeY) {
-        world.moveFromEquippedToUnequipped(nodeX, nodeY);
     }
 
     /**
@@ -938,22 +842,5 @@ public class LoopManiaWorldController {
         System.out.println("current method = "+currentMethodLabel);
         System.out.println("In application thread? = "+Platform.isFxApplicationThread());
         System.out.println("Current system time = "+java.time.LocalDateTime.now().toString().replace('T', ' '));
-
-        System.out.println(" INVENTORY ");
-        List<Item> equipped = world.getEquippedItems();
-        for (Entity e: equipped) {
-            System.out.println(e);
-        }
-
-        System.out.println(" UNEQUIPPED ");
-        List<Item> unEquipped = world.getUnequippedItems();
-        for (Entity e: unEquipped) {
-            System.out.println(e);
-        }
-   /*     }
-        System.out.println(" ATTACK ");
-        System.out.println(world.getCharacter().getAttack());
-        System.out.println(" DEFENCE ");
-        System.out.println(world.getCharacter().getDefense());*/
     }
 }

@@ -79,35 +79,4 @@ public class LoopManiaWorldTest {
         assertTrue(defeated.get(0) == dummySlug);
     }
 
-    @Test
-    public void TestEquipItems() {
-        //Path
-        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
-                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
-
-        //World
-        LoopManiaWorld d = new LoopManiaWorld(3, 3, dummyPath);
-
-        //Character
-        PathPosition dummyPos = new PathPosition(0, dummyPath);
-        Character dummyChar = new Character(dummyPos);
-        d.setCharacter(dummyChar);
-
-        List<Item> equippedItems = d.getEquippedItems();
-        List<Item> unequippedItems = d.getUnequippedItems();
-
-        // Add sword to equipped, then move to Inventory
-        Sword sword = d.addUnequippedSword();
-        d.moveFromUnequippedToEquipped(sword.getX(), sword.getY());
-        assertTrue(equippedItems.contains(sword));
-        assertTrue(!unequippedItems.contains(sword));
-        assertTrue(dummyChar.getAttack() == 15);
-
-        // Move from inventory to unequip
-        d.moveFromEquippedToUnequipped(sword.getX(), sword.getY());
-        assertTrue(!equippedItems.contains(sword));
-        assertTrue(unequippedItems.contains(sword));
-        assertTrue(dummyChar.getAttack() == 5);
-
-    }
 }
