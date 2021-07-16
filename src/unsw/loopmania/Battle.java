@@ -89,6 +89,7 @@ public class Battle {
         else {
             //GAME OVER
             System.out.println("GAME OVER");
+            System.exit(0);
             //TODO: replace this with a pop up or something
         }
     }
