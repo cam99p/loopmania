@@ -10,9 +10,10 @@
 
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="Main Menu" />
-      <!-- clicking button should start/resume the game -->
-      <Button fx:id="startGameButton" onAction="#switchToLevel" text="Start Game" />
+      <Label text="Choose Level" />
+      <Button fx:id="StandardMode" mnemonicParsing="false" onAction="#switchToGame" text="Standard Mode" />
+      <Button fx:id="SurvivalMode" mnemonicParsing="false" onAction="#switchToGame" text="Survival Mode" />
+      <Button fx:id="BerserkerMode" mnemonicParsing="false" onAction="#switchToGame" text="Berserker Mode" />
    </children>
    <padding>
       <Insets bottom="120.0" left="120.0" right="120.0" top="120.0" />
