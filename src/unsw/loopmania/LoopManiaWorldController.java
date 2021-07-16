@@ -388,10 +388,10 @@ public class LoopManiaWorldController {
         // react to character defeating an enemy
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
-        loadSword();
-        loadHealthPotion();
+        loadItem(ItemType.SWORD);
+        loadItem(ItemType.HEALTH_POTION);
         addXP(50);
-        addGold(20);
+        addGold(50);
         Random rand = new Random();
         int seed = rand.nextInt(8);
         if(seed == 1) {
@@ -478,7 +478,7 @@ public class LoopManiaWorldController {
      */
     private void onLoad(Item item) {
         String itemName = item.getName();
-        ImageView view;
+        ImageView view = null;
         switch(itemName){
             case "Sword":
                  view = new ImageView(swordImage);
@@ -499,29 +499,12 @@ public class LoopManiaWorldController {
             default:
                 view = null;
         }
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(item, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-    private void onLoad(Item item) {
-        if(item instanceof Sword) {
-
-        } else if(item instanceof Stake) {
-
-        } else if(item instanceof Staff) {
-
-        } else if(item instanceof Armour) {
-
-        } else if(item instanceof Shield) {
-
-        } else if(item instanceof Helmet) {
-
-        } else if(item instanceof HealthPotion) {
-
+        if(view != null) {
+            addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+            addEntity(item, view);
+            unequippedInventory.getChildren().add(view);
         }
     }
-
       
     /**
      * load an enemy into the GUI

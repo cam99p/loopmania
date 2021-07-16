@@ -67,7 +67,7 @@ public class Battle {
                 //If the attack kills the ally, remove it from the heros ally list
                 if (target.getHealth() < 0){
                     if (target == hero){
-                        heroDefeated(hero);
+                        // heroDefeated(hero);
                     } else{
                         //Ally dies, remove from hero's list
                         hero.getAllies().remove(target);
