@@ -67,7 +67,7 @@ public class Battle {
                 //If the attack kills the ally, remove it from the heros ally list
                 if (target.getHealth() < 0){
                     if (target == hero){
-                        heroDefeated(hero);
+                        // heroDefeated(hero);
                     } else{
                         //Ally dies, remove from hero's list
                         hero.getAllies().remove(target);
@@ -89,6 +89,7 @@ public class Battle {
         else {
             //GAME OVER
             System.out.println("GAME OVER");
+            System.exit(0);
             //TODO: replace this with a pop up or something
         }
     }
