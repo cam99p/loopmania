@@ -81,7 +81,16 @@ public class Battle {
     }
 
     public void heroDefeated(Character hero) {
-        
+        if (hero.canRevive){
+            //Set heros hp back to max
+            hero.setHealth(200); 
+            hero.unsetRevive();
+        } 
+        else {
+            //GAME OVER
+            System.out.println("GAME OVER");
+            //TODO: replace this with a pop up or something
+        }
     }
 
     public List<MovingEntity> getAllies() {

@@ -137,5 +137,7 @@ public class CharacterTest {
         dummyChar.setBlocking();
 
         dummySlug.AttackTarget(dummyChar, 1);
+
+        assertTrue(dummyChar.getHealth() == 200);
     }
 }

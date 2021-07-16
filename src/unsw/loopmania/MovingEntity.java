@@ -129,4 +129,13 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
         health -= value;
     }
 
+    //Used when the entity is attacked, and will try to block
+    public boolean tryBlock(int seed) {
+        if (this.canBlock && seed <= 2){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
