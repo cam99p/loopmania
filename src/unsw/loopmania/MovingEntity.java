@@ -57,6 +57,10 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     public int getY() {
         return y().get();
     }
+
+    public PathPosition getPosition() {
+        return position;
+    }
     
     public int getAttack() {
         return attack;

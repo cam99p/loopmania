@@ -59,37 +59,55 @@
          <children>
             <!-- equippedItems contains the equipment equipped by the character in special slots -->
             <!-- TODO = extend this to have slots for equipping armour, shields, helmets, and any other equippable items -->
+            <Label fx:id="equippedLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="95.0" text="INVENTORY">
+               <font>
+                     <Font name="Franklin Gothic Medium" size="15.0" />
+                  </font>
+               </Label>
             <GridPane fx:id="equippedItems" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
                <columnConstraints>
                   <ColumnConstraints />
                   <ColumnConstraints />
                   <ColumnConstraints />
+                  <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
                   <RowConstraints />
                </rowConstraints>
                <children>
                   <!-- swordCell is the cell where a sword intended to be equipped will be dragged by the human player -->
-                  <ImageView id="swordCell" GridPane.columnIndex="0" GridPane.rowIndex="0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
+                  <ImageView id="swordCell" GridPane.rowIndex="2" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
                      <image>
                         <Image url="@../../images/sword_unequipped.png" />
                      </image>
                   </ImageView>
                   <!-- blankCell is an empty cell -->
-                  <ImageView id="blankCell" GridPane.columnIndex="1" GridPane.rowIndex="0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
+                  <ImageView id="blankCell" GridPane.columnIndex="1" GridPane.rowIndex="2" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
                      <image>
                         <Image url="@../../images/image_just_black_tiny.png" />
                      </image>
                   </ImageView>
                   <!-- shieldCell is the cell where a shield intended to be equipped will be dragged by the human player -->
-                  <ImageView id="shieldCell" GridPane.columnIndex="2" GridPane.rowIndex="0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
+                  <ImageView id="shieldCell" GridPane.columnIndex="2" GridPane.rowIndex="2" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
                      <image>
                         <Image url="@../../images/shield_unequipped.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView id="helmetCell" GridPane.columnIndex="3" GridPane.rowIndex="2" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">    
+                     <image>
+                        <Image url="@../../images/helmet_slot.png" />
                      </image>
                   </ImageView>
                </children>
             </GridPane>
 
+            <Label fx:id="unequippedLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="95.0" text="EQUIPMENT">
+            <font>
+                  <Font name="Franklin Gothic Medium" size="15.0" />
+               </font>
+            </Label>
             <!-- unequippedInventory is for unequipped items, which can be dragged into the equipped inventory -->
             <GridPane fx:id="unequippedInventory" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
                <columnConstraints>
@@ -150,6 +168,9 @@
                   </Label>
                </children>
             </GridPane>
+         
+                                    <!-- clicking this button returns the human player to the main menu -->
+            <Button onAction="#switchToMainMenu" text="Exit to Main Menu" />
          </children>
       </VBox>
    </HBox>
