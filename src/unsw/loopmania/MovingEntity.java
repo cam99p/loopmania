@@ -57,7 +57,7 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     public int getY() {
         return y().get();
     }
-
+    
     public int getAttack() {
         return attack;
     }
