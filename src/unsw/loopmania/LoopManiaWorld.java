@@ -62,7 +62,7 @@ public class LoopManiaWorld {
 
     private List<HealthPotion> healthPotions;
 
-    private ItemFactory itemFactory = new ItemFactory();
+    private ItemFactory itemFactory;
 
 
     /**
@@ -92,6 +92,7 @@ public class LoopManiaWorld {
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
         healthPotions = new ArrayList<>();
+        this.itemFactory = new ItemFactory();
     }
 
     public int getWidth() {
