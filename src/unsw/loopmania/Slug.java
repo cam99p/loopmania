@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import java.util.Random;
 
-public class Slug extends BasicEnemy implements Attack {
+public class Slug extends BasicEnemy{
     //Construct enemy at certain position, and set all attributes
     public Slug(PathPosition position) {
         super(position);
@@ -19,7 +19,13 @@ public class Slug extends BasicEnemy implements Attack {
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
         int damage = this.getAttack() - target.getDefense();
-        target.setHealth(target.getHealth() - damage);
+
+        //If the target enityt (currently only main character) successfully blocks, reduce damage to 0
+        if (target.tryBlock(seed)){
+            damage = 0;
+        }
+
+        target.damageHealth(damage);
     }
 
     /**
