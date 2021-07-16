@@ -274,6 +274,7 @@ public class LoopManiaWorld {
             setExp(getExp() + 50);
             setGold(getGold() + 50);
         }
+
     }
 
     
@@ -325,8 +326,8 @@ public class LoopManiaWorld {
         setGold(getGold() + 10);
         setExp(getExp() + 100);
         Random rand = new Random();
-        int seed = rand.nextInt(11);
-        if(seed == 10) {
+        int seed = rand.nextInt(21);
+        if(seed == 20) {
             item = randomItem();
         }
         return item;
@@ -663,6 +664,8 @@ public class LoopManiaWorld {
             if(b instanceof TrapBuilding || b instanceof TowerBuilding) {
                 if(b.damage(enemies, buildingEntities, battle) != null) {
                     buildingsToRemove.add(b);
+                    setGold(getGold() + 50);
+                    setExp(getExp() + 50);
                 }
             }
         }
@@ -712,27 +715,46 @@ public class LoopManiaWorld {
     }
 
     public Item randomItem() {
-        /*
         Item item = null;
         Random rand = new Random();
         int seed = rand.nextInt(8);
         if(seed == 1) {
-            item = addUnequippedHealthPotion();
+            item = addUnequippedItem(ItemType.ARMOUR);
         } else if(seed == 2) {
-            item = addUnequippedSword();
+            item = addUnequippedItem(ItemType.HEALTH_POTION);
         } else if(seed == 3) {
-            item = addUnequippedStake();
+            item = addUnequippedItem(ItemType.SWORD);
         } else if(seed == 4) {
-            item = addUnequippedStaff();
+            item = addUnequippedItem(ItemType.HELMET);
         } else if(seed == 5) {
-            item = addUnequippedArmour();
+            item = addUnequippedItem(ItemType.SHIELD);
         } else if(seed == 6) {
-            item = addUnequippedShield();
+            item = addUnequippedItem(ItemType.STAKE);
         } else {
-            item = addUnequippedHelmet();
+            item = addUnequippedItem(ItemType.STAFF);
         }
         return item;
-        */
-        return null;
+    }
+
+    public Pair<Card, Item> randomCard() {
+        Pair<Card, Item> cardItemPair = null;
+        Random rand = new Random();
+        int seed = rand.nextInt(8);
+        if(seed == 1) {
+            cardItemPair = loadCard(VampireCastleCard.class);
+        } else if(seed == 2) {
+            cardItemPair = loadCard(ZombiePitCard.class);
+        } else if(seed == 3) {
+            cardItemPair = loadCard(BarracksCard.class);
+        } else if(seed == 4) {
+            cardItemPair = loadCard(CampfireCard.class);
+        } else if(seed == 5) {
+            cardItemPair = loadCard(TowerCard.class);  
+        } else if(seed == 6) {
+            cardItemPair = loadCard(TrapCard.class);
+        } else {
+            cardItemPair = loadCard(VillageCard.class);
+        }
+        return cardItemPair;
     }
 }

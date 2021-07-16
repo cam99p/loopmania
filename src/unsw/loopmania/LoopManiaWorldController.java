@@ -319,16 +319,16 @@ public class LoopManiaWorldController {
 
             // Battle enemies
             List<BasicEnemy> defeatedEnemies = world.runBattles();
+            world.GainBattleRewards(defeatedEnemies);
             for (BasicEnemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
             }
-            world.GainBattleRewards(defeatedEnemies);
 
             // Spawn Enemies
             List<BasicEnemy> newEnemies = world.possiblySpawnEnemies();
             List<BasicEnemy> newZombiesVampires = new ArrayList<>();
             if(world.getCharacterX() == world.getHerosCastleX() && world.getCharacterY() == world.getHerosCastleY()) {
-                addCycle();
+                setCycle();
                 newZombiesVampires = world.spawnEnemies();
             }
             for (BasicEnemy newEnemy: newEnemies){
@@ -371,8 +371,8 @@ public class LoopManiaWorldController {
     /**
      * load a card from the world, and pair it with an image in the GUI
      */
-    private void loadCard(Class<?> type) {
-        Pair<Card, Item> card = world.loadCard(type);
+    private void loadCard() {
+        Pair<Card, Item> card = world.randomCard();
         onLoad(card.getValue0());
         if(card.getValue1() != null) {
             Item item = card.getValue1();
@@ -400,25 +400,9 @@ public class LoopManiaWorldController {
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
         loadItem(ItemType.SWORD);
         loadItem(ItemType.HEALTH_POTION);
-        addXP(50);
-        addGold(50);
-        Random rand = new Random();
-        int seed = rand.nextInt(8);
-        if(seed == 1) {
-            loadCard(VampireCastleCard.class);
-        } else if(seed == 2) {
-            loadCard(ZombiePitCard.class);
-        } else if(seed == 3) {
-            loadCard(BarracksCard.class);
-        } else if(seed == 4) {
-            loadCard(CampfireCard.class);
-        } else if(seed == 5) {
-            loadCard(TowerCard.class);  
-        } else if(seed == 6) {
-            loadCard(TrapCard.class);
-        } else {
-            loadCard(VillageCard.class);
-        }
+        setXP();
+        setGold();
+        loadCard();
     }
 
     public void potionTrigger() {
@@ -429,21 +413,38 @@ public class LoopManiaWorldController {
         }
     }
 
-    public void addXP(int xp) {
-        Integer newXp = Integer.parseInt(xpValue.getText()) + xp;  
-        xpValue.setText(newXp.toString());
-    }
+    /**
+     * Do not use these as it is not synced up to backend
+     */
+    // public void addXP(int xp) {
+    //     Integer newXp = Integer.parseInt(xpValue.getText()) + xp;  
+    //     xpValue.setText(newXp.toString());
+    // }
 
-    public void addGold(int gold) {
-        Integer newGold = Integer.parseInt(goldValue.getText()) + gold;  
+    // public void addGold(int gold) {
+    //     Integer newGold = Integer.parseInt(goldValue.getText()) + gold;  
+    //     goldValue.setText(newGold.toString());
+    // }
+
+    // public void addCycle() {
+    //     Integer newCycle = Integer.parseInt(cycle.getText()) + 1;
+    //     cycle.setText(newCycle.toString());
+    // }
+
+    public void setGold() {
+        Integer newGold = world.getGold();
         goldValue.setText(newGold.toString());
     }
 
-    public void addCycle() {
-        Integer newCycle = Integer.parseInt(cycle.getText()) + 1;
-        cycle.setText(newCycle.toString());
+    public void setXP() {
+        Integer newXP = world.getExp();
+        xpValue.setText(newXP.toString());
     }
 
+    public void setCycle() {
+        Integer newCycle = world.getCycle();
+        cycle.setText(newCycle.toString());
+    }
     /**
      * load a vampire castle card into the GUI.
      * Particularly, we must connect to the drag detection event handler,
@@ -592,6 +593,7 @@ public class LoopManiaWorldController {
                  *you might want to design the application so dropping at an invalid location drops at the most recent valid location hovered over,
                  * or simply allow the card/item to return to its slot (the latter is easier, as you won't have to store the last valid drop location!)
                  */
+                Building newBuilding = null;
                 if (currentlyDraggedType == draggableType){
                     // problem = event is drop completed is false when should be true...
                     // https://bugs.openjdk.java.net/browse/JDK-8117019
@@ -602,7 +604,6 @@ public class LoopManiaWorldController {
                     Dragboard db = event.getDragboard();
                     Node node = event.getPickResult().getIntersectedNode();
                     if(node != targetGridPane && db.hasImage()){
-
                         Integer cIndex = GridPane.getColumnIndex(node);
                         Integer rIndex = GridPane.getRowIndex(node);
                         int x = cIndex == null ? 0 : cIndex;
@@ -614,9 +615,11 @@ public class LoopManiaWorldController {
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
                         switch (draggableType){
                             case CARD:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                Building newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
-                                onLoad(newBuilding);
+                                newBuilding = convertCardToBuildingByCoordinates(nodeX, nodeY, x, y);
+                                if(newBuilding != null) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    onLoad(newBuilding);
+                                }
                                 break;
                             case ITEM:
                                 removeDraggableDragEventHandlers(draggableType, targetGridPane);
@@ -627,20 +630,23 @@ public class LoopManiaWorldController {
                             default:
                                 break;
                         }
-                        
-                        draggedEntity.setVisible(false);
-                        draggedEntity.setMouseTransparent(false);
-                        // remove drag event handlers before setting currently dragged image to null
-                        currentlyDraggedImage = null;
-                        currentlyDraggedType = null;
+                        if(newBuilding != null) {
+                            draggedEntity.setVisible(false);
+                            draggedEntity.setMouseTransparent(false);
+                            // remove drag event handlers before setting currently dragged image to null
+                            currentlyDraggedImage = null;
+                            currentlyDraggedType = null;
+                        }
                         printThreadingNotes("DRAG DROPPED ON GRIDPANE HANDLED");
                     }
                 }
-                event.setDropCompleted(true);
+                if(newBuilding != null) {
+                    event.setDropCompleted(true);
                 // consuming prevents the propagation of the event to the anchorPaneRoot (as a sub-node of anchorPaneRoot, GridPane is prioritized)
                 // https://openjfx.io/javadoc/11/javafx.base/javafx/event/Event.html#consume()
                 // to understand this in full detail, ask your tutor or read https://docs.oracle.com/javase/8/javafx/events-tutorial/processing.htm
-                event.consume();
+                    event.consume();
+                }
             }
         });
 
@@ -761,12 +767,11 @@ public class LoopManiaWorldController {
                     // these do not affect visibility of original image...
                     // https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
                     gridPaneNodeSetOnDragEntered.put(draggableType, new EventHandler<DragEvent>() {
-                        // TODO = be more selective about whether highlighting changes - if it cannot be dropped in the location, the location shouldn't be highlighted!
                         public void handle(DragEvent event) {
                             if (currentlyDraggedType == draggableType){
                             //The drag-and-drop gesture entered the target
                             //show the user that it is an actual gesture target
-                                if(event.getGestureSource() != n && event.getDragboard().hasImage()){
+                                if(event.getGestureSource() != n && event.getDragboard().hasImage() && event.isDropCompleted()){
                                     n.setOpacity(0.7);
                                 }
                             }
