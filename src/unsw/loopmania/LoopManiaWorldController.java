@@ -3,7 +3,6 @@ package unsw.loopmania;
 import java.util.ArrayList;
 import java.util.List;
 import org.javatuples.Pair;
-import java.util.Random;
 
 import org.codefx.libfx.listener.handle.ListenerHandle;
 import org.codefx.libfx.listener.handle.ListenerHandles;
@@ -128,6 +127,10 @@ public class LoopManiaWorldController {
     private boolean isPaused;
     private LoopManiaWorld world;
 
+    private int cycleCounter = 1;
+
+    private int increment = 2;
+
     /**
      * runs the periodic game logic - second-by-second moving of character through maze, as well as enemies, and running of battles
      */
@@ -158,6 +161,7 @@ public class LoopManiaWorldController {
     private Image shieldImage;
     private Image healthPotionImage;
     private Image theOneRingImage;
+    private Image helmetImage;
     //ITEM//
     private Image basicBuildingImage;
     private Image heartImage;
@@ -201,6 +205,8 @@ public class LoopManiaWorldController {
      */
     private MenuSwitcher mainMenuSwitcher;
 
+    private MenuSwitcher itemMenuSwitcher;
+
     /**
      * @param world world object loaded from file
      * @param initialEntities the initial JavaFX nodes (ImageViews) which should be loaded into the GUI
@@ -229,11 +235,17 @@ public class LoopManiaWorldController {
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
         basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
         healthPotionImage = new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString());
+        swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
+        stakeImage = new Image((new File("src/images/stake.png")).toURI().toString());
+        staffImage = new Image((new File("src/images/staff.png")).toURI().toString());
+        armourImage = new Image((new File("src/images/armour.png")).toURI().toString());
+        shieldImage = new Image((new File("src/images/shield.png")).toURI().toString());
+        theOneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
+        helmetImage = new Image((new File("src/images/helmet.png")).toURI().toString());
         heartImage = new Image((new File("src/images/heart.png")).toURI().toString());
         goldImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
-        
 
         // initialize them all...
         gridPaneSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
@@ -302,6 +314,7 @@ public class LoopManiaWorldController {
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
+            switchToMenu();
             world.runTickMoves();
             world.damageEnemy(null);
             world.buffCharacter();
@@ -373,7 +386,7 @@ public class LoopManiaWorldController {
     /**
      * load an item from the world, and pair it with an image in the GUI
      */
-    private void loadItem(ItemType itemType){
+    public void loadItem(ItemType itemType){
         // TODO = load more types of weapon
         // start by getting first available coordinates
         Item item = world.addUnequippedItem(itemType);
@@ -411,10 +424,17 @@ public class LoopManiaWorldController {
     //     xpValue.setText(newXp.toString());
     // }
 
-    // public void addGold(int gold) {
-    //     Integer newGold = Integer.parseInt(goldValue.getText()) + gold;  
-    //     goldValue.setText(newGold.toString());
-    // }
+    public void minusGold(int gold) {
+        Integer newGold = world.getGold() - gold;
+        world.setGold(newGold);
+        goldValue.setText(newGold.toString());
+    }
+
+    public void addGold(int gold) {
+        Integer newGold = world.getGold() + gold;
+        world.setGold(newGold);
+        goldValue.setText(newGold.toString());
+    }
 
     // public void addCycle() {
     //     Integer newCycle = Integer.parseInt(cycle.getText()) + 1;
@@ -434,6 +454,29 @@ public class LoopManiaWorldController {
     public void setCycle() {
         Integer newCycle = world.getCycle();
         cycle.setText(newCycle.toString());
+    }
+
+    public int getGold() {
+        return world.getGold();
+    }
+
+    public String getGoldString() {
+        Integer tempGold = world.getGold();
+        return tempGold.toString();
+    }
+
+    public String getXpString() {
+        Integer tempXp = world.getExp();
+        return tempXp.toString();
+    }
+
+    public String getCycleString() {
+        Integer tempCycle = world.getCycle();
+        return tempCycle.toString();
+    }
+
+    public GridPane getUneqippedInventory() {
+        return unequippedInventory;
     }
     /**
      * load a vampire castle card into the GUI.
@@ -479,7 +522,6 @@ public class LoopManiaWorldController {
      */
     private void onLoad(Item item){
         String itemName = item.getName();
-        System.out.println(itemName);
         ImageView view = null;
         switch(itemName){
             case "Sword":
@@ -830,8 +872,11 @@ public class LoopManiaWorldController {
     }
 
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher){
-        // TODO = possibly set other menu switchers
         this.mainMenuSwitcher = mainMenuSwitcher;
+    }
+
+    public void setItemMenuSwitcher(MenuSwitcher itemMenuSwitcher) {
+        this.itemMenuSwitcher = itemMenuSwitcher;
     }
 
     /**
@@ -840,9 +885,29 @@ public class LoopManiaWorldController {
      */
     @FXML
     private void switchToMainMenu() throws IOException {
-        // TODO = possibly set other menu switchers
         pause();
         mainMenuSwitcher.switchMenu();
+    }
+
+    public void switchToItemMenu() throws IOException {
+        pause();
+        itemMenuSwitcher.switchMenu();
+    }
+
+    public void switchToMenu() {
+        if(cycleCounter == world.getCycle()) {
+            try {
+                switchToItemMenu();
+                incrCycleCounter();
+            } catch (IOException e) {
+                System.out.println("Nothing was done");
+            } 
+        }
+    }
+
+    public void incrCycleCounter() {
+        cycleCounter += increment;
+        increment++;
     }
 
     /**
@@ -860,7 +925,7 @@ public class LoopManiaWorldController {
      * @param entity
      * @param node
      */
-    private void trackPosition(Entity entity, Node node) {
+    public void trackPosition(Entity entity, Node node) {
         // TODO = tweak this slightly to remove items from the equipped inventory?
         GridPane.setColumnIndex(node, entity.getX());
         GridPane.setRowIndex(node, entity.getY());
