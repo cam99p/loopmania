@@ -496,8 +496,6 @@ public class LoopManiaWorldController {
                 view = new ImageView(healthPotionImage);
             case "The One Ring":
                 view = new ImageView(theOneRingImage);
-            default:
-                view = null;
         }
         if(view != null) {
             addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
