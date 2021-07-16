@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import java.util.Random;
 
-public class Vampire extends BasicEnemy implements Attack{
+public class Vampire extends BasicEnemy{
     //Unique Attributes
     private int frenzyTimer;
 
@@ -22,15 +22,33 @@ public class Vampire extends BasicEnemy implements Attack{
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
         int damage = this.getAttack() - target.getDefense();
-        target.setHealth(target.getHealth() - damage);
+
+        //If the target enityt (currently only main character) successfully blocks, reduce damage to 0
+        if (target.tryBlock(seed)){
+            damage = 0;
+        }
+
+        target.damageHealth(damage);
 
         //Critical
         if (seed == 10){
-            this.startFrenzy();
+            //Check if hero is target and has shield
+            if (target instanceof Character && target.canBlock){
+                var rand = new Random();
+                int seed2 = rand.nextInt(11);
+                //If its below 7, the hero blocked the critical
+                if (seed2 >= 7){
+                    this.startFrenzy();
+                }
+
+            } 
+            else {
+                this.startFrenzy();
+            }
         }
 
         //If frenzy buff has 0 turns left
-        if (frenzyTimer == 0){
+        if (frenzyTimer == 0) {
             endFrenzy();
         }
         //Deincrement frenzy
