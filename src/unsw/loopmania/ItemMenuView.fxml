@@ -10,7 +10,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #c38120;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane layoutX="220.0" layoutY="104.0" onDragDropped="#handleSell" prefHeight="276.0" prefWidth="366.0" style="-fx-background-color: #7c430d;">
+      <Pane layoutX="220.0" layoutY="104.0" prefHeight="276.0" prefWidth="366.0" style="-fx-background-color: #7c430d;">
          <children>
             <GridPane fx:id="itemsGridPane" alignment="CENTER" layoutX="87.0" layoutY="18.0" prefHeight="240.0" prefWidth="253.0">
               <columnConstraints>
@@ -31,6 +31,7 @@
                   <Button fx:id="stakeButton" mnemonicParsing="false" onAction="#handleStake" prefHeight="55.0" prefWidth="55.0" text="Stake" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <Button fx:id="staffButton" mnemonicParsing="false" onAction="#handleStaff" prefHeight="55.0" prefWidth="55.0" text="Staff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <Button fx:id="armorButton" mnemonicParsing="false" onAction="#handleArmor" prefHeight="55.0" prefWidth="55.0" text="Armor" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#sellAllItems" prefHeight="55.0" prefWidth="55.0" text="Sell All" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
             <Label layoutX="14.0" layoutY="6.0" text="Items">

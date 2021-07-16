@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
+import org.javatuples.Pair;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import unsw.loopmania.ItemFactory.ItemType;
 import java.io.File;
 
@@ -161,9 +163,26 @@ public class ItemMenuController {
     }
 
     @FXML
-    public void handleSell() throws IOException {
-        mainController.addGold(50);
-        
+    public void sellAllItems() throws IOException {
+        setUneqippedInventory();
+        GridPane unequippedItems = mainController.getUneqippedInventory();
+        ObservableList<Node> children = unequippedItems.getChildren();
+        ArrayList<Pair<Integer, Integer>> toBeRemoved = new ArrayList<>();
+
+        // TODO: Sell item if an item is in a cell
+        for(Node n : children) {
+            if(n.getOnDragDetected() != null) {
+                Pair<Integer, Integer> pair = new Pair<Integer, Integer>(GridPane.getColumnIndex(n), GridPane.getRowIndex(n));
+                toBeRemoved.add(pair);
+            }
+        }
+
+        for(Pair<Integer, Integer> p : toBeRemoved) {
+            mainController.removeItemByCoordinates(p.getValue0(), p.getValue1());
+            mainController.addGold(50);
+            setGoldValue();
+        }
+        setShopInventory();
     }
 
     public void setGoldValue() {

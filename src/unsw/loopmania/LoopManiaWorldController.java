@@ -741,7 +741,7 @@ public class LoopManiaWorldController {
      * @param nodeX x coordinate from 0 to unequippedInventoryWidth-1
      * @param nodeY y coordinate from 0 to unequippedInventoryHeight-1
      */
-    private void removeItemByCoordinates(int nodeX, int nodeY) {
+    public void removeItemByCoordinates(int nodeX, int nodeY) {
         world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
     }
 
@@ -833,7 +833,7 @@ public class LoopManiaWorldController {
      * @param draggableType either cards, or items in unequipped inventory
      * @param targetGridPane the gridpane to remove the drag event handlers from
      */
-    private void removeDraggableDragEventHandlers(DRAGGABLE_TYPE draggableType, GridPane targetGridPane){
+    public void removeDraggableDragEventHandlers(DRAGGABLE_TYPE draggableType, GridPane targetGridPane){
         // remove event handlers from nodes in children squares, from anchorPaneRoot, and squares
         targetGridPane.removeEventHandler(DragEvent.DRAG_DROPPED, gridPaneSetOnDragDropped.get(draggableType));
 
