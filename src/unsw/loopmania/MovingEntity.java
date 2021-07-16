@@ -103,6 +103,10 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
         defense += value;
     }
     
+    public boolean getBlockingStatus(){
+        return canBlock;
+    }
+
     // Makes it possible for the character to block
     public void setBlocking() {
         this.canBlock = true;
@@ -111,6 +115,10 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     // Makes it impossible for the character to block
     public void unsetBlocking() {
         this.canBlock = false; 
+    }
+
+    public boolean getReviveStatus() {
+        return canRevive;
     }
 
     // Makes it possible for the character to be revived
