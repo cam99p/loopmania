@@ -24,13 +24,13 @@
                 <RowConstraints maxHeight="79.0" minHeight="10.0" prefHeight="79.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="helmetButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleHelmet" prefHeight="55.0" prefWidth="55.0" text="Helmet" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button fx:id="potionButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handlePotion" prefHeight="55.0" prefWidth="55.0" text="Potion" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button fx:id="swordButton" mnemonicParsing="false" onAction="#handleSword" prefHeight="55.0" prefWidth="55.0" text="Sword" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Button fx:id="shieldButton" mnemonicParsing="false" onAction="#handleShield" prefHeight="55.0" prefWidth="55.0" text="Shield" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Button fx:id="stakeButton" mnemonicParsing="false" onAction="#handleStake" prefHeight="55.0" prefWidth="55.0" text="Stake" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Button fx:id="staffButton" mnemonicParsing="false" onAction="#handleStaff" prefHeight="55.0" prefWidth="55.0" text="Staff" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Button fx:id="armorButton" mnemonicParsing="false" onAction="#handleArmor" prefHeight="55.0" prefWidth="55.0" text="Armor" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button fx:id="helmetButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleHelmet" prefHeight="55.0" prefWidth="55.0" text="Helmet 300G" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="potionButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handlePotion" prefHeight="55.0" prefWidth="55.0" text="Potion 50G" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="swordButton" mnemonicParsing="false" onAction="#handleSword" prefHeight="55.0" prefWidth="55.0" text="Sword 300G" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="shieldButton" mnemonicParsing="false" onAction="#handleShield" prefHeight="55.0" prefWidth="55.0" text="Shield 300G" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button fx:id="stakeButton" mnemonicParsing="false" onAction="#handleStake" prefHeight="55.0" prefWidth="55.0" text="Stake 300G" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button fx:id="staffButton" mnemonicParsing="false" onAction="#handleStaff" prefHeight="55.0" prefWidth="55.0" text="Staff 300G" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button fx:id="armorButton" mnemonicParsing="false" onAction="#handleArmor" prefHeight="55.0" prefWidth="55.0" text="Armor 300G" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                   <Button mnemonicParsing="false" onAction="#sellAllItems" prefHeight="55.0" prefWidth="55.0" text="Sell All" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
