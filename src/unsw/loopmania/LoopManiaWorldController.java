@@ -164,7 +164,6 @@ public class LoopManiaWorldController {
     private Image helmetImage;
     private Image healthPotionImage;
     private Image theOneRingImage;
-    private Image helmetImage;
     //ITEM//
     private Image basicBuildingImage;
     private Image heartImage;
