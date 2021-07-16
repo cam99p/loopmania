@@ -11,13 +11,14 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     private int defense;
     private int health;
     private int speed;
-    /**
-     * object holding position in the path
-     */
     private PathPosition position;
     protected Boolean canBlock;
     protected Boolean canRevive;
 
+    /**
+     * object holding position in the path
+     */
+    
     /**
      * Create a moving entity which moves up and down the path in position
      * @param position represents the current position in the path
@@ -131,8 +132,18 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
         this.canRevive = false; 
     }
 
+    //Used when the MovingEntity takes damage
     public void damageHealth(int value) {
         health -= value;
+    }
+
+    //Used when the entity is attacked, and will try to block
+    public boolean tryBlock(int seed) {
+        if (this.canBlock && seed <= 2){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

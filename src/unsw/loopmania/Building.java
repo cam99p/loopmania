@@ -83,14 +83,14 @@ public abstract class Building extends StaticEntity implements SpawnEnemyBuildin
     }
 
     public void buff(Character character) {
-
+        throw new UnsupportedOperationException();
     }
 
     public Building damage(List<BasicEnemy> enemies, List<Building> building, Battle battle) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public BasicEnemy spawn(List<BasicEnemy> enemies, List<Pair<Integer, Integer>> path, int cycle) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }

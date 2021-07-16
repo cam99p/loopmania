@@ -1,6 +1,5 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -22,6 +21,7 @@ import unsw.loopmania.VillageCard;
 import unsw.loopmania.Building;
 import unsw.loopmania.CampfireBuilding;
 import unsw.loopmania.CampfireCard;
+import unsw.loopmania.Card;
 
 public class BuffBuildingsTest {
     @Test
@@ -43,7 +43,7 @@ public class BuffBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VillageCard villageCard = world.loadVillageCard();
+        Card villageCard = world.loadCard(VillageCard.class).getValue0();
 
         Building village = world.convertCardToBuildingByCoordinates(villageCard.getX(), villageCard.getY(), 0, 1);
         assertEquals(2, world.getBuildings().size());
@@ -69,9 +69,13 @@ public class BuffBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VillageCard villageCard = world.loadVillageCard();
+        Card villageCard = world.loadCard(VillageCard.class).getValue0();
 
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(villageCard.getX(), villageCard.getY(), 1, 1));
+        world.convertCardToBuildingByCoordinates(villageCard.getX(), villageCard.getY(), 1, 1);
+
+        assertEquals(1, world.getBuildings().size());
+        assertEquals(1, world.getCards().size());
+        assertEquals(villageCard, world.getCards().get(0));
     }
 
     @Test
@@ -95,7 +99,7 @@ public class BuffBuildingsTest {
 
         character.setHealth(140);
 
-        VillageCard villageCard = world.loadVillageCard();
+        Card villageCard = world.loadCard(VillageCard.class).getValue0();
         world.convertCardToBuildingByCoordinates(villageCard.getX(), villageCard.getY(), 0, 1);
 
         character.moveDownPath();
@@ -129,7 +133,7 @@ public class BuffBuildingsTest {
 
         assertTrue(slug.getHealth() == 30);
 
-        VillageCard villageCard = world.loadVillageCard();
+        Card villageCard = world.loadCard(VillageCard.class).getValue0();
         world.convertCardToBuildingByCoordinates(villageCard.getX(), villageCard.getY(), 0, 2);
 
         slug.moveDownPath();
@@ -158,9 +162,12 @@ public class BuffBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        CampfireCard campfireCard = world.loadCampfireCard();
+        Card campfireCard = world.loadCard(CampfireCard.class).getValue0();
 
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 0, 1));
+        world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 0, 1);
+        assertEquals(1, world.getBuildings().size());
+        assertEquals(1, world.getCards().size());
+        assertEquals(campfireCard, world.getCards().get(0));
     }
 
     @Test
@@ -182,7 +189,7 @@ public class BuffBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        CampfireCard campfireCard = world.loadCampfireCard();
+        Card campfireCard = world.loadCard(CampfireCard.class).getValue0();
         assertDoesNotThrow(() -> world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 1, 1));
         assertEquals(2, world.getBuildings().size());
         assertTrue(world.getBuildings().get(1) instanceof CampfireBuilding);
@@ -209,7 +216,7 @@ public class BuffBuildingsTest {
 
         assertTrue(character.getAttack() == 5);
 
-        CampfireCard campfireCard = world.loadCampfireCard();
+        Card campfireCard = world.loadCard(CampfireCard.class).getValue0();
         world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 1, 1);
 
         world.buffCharacter();
@@ -246,7 +253,7 @@ public class BuffBuildingsTest {
 
         assertTrue(character.getAttack() == 5);
 
-        CampfireCard campfireCard = world.loadCampfireCard();
+        Card campfireCard = world.loadCard(CampfireCard.class).getValue0();
         world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 3, 1);
 
         world.buffCharacter();

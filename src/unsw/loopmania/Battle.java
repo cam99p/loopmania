@@ -67,7 +67,7 @@ public class Battle {
                 //If the attack kills the ally, remove it from the heros ally list
                 if (target.getHealth() < 0){
                     if (target == hero){
-                        //TODO: Hero died, do thing
+                        // heroDefeated(hero);
                     } else{
                         //Ally dies, remove from hero's list
                         hero.getAllies().remove(target);
@@ -77,6 +77,20 @@ public class Battle {
 
             //Increment to move onto next entity in turn order
             i++;
+        }
+    }
+
+    public void heroDefeated(Character hero) {
+        if (hero.canRevive){
+            //Set heros hp back to max
+            hero.setHealth(200); 
+            hero.unsetRevive();
+        } 
+        else {
+            //GAME OVER
+            System.out.println("GAME OVER");
+            System.exit(0);
+            //TODO: replace this with a pop up or something
         }
     }
 

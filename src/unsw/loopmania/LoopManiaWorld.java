@@ -222,7 +222,7 @@ public class LoopManiaWorld {
             if (building instanceof TowerBuilding){
                 //Check distance
                 //Radius of tower support is 8 tiles 8^2 = 64
-                if (Math.pow((character.getX()-building.getX()), 2) + Math.pow((character.getY()-building.getY()), 2) < (64)){
+                if (Math.pow((character.getX()-building.getX()), 2) + Math.pow((character.getY()-building.getY()), 2) <= 64){
                     TowerAlly tempTower = new TowerAlly(null);
                     allies.add(tempTower);
                 }
@@ -243,7 +243,7 @@ public class LoopManiaWorld {
 
         //Check for those in battle range
         for (BasicEnemy e: enemies){
-            if (Math.pow((character.getX()-e.getX()), 2) + Math.pow((character.getY()-e.getY()), 2) < (e.getBattleRadius() * e.getBattleRadius())){
+            if (Math.pow((character.getX()-e.getX()), 2) + Math.pow((character.getY()-e.getY()), 2) <= (e.getBattleRadius() * e.getBattleRadius())){
                 battleEnemies.add(e);
             }
         }
@@ -252,7 +252,7 @@ public class LoopManiaWorld {
         if (battleEnemies.size() > 0){
             //Check for those in support range
             for (BasicEnemy e: enemies){
-                if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < (e.getSupportRadius() * e.getSupportRadius())){
+                if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) <= (e.getSupportRadius() * e.getSupportRadius())){
                     //Check it wasnt already added due to being in battle range
                     if (!battleEnemies.contains(e)){
                         battleEnemies.add(e);
@@ -276,112 +276,61 @@ public class LoopManiaWorld {
 
 
     }
+
     
-
-    /**
-     * spawn a vampire castle card in the world and return the card entity
-     * @return a card to be spawned in the controller as a JavaFX node
-     */
-    public VampireCastleCard loadVampireCard(){
-        // if adding more cards than have, remove the first card...
+    public Pair<Card, Item> loadCard(Class<?> type) {
+        Pair<Card, Item> card = null;
+        Item item = null;
         if (cardEntities.size() >= getWidth()){
-            // TODO = give some cash/experience/item rewards for the discarding of the oldest card
             removeCard(0);
+            item = cardRemovalLoot();
         }
-        VampireCastleCard vampireCastleCard = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(vampireCastleCard);
-        return vampireCastleCard;
-    }
+        if(type == VampireCastleCard.class) {
+            VampireCastleCard vampireCastleCard = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(vampireCastleCard);
+            card = new Pair<>(vampireCastleCard, item);
+        } else if(type == ZombiePitCard.class) {
+            ZombiePitCard zombiePitCard = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(zombiePitCard);
+            card = new Pair<>(zombiePitCard, item);
+        } else if(type == BarracksCard.class) {
+            BarracksCard barracksCard = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(barracksCard);
+            card = new Pair<>(barracksCard, item);
+        } else if(type == VillageCard.class) {
+            VillageCard villageCard = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(villageCard);
+            card = new Pair<>(villageCard, item);
+        } else if(type == CampfireCard.class) {
+            CampfireCard campfireCard = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(campfireCard);
+            card = new Pair<>(campfireCard, item);
+        } else if(type == TrapCard.class) {
+            TrapCard trapCard = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(trapCard);
+            card = new Pair<>(trapCard, item);
+        } else {
+            TowerCard towerCard = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(towerCard);
+            card = new Pair<>(towerCard, item);
+        }
 
-    /**
-     * spawn a zombie pit card in the world and return the card entity
-     * @return a card to be spawned in the controller as a node
-     */
-    public ZombiePitCard loadZombieCard() {
-        if (cardEntities.size() >= getWidth()){
-            cardRemovalLoot();
-            removeCard(0);
-        }
-        ZombiePitCard zombiePitCard = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(zombiePitCard);
-        return zombiePitCard;
-    }
-
-    /**
-     * spawn a barracks card in the world and return the card entity
-     * @return a card to be spawned in the controller as a node
-     */
-    public BarracksCard loadBarracksCard() {
-        if (cardEntities.size() >= getWidth()){
-            cardRemovalLoot();
-            removeCard(0);
-        }
-        BarracksCard barracksCard = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(barracksCard);
-        return barracksCard;
-    }
-
-    /**
-     * spawn a village card in the world and return the card entity
-     * @return a card to be spawned in the controller as a node
-     */
-    public VillageCard loadVillageCard() {
-        if (cardEntities.size() >= getWidth()){
-            cardRemovalLoot();
-            removeCard(0);
-        }
-        VillageCard villageCard = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(villageCard);
-        return villageCard;
-    }
-
-    /**
-     * spawn a campfire card in the world and return the card entity
-     * @return a card to be spawned in the controller as a node
-     */
-    public CampfireCard loadCampfireCard() {
-        if (cardEntities.size() >= getWidth()){
-            cardRemovalLoot();
-            removeCard(0);
-        }
-        CampfireCard campfireCard = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(campfireCard);
-        return campfireCard;
-    }
-
-    /**
-     * spawn a trap card in the world and return the card entity
-     * @return a card to be spawned in the controller as a node
-     */
-    public TrapCard loadTrapCard() {
-        if (cardEntities.size() >= getWidth()){
-            cardRemovalLoot();
-            removeCard(0);
-        }
-        TrapCard trapCard = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(trapCard);
-        return trapCard;
-    }
-
-    /**
-     * spawn a tower card in the world and return the card entity
-     * @return a card to be spawned in the controller as a node
-     */
-    public TowerCard loadTowerCard() {
-        if (cardEntities.size() >= getWidth()){
-            cardRemovalLoot();
-            removeCard(0);
-        }
-        TowerCard towerCard = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(towerCard);
-        return towerCard;
+        return card;
     }
 
     /**
      * Give gold/experience/item rewards for the discarding of the oldest card
      */
-    private void cardRemovalLoot() {
-
+    private Item cardRemovalLoot() {
+        Item item = null;
+        setGold(getGold() + 10);
+        setExp(getExp() + 100);
+        Random rand = new Random();
+        int seed = rand.nextInt(11);
+        if(seed == 10) {
+            item = randomItem();
+        }
+        return item;
     }
 
     /**
@@ -577,53 +526,71 @@ public class LoopManiaWorld {
                 break;
             }
         }
-        
+
+        // Check if coordinates are already taken by another building
+        boolean alrTaken = false;
+        for (Building b : buildingEntities) {
+            if(b.getX() == buildingNodeX && b.getY() == buildingNodeY) {
+                alrTaken = true;
+            }
+        }
+
         // now spawn building
-        Pair<Integer, Integer> pos = new Pair<Integer, Integer>(buildingNodeX, buildingNodeY);
         Building newBuilding = null;
-        boolean checkAdjacent = checkIfAdjacentPathTile(buildingNodeX, buildingNodeY);
-        if(card instanceof VampireCastleCard) {
-            if(!orderedPath.contains(pos) && checkAdjacent) {
-                newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-            }
-        } else if(card instanceof ZombiePitCard) {
-            if(!orderedPath.contains(pos) && checkAdjacent) {
-                newBuilding = new ZombiePitBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-            }
-        } else if(card instanceof BarracksCard) {
-            if(orderedPath.contains(pos)) {
-                newBuilding = new BarracksBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-            }
-        } else if(card instanceof TowerCard) {
-            if(!orderedPath.contains(pos) && checkAdjacent) {
-                newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-            }
-        } else if(card instanceof VillageCard) {
-            if(orderedPath.contains(pos)) {
-                newBuilding = new VillageBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-            }
-        } else if(card instanceof CampfireCard) {
-            if(!orderedPath.contains(pos)) {
-                newBuilding = new CampfireBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
-            }
-        } else if(card instanceof TrapCard) {
-            if(orderedPath.contains(pos)) {
-                newBuilding = new TrapBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+        if(!alrTaken) {
+            Pair<Integer, Integer> pos = new Pair<Integer, Integer>(buildingNodeX, buildingNodeY);
+            boolean checkAdjacent = checkIfAdjacentPathTile(buildingNodeX, buildingNodeY);
+            if(card instanceof VampireCastleCard) {
+                if(!orderedPath.contains(pos) && checkAdjacent) {
+                    newBuilding = new VampireCastleBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
+            } else if(card instanceof ZombiePitCard) {
+                if(!orderedPath.contains(pos) && checkAdjacent) {
+                    newBuilding = new ZombiePitBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
+            } else if(card instanceof BarracksCard) {
+                if(orderedPath.contains(pos)) {
+                    newBuilding = new BarracksBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
+            } else if(card instanceof TowerCard) {
+                if(!orderedPath.contains(pos) && checkAdjacent) {
+                    newBuilding = new TowerBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
+            } else if(card instanceof VillageCard) {
+                if(orderedPath.contains(pos)) {
+                    newBuilding = new VillageBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
+            } else if(card instanceof CampfireCard) {
+                if(!orderedPath.contains(pos)) {
+                    newBuilding = new CampfireBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
+            } else if(card instanceof TrapCard) {
+                if(orderedPath.contains(pos)) {
+                    newBuilding = new TrapBuilding(new SimpleIntegerProperty(buildingNodeX), new SimpleIntegerProperty(buildingNodeY));
+                }
             }
         }
 
         if(newBuilding != null) {
             buildingEntities.add(newBuilding);
+
+            // destroy the card
+            card.destroy();
+            cardEntities.remove(card);
+            shiftCardsDownFromXCoordinate(cardNodeX);
         } else {
-            throw new IllegalArgumentException();
+            try {
+                throw new IllegalArgumentException();
+            } catch (IllegalArgumentException e) {
+                System.out.println("Cannot place building there");
+            }
         }
 
-        // destroy the card
-        card.destroy();
-        cardEntities.remove(card);
-        shiftCardsDownFromXCoordinate(cardNodeX);
-
         return newBuilding;
+    }
+
+    public void addCycle() {
+        cycle++;
     }
 
     public int getCycle() {
@@ -654,12 +621,18 @@ public class LoopManiaWorld {
         return enemies;
     }
 
+    public List<Card> getCards() {
+        return cardEntities;
+    }
+
     public List<BasicEnemy> spawnEnemies() {
         List<BasicEnemy> spawnedEnemies = new ArrayList<>();
         for(Building b : buildingEntities) {
             if(b instanceof VampireCastleBuilding || b instanceof ZombiePitBuilding) {
                 BasicEnemy temp = b.spawn(enemies, orderedPath, cycle);
-                spawnedEnemies.add(temp);
+                if(temp != null) {
+                    spawnedEnemies.add(temp);
+                }
             }
         }
         return spawnedEnemies;
@@ -694,6 +667,7 @@ public class LoopManiaWorld {
             }
         }
         for(Building b : buildingsToRemove) {
+            b.destroy();
             buildingEntities.remove(b);
         }
     }
@@ -715,5 +689,46 @@ public class LoopManiaWorld {
                 return false;
             }
 
+    }
+
+    public int getCharacterX() {
+        return character.getX();
+    }
+
+    public int getCharacterY() {
+        return character.getY();
+    }
+
+    public int getHerosCastleX() {
+        return castle.getX();
+    }
+
+    public int getHerosCastleY() {
+        return castle.getY();
+    }
+
+    public Item randomItem() {
+        /*
+        Item item = null;
+        Random rand = new Random();
+        int seed = rand.nextInt(8);
+        if(seed == 1) {
+            item = addUnequippedHealthPotion();
+        } else if(seed == 2) {
+            item = addUnequippedSword();
+        } else if(seed == 3) {
+            item = addUnequippedStake();
+        } else if(seed == 4) {
+            item = addUnequippedStaff();
+        } else if(seed == 5) {
+            item = addUnequippedArmour();
+        } else if(seed == 6) {
+            item = addUnequippedShield();
+        } else {
+            item = addUnequippedHelmet();
+        }
+        return item;
+        */
+        return null;
     }
 }
