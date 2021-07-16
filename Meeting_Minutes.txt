@@ -54,3 +54,15 @@ Topics of Discussion:
 •	Presented our progress on our backend functions
 •	Merged branches with completed work, in order to continue working on sections with interdependancies
 •	Brainstormed how to handle these interdependancies (ie, how to properly integrate items with battles, and the like)
+Date - 16/07/2021
+Attendees:
+-	Cameron
+-	Abrar
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Milestone 1 presentation
+•	Milestone 2 project check in: discussed questions about submission, pattern usage and connecting the backend to the front end
+•	Discussed progress on backend functions
+•	Worked to merge branches again
