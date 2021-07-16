@@ -275,7 +275,6 @@ public class LoopManiaWorld {
             setGold(getGold() + 50);
         }
 
-
     }
 
     
@@ -327,8 +326,8 @@ public class LoopManiaWorld {
         setGold(getGold() + 10);
         setExp(getExp() + 100);
         Random rand = new Random();
-        int seed = rand.nextInt(11);
-        if(seed == 10) {
+        int seed = rand.nextInt(21);
+        if(seed == 20) {
             item = randomItem();
         }
         return item;
@@ -730,5 +729,27 @@ public class LoopManiaWorld {
             item = addUnequippedItem(ItemType.STAFF);
         }
         return item;
+    }
+
+    public Pair<Card, Item> randomCard() {
+        Pair<Card, Item> cardItemPair = null;
+        Random rand = new Random();
+        int seed = rand.nextInt(8);
+        if(seed == 1) {
+            cardItemPair = loadCard(VampireCastleCard.class);
+        } else if(seed == 2) {
+            cardItemPair = loadCard(ZombiePitCard.class);
+        } else if(seed == 3) {
+            cardItemPair = loadCard(BarracksCard.class);
+        } else if(seed == 4) {
+            cardItemPair = loadCard(CampfireCard.class);
+        } else if(seed == 5) {
+            cardItemPair = loadCard(TowerCard.class);  
+        } else if(seed == 6) {
+            cardItemPair = loadCard(TrapCard.class);
+        } else {
+            cardItemPair = loadCard(VillageCard.class);
+        }
+        return cardItemPair;
     }
 }

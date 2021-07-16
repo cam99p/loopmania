@@ -309,10 +309,10 @@ public class LoopManiaWorldController {
 
             // Battle enemies
             List<BasicEnemy> defeatedEnemies = world.runBattles();
+            world.GainBattleRewards(defeatedEnemies);
             for (BasicEnemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
             }
-            world.GainBattleRewards(defeatedEnemies);
 
             // Spawn Enemies
             List<BasicEnemy> newEnemies = world.possiblySpawnEnemies();
@@ -361,8 +361,8 @@ public class LoopManiaWorldController {
     /**
      * load a card from the world, and pair it with an image in the GUI
      */
-    private void loadCard(Class<?> type) {
-        Pair<Card, Item> card = world.loadCard(type);
+    private void loadCard() {
+        Pair<Card, Item> card = world.randomCard();
         onLoad(card.getValue0());
         if(card.getValue1() != null) {
             Item item = card.getValue1();
@@ -392,23 +392,7 @@ public class LoopManiaWorldController {
         loadItem(ItemType.HEALTH_POTION);
         setXP();
         setGold();
-        Random rand = new Random();
-        int seed = rand.nextInt(8);
-        if(seed == 1) {
-            loadCard(VampireCastleCard.class);
-        } else if(seed == 2) {
-            loadCard(ZombiePitCard.class);
-        } else if(seed == 3) {
-            loadCard(BarracksCard.class);
-        } else if(seed == 4) {
-            loadCard(CampfireCard.class);
-        } else if(seed == 5) {
-            loadCard(TowerCard.class);  
-        } else if(seed == 6) {
-            loadCard(TrapCard.class);
-        } else {
-            loadCard(VillageCard.class);
-        }
+        loadCard();
     }
 
     public void potionTrigger() {
