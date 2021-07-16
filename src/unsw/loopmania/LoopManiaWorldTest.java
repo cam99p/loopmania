@@ -108,4 +108,5 @@ public class LoopManiaWorldTest {
         assertTrue(d.getGold() == 50);
 
     }
+
 }
