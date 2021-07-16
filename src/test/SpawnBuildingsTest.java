@@ -1,6 +1,5 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -25,6 +24,7 @@ import unsw.loopmania.BarracksBuilding;
 import unsw.loopmania.BarracksCard;
 import unsw.loopmania.Building;
 import unsw.loopmania.ZombiePitCard;
+import unsw.loopmania.Card;
 
 public class SpawnBuildingsTest {
     @Test
@@ -96,7 +96,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
         
-        VampireCastleCard vampCard = world.loadVampireCard();
+        Card vampCard = world.loadCard(VampireCastleCard.class).getValue0();
 
         assertDoesNotThrow(() -> world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1));
         assertEquals(2, world.getBuildings().size());
@@ -122,9 +122,11 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
         
-        VampireCastleCard vampCard = world.loadVampireCard();
+        Card vampCard = world.loadCard(VampireCastleCard.class).getValue0();
 
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 0, 1));
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 0, 1);
+        assertEquals(1, world.getCards().size());
+        assertEquals(vampCard, world.getCards().get(0));
     }
 
     @Test
@@ -146,7 +148,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleCard vampCard = world.loadVampireCard();
+        Card vampCard = world.loadCard(VampireCastleCard.class).getValue0();
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
 
@@ -181,7 +183,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleCard vampCard = world.loadVampireCard();
+        Card vampCard = world.loadCard(VampireCastleCard.class).getValue0();
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
 
@@ -220,7 +222,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleCard vampCard = world.loadVampireCard();
+        Card vampCard = world.loadCard(VampireCastleCard.class).getValue0();
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 2);
 
@@ -260,7 +262,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleCard vampCard = world.loadVampireCard();
+        Card vampCard = world.loadCard(VampireCastleCard.class).getValue0();
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 1);
 
@@ -304,7 +306,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleCard vampCard = world.loadVampireCard();
+        Card vampCard = world.loadCard(VampireCastleCard.class).getValue0();
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 2, 1);
 
@@ -340,7 +342,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        VampireCastleCard vampCard = world.loadVampireCard();
+        Card vampCard = world.loadCard(VampireCastleCard.class).getValue0();;
 
         world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
 
@@ -387,7 +389,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        Card zombieCard = world.loadCard(ZombiePitCard.class).getValue0();
 
         Building zombieBuilding = world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
         assertEquals(2, world.getBuildings().size());
@@ -413,9 +415,11 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
         
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        Card zombieCard = world.loadCard(ZombiePitCard.class).getValue0();
 
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 0, 1));
+        world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 0, 1);
+        assertEquals(1, world.getCards().size());
+        assertEquals(zombieCard, world.getCards().get(0));
     }
 
     @Test
@@ -437,7 +441,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        Card zombieCard = world.loadCard(ZombiePitCard.class).getValue0();
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
 
@@ -471,7 +475,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        Card zombieCard = world.loadCard(ZombiePitCard.class).getValue0();
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
 
@@ -512,7 +516,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        Card zombieCard = world.loadCard(ZombiePitCard.class).getValue0();
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 1);
 
@@ -553,7 +557,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        Card zombieCard = world.loadCard(ZombiePitCard.class).getValue0();
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 2);
 
@@ -598,7 +602,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        Card zombieCard = world.loadCard(ZombiePitCard.class).getValue0();
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 2, 1);
 
@@ -634,7 +638,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        ZombiePitCard zombieCard = world.loadZombieCard();
+        Card zombieCard = world.loadCard(ZombiePitCard.class).getValue0();;
 
         world.convertCardToBuildingByCoordinates(zombieCard.getX(), zombieCard.getY(), 1, 1);
 
@@ -678,7 +682,7 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        BarracksCard barracksCard = world.loadBarracksCard();
+        Card barracksCard = world.loadCard(BarracksCard.class).getValue0();
         assertDoesNotThrow(() -> world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1));
         assertEquals(2, world.getBuildings().size());
         assertTrue(world.getBuildings().get(1) instanceof BarracksBuilding);
@@ -703,8 +707,10 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        BarracksCard barracksCard = world.loadBarracksCard();
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 1, 1));
+        Card barracksCard = world.loadCard(BarracksCard.class).getValue0();
+        world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 1, 1);
+        assertEquals(1, world.getCards().size());
+        assertEquals(barracksCard, world.getCards().get(0));
     }
 
     
@@ -727,15 +733,18 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        BarracksCard barracksCard = world.loadBarracksCard();
-        Building barracksBuilding = world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1));
+        Card barracksCard = world.loadCard(BarracksCard.class).getValue0();
+        world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1);
 
         character.moveDownPath();
         
         world.spawnAllies();
 
         assertEquals(1, character.getAllies().size());
-        // Add more asserts to test the basic stats of an ally
+        assertEquals(5, character.getAllies().get(0).getAttack());
+        assertEquals(50, character.getAllies().get(0).getHealth());
+        assertEquals(0, character.getAllies().get(0).getDefense());
+        assertEquals(7, character.getAllies().get(0).getSpeed());
     }
 
     @Test
@@ -757,14 +766,14 @@ public class SpawnBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        BarracksCard barracksCard = world.loadBarracksCard();
-        Building barracksBuilding = world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1));
+        Card barracksCard = world.loadCard(BarracksCard.class).getValue0();
+        world.convertCardToBuildingByCoordinates(barracksCard.getX(), barracksCard.getY(), 0, 1);
 
         character.moveDownPath();
         for(int i = 1; i <= 3; i++) {
             world.spawnAllies();
             assertEquals(i, character.getAllies().size());
-            for(int j = 0; j < 9; j++) {
+            for(int j = 0; j < 8; j++) {
                 world.runTickMoves();
             }
         }
