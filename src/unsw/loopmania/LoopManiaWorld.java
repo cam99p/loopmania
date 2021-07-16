@@ -20,6 +20,8 @@ public class LoopManiaWorld {
 
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
+    public static final int equippedInventoryWidth = 4;
+    public static final int equippedInventoryHeight = 2;
 
     /**
      * width of the world in GridPane cells
@@ -89,6 +91,7 @@ public class LoopManiaWorld {
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
+        //equippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
         healthPotions = new ArrayList<>();
@@ -200,6 +203,7 @@ public class LoopManiaWorld {
         else {
             return new ArrayList<BasicEnemy>();
         }
+
     }
 
     /**
@@ -378,15 +382,41 @@ public class LoopManiaWorld {
         return item;
     }
 
+    public Item addUnequippedItemByCoordinate(ItemType itemType, int x, int y){
+        Item item = itemFactory.createItem(itemType, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        unequippedInventoryItems.add(item);
+        return item;
+    }
+
+    public Item addEquippedItemByCoordinate(ItemType itemType, int x, int y){
+        Item item = itemFactory.createItem(itemType, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        character.equipItem(item);
+        return item;
+    }
+
+
+
     /**
      * remove an item by x,y coordinates
      * @param x x coordinate from 0 to width-1
      * @param y y coordinate from 0 to height-1
      */
     public void removeUnequippedInventoryItemByCoordinates(int x, int y){
-        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
         removeUnequippedInventoryItem(item);
     }
+
+    public Item moveFromUnequippedToEquipped(int x, int y) {
+        Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        equipItem(item);
+        return item;
+    }
+
+    
+    public Item moveFromEquippedToUnequipped(int x, int y) {
+        Item item = character.DeequipItemByCoordinate(x, y);
+        return item;
+    } 
 
     /**
      * equip an item (move from unequipped inventory to character equipment)
@@ -411,10 +441,17 @@ public class LoopManiaWorld {
      * remove an item from the unequipped inventory
      * @param item item to be removed
      */
-    private void removeUnequippedInventoryItem(Entity item){
+    private void removeUnequippedInventoryItem(Item item){
         item.destroy();
         unequippedInventoryItems.remove(item);
     }
+
+    /*
+    private void removeEquippedInventoryItem(Item item){
+        item.destroy();
+        equippedInventoryItems.remove(item);
+    }
+    */
 
     /**
      * return an unequipped inventory item by x and y coordinates
@@ -423,21 +460,22 @@ public class LoopManiaWorld {
      * @param y y index from 0 to height-1
      * @return unequipped inventory item at the input position
      */
-    private Entity getUnequippedInventoryItemEntityByCoordinates(int x, int y){
-        for (Entity e: unequippedInventoryItems){
+    private Item getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
+        for (Item e: unequippedInventoryItems){
             if ((e.getX() == x) && (e.getY() == y)){
                 return e;
             }
         }
         return null;
     }
+    
 
     /**
      * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
      * @param index index from 0 to length-1
      */
     private void removeItemByPositionInUnequippedInventoryItems(int index){
-        Entity item = unequippedInventoryItems.get(index);
+        Item item = unequippedInventoryItems.get(index);
         item.destroy();
         unequippedInventoryItems.remove(index);
     }
