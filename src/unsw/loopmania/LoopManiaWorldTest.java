@@ -23,7 +23,7 @@ public class LoopManiaWorldTest {
         d.setCharacter(dummyChar);
         Ally dummyAlly = new Ally(dummyPos);
         dummyChar.AddAlly(dummyAlly);
-        TowerCard towerCard = d.loadTowerCard().getValue0();
+        Card towerCard = d.loadCard(TowerCard.class).getValue0();
         Building towerBuilding = d.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), 1, 1);
 
         assertTrue(d.gatherAllies().size() == 3);

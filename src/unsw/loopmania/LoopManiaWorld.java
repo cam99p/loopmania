@@ -271,118 +271,45 @@ public class LoopManiaWorld {
             setGold(getGold() + 50);
         }
     }
+
     
-
-    /**
-     * spawn a vampire castle card in the world and return the card entity
-     * @return a card to be spawned in the controller as a JavaFX node
-     */
-    public Pair<VampireCastleCard, Item> loadVampireCard(){
-        // if adding more cards than have, remove the first card...
+    public Pair<Card, Item> loadCard(Class<?> type) {
+        Pair<Card, Item> card = null;
         Item item = null;
         if (cardEntities.size() >= getWidth()){
             removeCard(0);
             item = cardRemovalLoot();
         }
-        VampireCastleCard vampireCastleCard = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(vampireCastleCard);
-        Pair<VampireCastleCard, Item> card = new Pair<>(vampireCastleCard, item);
-        return card;
-    }
-
-    /**
-     * spawn a zombie pit card in the world and return the card entity
-     * @return a card to be spawned in the controller as a node
-     */
-    public Pair<ZombiePitCard, Item> loadZombieCard() {
-        Item item = null;
-        if (cardEntities.size() >= getWidth()){
-            removeCard(0);
-            item = cardRemovalLoot();
+        if(type == VampireCastleCard.class) {
+            VampireCastleCard vampireCastleCard = new VampireCastleCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(vampireCastleCard);
+            card = new Pair<>(vampireCastleCard, item);
+        } else if(type == ZombiePitCard.class) {
+            ZombiePitCard zombiePitCard = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(zombiePitCard);
+            card = new Pair<>(zombiePitCard, item);
+        } else if(type == BarracksCard.class) {
+            BarracksCard barracksCard = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(barracksCard);
+            card = new Pair<>(barracksCard, item);
+        } else if(type == VillageCard.class) {
+            VillageCard villageCard = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(villageCard);
+            card = new Pair<>(villageCard, item);
+        } else if(type == CampfireCard.class) {
+            CampfireCard campfireCard = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(campfireCard);
+            card = new Pair<>(campfireCard, item);
+        } else if(type == TrapCard.class) {
+            TrapCard trapCard = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(trapCard);
+            card = new Pair<>(trapCard, item);
+        } else {
+            TowerCard towerCard = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
+            cardEntities.add(towerCard);
+            card = new Pair<>(towerCard, item);
         }
-        ZombiePitCard zombiePitCard = new ZombiePitCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(zombiePitCard);
-        Pair<ZombiePitCard, Item> card = new Pair<>(zombiePitCard, item);
-        return card;
-    }
 
-    /**
-     * spawn a barracks card in the world and return the card entity
-     * @return a card to be spawned in the controller as a node
-     */
-    public Pair<BarracksCard, Item> loadBarracksCard() {
-        Item item = null;
-        if (cardEntities.size() >= getWidth()){
-            removeCard(0);
-            item = cardRemovalLoot();
-        }
-        BarracksCard barracksCard = new BarracksCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(barracksCard);
-        Pair<BarracksCard, Item> card = new Pair<>(barracksCard, item);
-        return card;
-    }
-
-    /**
-     * spawn a village card in the world and return the card entity
-     * @return a card to be spawned in the controller as a node
-     */
-    public Pair<VillageCard, Item> loadVillageCard() {
-        Item item = null;
-        if (cardEntities.size() >= getWidth()){
-            removeCard(0);
-            item = cardRemovalLoot();
-        }
-        VillageCard villageCard = new VillageCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(villageCard);
-        Pair<VillageCard, Item> card = new Pair<>(villageCard, item);
-        return card;
-    }
-
-    /**
-     * spawn a campfire card in the world and return the card entity
-     * @return a card to be spawned in the controller as a node
-     */
-    public Pair<CampfireCard, Item> loadCampfireCard() {
-        Item item = null;
-        if (cardEntities.size() >= getWidth()){
-            removeCard(0);
-            item = cardRemovalLoot();
-        }
-        CampfireCard campfireCard = new CampfireCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(campfireCard);
-        Pair<CampfireCard, Item> card = new Pair<>(campfireCard, item);
-        return card;
-    }
-
-    /**
-     * spawn a trap card in the world and return the card entity
-     * @return a card to be spawned in the controller as a node
-     */
-    public Pair<TrapCard, Item> loadTrapCard() {
-        Item item = null;
-        if (cardEntities.size() >= getWidth()){
-            removeCard(0);
-            item = cardRemovalLoot();
-        }
-        TrapCard trapCard = new TrapCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(trapCard);
-        Pair<TrapCard, Item> card = new Pair<>(trapCard, item);
-        return card;
-    }
-
-    /**
-     * spawn a tower card in the world and return the card entity
-     * @return a card to be spawned in the controller as a node
-     */
-    public Pair<TowerCard, Item> loadTowerCard() {
-        Item item = null;
-        if (cardEntities.size() >= getWidth()){
-            removeCard(0);
-            item = cardRemovalLoot();
-        }
-        TowerCard towerCard = new TowerCard(new SimpleIntegerProperty(cardEntities.size()), new SimpleIntegerProperty(0));
-        cardEntities.add(towerCard);
-        Pair<TowerCard, Item> card = new Pair<>(towerCard, item);
         return card;
     }
 
@@ -706,7 +633,9 @@ public class LoopManiaWorld {
         for(Building b : buildingEntities) {
             if(b instanceof VampireCastleBuilding || b instanceof ZombiePitBuilding) {
                 BasicEnemy temp = b.spawn(enemies, orderedPath, cycle);
-                spawnedEnemies.add(temp);
+                if(temp != null) {
+                    spawnedEnemies.add(temp);
+                }
             }
         }
         return spawnedEnemies;

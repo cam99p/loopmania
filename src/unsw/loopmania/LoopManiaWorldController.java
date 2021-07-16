@@ -316,16 +316,10 @@ public class LoopManiaWorldController {
                 newZombiesVampires = world.spawnEnemies();
             }
             for (BasicEnemy newEnemy: newEnemies){
-                if(newEnemy instanceof Slug) {
-                    onLoad(((Slug) newEnemy));
-                }
+                onLoad(newEnemy);
             }
             for (BasicEnemy enemy : newZombiesVampires) {
-                if(enemy instanceof Vampire) {
-                    onLoad(((Vampire) enemy));
-                } else if(enemy instanceof Zombie) {
-                    onLoad((Zombie) enemy);
-                }
+                onLoad(enemy);
             }
             printThreadingNotes("HANDLED TIMER");
         }));
@@ -359,64 +353,10 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load a vampire card from the world, and pair it with an image in the GUI
+     * load a card from the world, and pair it with an image in the GUI
      */
-    private void loadVampireCard() {
-        Pair<VampireCastleCard, Item> card = world.loadVampireCard();
-        onLoad(card.getValue0());
-        if(card.getValue1() != null) {
-            Item item = card.getValue1();
-            onLoad(item);
-        }
-    }
-
-    private void loadZombiePitCard() {
-        Pair<ZombiePitCard, Item> card = world.loadZombieCard();
-        onLoad(card.getValue0());
-        if(card.getValue1() != null) {
-            Item item = card.getValue1();
-            onLoad(item);
-        }
-    }
-
-    private void loadTowerCard() {
-        Pair<TowerCard, Item> card = world.loadTowerCard();
-        onLoad(card.getValue0());
-        if(card.getValue1() != null) {
-            Item item = card.getValue1();
-            onLoad(item);
-        }
-    }
-
-    private void loadVillageCard() {
-        Pair<VillageCard, Item> card = world.loadVillageCard();
-        onLoad(card.getValue0());
-        if(card.getValue1() != null) {
-            Item item = card.getValue1();
-            onLoad(item);
-        }
-    }
-
-    private void loadBarracksCard() {
-        Pair<BarracksCard, Item> card = world.loadBarracksCard();
-        onLoad(card.getValue0());
-        if(card.getValue1() != null) {
-            Item item = card.getValue1();
-            onLoad(item);
-        }
-    }
-
-    private void loadTrapCard() {
-        Pair<TrapCard, Item> card = world.loadTrapCard();
-        onLoad(card.getValue0());
-        if(card.getValue1() != null) {
-            Item item = card.getValue1();
-            onLoad(item);
-        }
-    }
-
-    private void loadCampfireCard() {
-        Pair<CampfireCard, Item> card = world.loadCampfireCard();
+    private void loadCard(Class<?> type) {
+        Pair<Card, Item> card = world.loadCard(type);
         onLoad(card.getValue0());
         if(card.getValue1() != null) {
             Item item = card.getValue1();
@@ -455,19 +395,19 @@ public class LoopManiaWorldController {
         Random rand = new Random();
         int seed = rand.nextInt(8);
         if(seed == 1) {
-            loadVampireCard();
+            loadCard(VampireCastleCard.class);
         } else if(seed == 2) {
-            loadZombiePitCard();
+            loadCard(ZombiePitCard.class);
         } else if(seed == 3) {
-            loadBarracksCard();
+            loadCard(BarracksCard.class);
         } else if(seed == 4) {
-            loadCampfireCard();
+            loadCard(CampfireCard.class);
         } else if(seed == 5) {
-            loadTowerCard();   
+            loadCard(TowerCard.class);  
         } else if(seed == 6) {
-            loadTrapCard();
+            loadCard(TrapCard.class);
         } else {
-            loadVillageCard();
+            loadCard(VillageCard.class);
         }
     }
 
@@ -500,57 +440,34 @@ public class LoopManiaWorldController {
      * and load the image into the cards GridPane.
      * @param vampireCastleCard
      */
-    private void onLoad(VampireCastleCard vampireCastleCard) {
-        ImageView view = new ImageView(vampireCastleCardImage);
-
-        // FROM https://stackoverflow.com/questions/41088095/javafx-drag-and-drop-to-gridpane
-        // note target setOnDragOver and setOnDragEntered defined in initialize method
-        addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
-
-        addEntity(vampireCastleCard, view);
-        cards.getChildren().add(view);
-    }
-
-    private void onLoad(ZombiePitCard zombiePitCard) {
-        ImageView view = new ImageView(zombiePitCardImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
-        addEntity(zombiePitCard, view);
-        cards.getChildren().add(view);
-    }
-
-    private void onLoad(TowerCard towerCard) {
-        ImageView view = new ImageView(towerCardImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
-        addEntity(towerCard, view);
-        cards.getChildren().add(view);
-    }
-
-    private void onLoad(VillageCard villageCard) {
-        ImageView view = new ImageView(villageCardImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
-        addEntity(villageCard, view);
-        cards.getChildren().add(view);
-    }
-
-    private void onLoad(BarracksCard barracksCard) {
-        ImageView view = new ImageView(barracksCardImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
-        addEntity(barracksCard, view);
-        cards.getChildren().add(view);
-    }
-
-    private void onLoad(TrapCard trapCard) {
-        ImageView view = new ImageView(trapCardImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
-        addEntity(trapCard, view);
-        cards.getChildren().add(view);
-    }
-
-    private void onLoad(CampfireCard campfireCard) {
-        ImageView view = new ImageView(campfireCardImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
-        addEntity(campfireCard, view);
-        cards.getChildren().add(view);
+    private void onLoad(Card card) {
+        ImageView view = null;
+        if(card instanceof VampireCastleCard) {
+            view = new ImageView(vampireCastleCardImage);
+            addEntity(((VampireCastleCard) card), view);
+        } else if(card instanceof ZombiePitCard) {
+            view = new ImageView(zombiePitCardImage);
+            addEntity(((ZombiePitCard) card), view);
+        } else if(card instanceof BarracksCard) {
+            view = new ImageView(barracksCardImage);
+            addEntity(((BarracksCard) card), view);
+        } else if(card instanceof VillageCard) {
+            view = new ImageView(villageCardImage);
+            addEntity(((VillageCard) card), view);
+        } else if(card instanceof CampfireCard) {
+            view = new ImageView(campfireCardImage);
+            addEntity(((CampfireCard) card), view);
+        } else if(card instanceof TrapCard) {
+            view = new ImageView(trapCardImage);
+            addEntity(((TrapCard) card), view);
+        } else {
+            view = new ImageView(towerCardImage);
+            addEntity(((TowerCard) card), view);
+        }
+        if(view != null) {
+            addDragEventHandlers(view, DRAGGABLE_TYPE.CARD, cards, squares);
+            cards.getChildren().add(view);
+        }
     }
 
     /**
@@ -598,26 +515,17 @@ public class LoopManiaWorldController {
      * @param enemy
      */
     private void onLoad(BasicEnemy enemy) {
-        ImageView view = new ImageView(basicEnemyImage);
-        addEntity(enemy, view);
-        squares.getChildren().add(view);
-    }
-
-    private void onLoad(Slug slug) {
-        ImageView view = new ImageView(slugImage);
-        addEntity(slug, view);
-        squares.getChildren().add(view);
-    }
-
-    private void onLoad(Vampire vampire) {
-        ImageView view = new ImageView(vampireImage);
-        addEntity(vampire, view);
-        squares.getChildren().add(view);
-    }
-
-    private void onLoad(Zombie zombie) {
-        ImageView view = new ImageView(zombieImage);
-        addEntity(zombie, view);
+        ImageView view = null;
+        if(enemy instanceof Slug) {
+            view = new ImageView(slugImage);
+            addEntity(((Slug) enemy), view);
+        } else if(enemy instanceof Vampire) {
+            view = new ImageView(vampireImage);
+            addEntity(((Vampire) enemy), view);
+        } else {
+            view = new ImageView(zombieImage);
+            addEntity(((Zombie) enemy), view);
+        }
         squares.getChildren().add(view);
     }
 
@@ -625,26 +533,31 @@ public class LoopManiaWorldController {
      * load a building into the GUI
      * @param building
      */
-    
     private void onLoad(Building building) {
         ImageView view = null;
         if(building instanceof VampireCastleBuilding) {
             view = new ImageView(vampireCastleImage);
+            addEntity(((VampireCastleBuilding) building), view);
         } else if(building instanceof ZombiePitBuilding) {
             view = new ImageView(zombiePitImage);
+            addEntity(((ZombiePitBuilding) building), view);
         } else if(building instanceof TowerBuilding) {
             view = new ImageView(towerImage);
+            addEntity(((TowerBuilding) building), view);
         } else if(building instanceof VillageBuilding) {
             view = new ImageView(villageImage);
+            addEntity(((VillageBuilding) building), view);
         } else if(building instanceof BarracksBuilding) {
             view = new ImageView(barracksImage);
+            addEntity(((BarracksBuilding) building), view);
         } else if(building instanceof TrapBuilding) {
             view = new ImageView(trapImage);
+            addEntity(((TrapBuilding) building), view);
         } else if(building instanceof CampfireBuilding) {
             view = new ImageView(campfireImage);
+            addEntity(((CampfireBuilding) building), view);
         }
         if(view != null) {
-            addEntity(building, view);
             squares.getChildren().add(view);
         }
     }

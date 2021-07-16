@@ -25,6 +25,7 @@ import unsw.loopmania.TowerBuilding;
 import unsw.loopmania.TowerCard;
 import unsw.loopmania.MovingEntity;
 import unsw.loopmania.Battle;
+import unsw.loopmania.Card;
 
 public class DamageBuildingsTest {
     @Test
@@ -46,7 +47,7 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TrapCard trapCard = world.loadTrapCard().getValue0();
+        Card trapCard = world.loadCard(TrapCard.class).getValue0();
 
         assertDoesNotThrow(() -> world.convertCardToBuildingByCoordinates(trapCard.getX(), trapCard.getY(), 0, 1));
         assertEquals(2, world.getBuildings().size());
@@ -72,7 +73,7 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TrapCard trapCard = world.loadTrapCard().getValue0();
+        Card trapCard = world.loadCard(TrapCard.class).getValue0();
 
         world.convertCardToBuildingByCoordinates(trapCard.getX(), trapCard.getY(), 1, 1);
         assertEquals(1, world.getCards().size());
@@ -98,7 +99,7 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TrapCard trapCard = world.loadTrapCard().getValue0();
+        Card trapCard = world.loadCard(TrapCard.class).getValue0();
         Building trapBuilding = world.convertCardToBuildingByCoordinates(trapCard.getX(), trapCard.getY(), 0, 1);
         assertEquals(2, world.getBuildings().size());
         assertEquals(trapBuilding, world.getBuildings().get(1));
@@ -133,7 +134,7 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TrapCard trapCard = world.loadTrapCard().getValue0();
+        Card trapCard = world.loadCard(TrapCard.class).getValue0();
         Building trapBuilding = world.convertCardToBuildingByCoordinates(trapCard.getX(), trapCard.getY(), 0, 1);
         assertEquals(2, world.getBuildings().size());
         assertEquals(trapBuilding, world.getBuildings().get(1));
@@ -166,7 +167,7 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TowerCard towerCard = world.loadTowerCard().getValue0();
+        Card towerCard = world.loadCard(TowerCard.class).getValue0();
         assertDoesNotThrow(() -> world.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), 1, 1));
         assertEquals(2, world.getBuildings().size());
         assertTrue(world.getBuildings().get(1) instanceof TowerBuilding);
@@ -191,7 +192,7 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TowerCard towerCard = world.loadTowerCard().getValue0();
+        Card towerCard = world.loadCard(TowerCard.class).getValue0();
         world.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), 0, 1);
         assertEquals(1, world.getCards().size());
         assertEquals(towerCard, world.getCards().get(0));
