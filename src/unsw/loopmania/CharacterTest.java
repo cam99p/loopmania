@@ -124,4 +124,20 @@ public class CharacterTest {
 
         assertTrue(dummySlug.getHealth() == 40); 
     }
+
+    //Tests that the Character can block an attack when equipped with a shield
+    @Test
+    public void TestShieldBlock(){
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
+        Slug dummySlug = new Slug(dummyPos);
+        Character dummyChar = new Character(dummyPos);
+
+        dummyChar.setBlocking();
+
+        dummySlug.AttackTarget(dummyChar, 1);
+
+        assertTrue(dummyChar.getHealth() == 200);
+    }
 }

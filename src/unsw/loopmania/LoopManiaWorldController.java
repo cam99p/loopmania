@@ -37,7 +37,7 @@ import java.util.EnumMap;
 import java.io.File;
 import java.io.IOException;
 
-
+import unsw.loopmania.ItemFactory.ItemType;
 /**
  * the draggable types.
  * If you add more draggable types, add an enum value here.
@@ -152,8 +152,14 @@ public class LoopManiaWorldController {
     private Image vampireImage;
     private Image zombieImage;
     private Image swordImage;
-    private Image basicBuildingImage;
+    private Image stakeImage;
+    private Image staffImage;
+    private Image armourImage;
+    private Image shieldImage;
     private Image healthPotionImage;
+    private Image theOneRingImage;
+    //ITEM//
+    private Image basicBuildingImage;
     private Image heartImage;
     private Image goldImage;
 
@@ -365,19 +371,13 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load a sword from the world, and pair it with an image in the GUI
+     * load an item from the world, and pair it with an image in the GUI
      */
-    private void loadSword(){
+    private void loadItem(ItemType itemType){
         // TODO = load more types of weapon
         // start by getting first available coordinates
-        Sword sword = world.addUnequippedSword();
-        onLoad(sword);
-    }
-
-    private void loadHealthPotion() {
-        HealthPotion healthPotion = world.addUnequippedHealthPotion();
-        onLoad(healthPotion);
-
+        Item item = world.addUnequippedItem(itemType);
+        onLoad(item);
     }
     
     /**
@@ -471,23 +471,36 @@ public class LoopManiaWorldController {
     }
 
     /**
-     * load a sword into the GUI.
+     * load an item into the GUI.
      * Particularly, we must connect to the drag detection event handler,
      * and load the image into the unequippedInventory GridPane.
      * @param sword
      */
-    private void onLoad(Sword sword) {
-        ImageView view = new ImageView(swordImage);
+    private void onLoad(Item item) {
+        String itemName = item.getName();
+        ImageView view;
+        switch(itemName){
+            case "Sword":
+                 view = new ImageView(swordImage);
+            case "Stake":
+                view = new ImageView(stakeImage);
+            case "Staff":
+                view = new ImageView(staffImage);
+            case "Armour":
+                view = new ImageView(armourImage);
+            case "Shield":
+                view = new ImageView(shieldImage);
+            //case "Gold"
+            //    view = new ImageView(goldImage);
+            case "Health Potion":
+                view = new ImageView(healthPotionImage);
+            case "The One Ring":
+                view = new ImageView(theOneRingImage);
+            default:
+                view = null;
+        }
         addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(sword, view);
-        unequippedInventory.getChildren().add(view);
-    }
-
-
-    private void onLoad(HealthPotion healthPotion) {
-        ImageView view = new ImageView(healthPotionImage);
-        addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-        addEntity(healthPotion, view);
+        addEntity(item, view);
         unequippedInventory.getChildren().add(view);
     }
 
