@@ -24,6 +24,14 @@ public class ZombieTest {
 
     @Test
     public void TestZombification(){
-        //Cannot be implemented until ally is implemented
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
+        Zombie dummyZombie = new Zombie(dummyPos);
+        Ally dummyAlly = new Ally(dummyPos);
+
+        dummyZombie.AttackTarget(dummyAlly, 10);
+
+        assertTrue(dummyAlly.isZombified());
     }
 }
