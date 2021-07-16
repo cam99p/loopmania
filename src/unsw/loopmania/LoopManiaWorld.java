@@ -664,6 +664,8 @@ public class LoopManiaWorld {
             if(b instanceof TrapBuilding || b instanceof TowerBuilding) {
                 if(b.damage(enemies, buildingEntities, battle) != null) {
                     buildingsToRemove.add(b);
+                    setGold(getGold() + 50);
+                    setExp(getExp() + 50);
                 }
             }
         }
@@ -709,27 +711,24 @@ public class LoopManiaWorld {
     }
 
     public Item randomItem() {
-        /*
         Item item = null;
         Random rand = new Random();
         int seed = rand.nextInt(8);
         if(seed == 1) {
-            item = addUnequippedHealthPotion();
+            item = addUnequippedItem(ItemType.ARMOUR);
         } else if(seed == 2) {
-            item = addUnequippedSword();
+            item = addUnequippedItem(ItemType.HEALTH_POTION);
         } else if(seed == 3) {
-            item = addUnequippedStake();
+            item = addUnequippedItem(ItemType.SWORD);
         } else if(seed == 4) {
-            item = addUnequippedStaff();
+            item = addUnequippedItem(ItemType.HELMET);
         } else if(seed == 5) {
-            item = addUnequippedArmour();
+            item = addUnequippedItem(ItemType.SHIELD);
         } else if(seed == 6) {
-            item = addUnequippedShield();
+            item = addUnequippedItem(ItemType.STAKE);
         } else {
-            item = addUnequippedHelmet();
+            item = addUnequippedItem(ItemType.STAFF);
         }
         return item;
-        */
-        return null;
     }
 }

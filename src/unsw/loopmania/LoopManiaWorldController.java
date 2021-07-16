@@ -318,7 +318,7 @@ public class LoopManiaWorldController {
             List<BasicEnemy> newEnemies = world.possiblySpawnEnemies();
             List<BasicEnemy> newZombiesVampires = new ArrayList<>();
             if(world.getCharacterX() == world.getHerosCastleX() && world.getCharacterY() == world.getHerosCastleY()) {
-                addCycle();
+                setCycle();
                 newZombiesVampires = world.spawnEnemies();
             }
             for (BasicEnemy newEnemy: newEnemies){
@@ -390,8 +390,8 @@ public class LoopManiaWorldController {
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
         loadItem(ItemType.SWORD);
         loadItem(ItemType.HEALTH_POTION);
-        addXP(50);
-        addGold(50);
+        setXP();
+        setGold();
         Random rand = new Random();
         int seed = rand.nextInt(8);
         if(seed == 1) {
@@ -419,21 +419,38 @@ public class LoopManiaWorldController {
         }
     }
 
-    public void addXP(int xp) {
-        Integer newXp = Integer.parseInt(xpValue.getText()) + xp;  
-        xpValue.setText(newXp.toString());
-    }
+    /**
+     * Do not use these as it is not synced up to backend
+     */
+    // public void addXP(int xp) {
+    //     Integer newXp = Integer.parseInt(xpValue.getText()) + xp;  
+    //     xpValue.setText(newXp.toString());
+    // }
 
-    public void addGold(int gold) {
-        Integer newGold = Integer.parseInt(goldValue.getText()) + gold;  
+    // public void addGold(int gold) {
+    //     Integer newGold = Integer.parseInt(goldValue.getText()) + gold;  
+    //     goldValue.setText(newGold.toString());
+    // }
+
+    // public void addCycle() {
+    //     Integer newCycle = Integer.parseInt(cycle.getText()) + 1;
+    //     cycle.setText(newCycle.toString());
+    // }
+
+    public void setGold() {
+        Integer newGold = world.getGold();
         goldValue.setText(newGold.toString());
     }
 
-    public void addCycle() {
-        Integer newCycle = Integer.parseInt(cycle.getText()) + 1;
-        cycle.setText(newCycle.toString());
+    public void setXP() {
+        Integer newXP = world.getExp();
+        xpValue.setText(newXP.toString());
     }
 
+    public void setCycle() {
+        Integer newCycle = world.getCycle();
+        cycle.setText(newCycle.toString());
+    }
     /**
      * load a vampire castle card into the GUI.
      * Particularly, we must connect to the drag detection event handler,
