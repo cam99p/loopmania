@@ -3,7 +3,6 @@ package unsw.loopmania;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
-import java.util.List;
 import java.util.ArrayList;
 import org.javatuples.Pair;
 import java.util.Arrays;

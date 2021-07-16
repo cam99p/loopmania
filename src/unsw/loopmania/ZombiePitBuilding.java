@@ -2,10 +2,9 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import java.util.List;
-import java.util.ArrayList;
 import org.javatuples.Pair;
 
-public class ZombiePitBuilding extends Building implements SpawnEnemyBuilding {
+public class ZombiePitBuilding extends Building {
     public ZombiePitBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);
     }
