@@ -2,11 +2,9 @@ package unsw.loopmania;
 
 import java.io.IOException;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import org.javatuples.Pair;
-import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -14,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
 import unsw.loopmania.ItemFactory.ItemType;
 import java.io.File;
 
