@@ -393,6 +393,7 @@ public class LoopManiaWorld {
      */
     public void equipItem(Item item){
         character.equipItem(item);
+        removeUnequippedInventoryItem(item);
     }
 
     /**
@@ -707,6 +708,10 @@ public class LoopManiaWorld {
 
     public int getHerosCastleY() {
         return castle.getY();
+    }
+
+    public List<Item> getUnequippedInventoryItems() {
+        return unequippedInventoryItems;
     }
 
     public Item randomItem() {

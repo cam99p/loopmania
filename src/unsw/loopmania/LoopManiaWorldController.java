@@ -151,11 +151,13 @@ public class LoopManiaWorldController {
     private Image slugImage;
     private Image vampireImage;
     private Image zombieImage;
+    //ITEM//
     private Image swordImage;
     private Image stakeImage;
     private Image staffImage;
     private Image armourImage;
     private Image shieldImage;
+    private Image helmetImage;
     private Image healthPotionImage;
     private Image theOneRingImage;
     //ITEM//
@@ -226,9 +228,17 @@ public class LoopManiaWorldController {
         slugImage = new Image((new File("src/images/slug.png")).toURI().toString());
         vampireImage = new Image((new File("src/images/vampire.png")).toURI().toString());
         zombieImage = new Image((new File("src/images/zombie.png")).toURI().toString());
-        swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
         basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
+        //ITEM//
+        swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
+        stakeImage = new Image((new File("src/images/stake.png")).toURI().toString());
+        staffImage = new Image((new File("src/images/staff.png")).toURI().toString());
+        armourImage = new Image((new File("src/images/armour.png")).toURI().toString());
+        shieldImage = new Image((new File("src/images/shield.png")).toURI().toString());
+        helmetImage = new Image((new File("src/images/stake.png")).toURI().toString());
         healthPotionImage = new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString());
+        theOneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
+        //ITEM//
         heartImage = new Image((new File("src/images/heart.png")).toURI().toString());
         goldImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
         currentlyDraggedImage = null;
@@ -497,6 +507,8 @@ public class LoopManiaWorldController {
             case "Shield":
                 view = new ImageView(shieldImage);
                 break;
+            case "Helmet":
+                view = new ImageView(helmetImage);
             case "Health Potion":
                 view = new ImageView(healthPotionImage);
                 break;
