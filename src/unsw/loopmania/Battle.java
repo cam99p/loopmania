@@ -67,7 +67,7 @@ public class Battle {
                 //If the attack kills the ally, remove it from the heros ally list
                 if (target.getHealth() < 0){
                     if (target == hero){
-                        //TODO: Hero died, do thing
+                        heroDefeated(hero);
                     } else{
                         //Ally dies, remove from hero's list
                         hero.getAllies().remove(target);
@@ -78,6 +78,10 @@ public class Battle {
             //Increment to move onto next entity in turn order
             i++;
         }
+    }
+
+    public void heroDefeated(Character hero) {
+        
     }
 
     public List<MovingEntity> getAllies() {

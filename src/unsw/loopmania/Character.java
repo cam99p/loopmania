@@ -59,5 +59,10 @@ public class Character extends MovingEntity{
     public List<Ally> getAllies() {
         return allies;
     }
+
+    //Used when the character is attacked, and will try to block
+    public boolean tryBlock(int seed) {
+
+    }
     
 }
