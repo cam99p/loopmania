@@ -19,6 +19,8 @@ public class LoopManiaWorld {
 
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
+    public static final int equippedInventoryWidth = 4;
+    public static final int equippedInventoryHeight = 2;
 
     /**
      * width of the world in GridPane cells
@@ -50,7 +52,9 @@ public class LoopManiaWorld {
     private List<Card> cardEntities;
 
     // TODO = expand the range of items
-    private List<Entity> unequippedInventoryItems;
+    private List<Item> unequippedInventoryItems;
+
+    private List<Item> equippedInventoryItems;
 
     // TODO = expand the range of buildings
     private List<Building> buildingEntities;
@@ -80,6 +84,7 @@ public class LoopManiaWorld {
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
+        equippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
         healthPotions = new ArrayList<>();
@@ -157,6 +162,24 @@ public class LoopManiaWorld {
      * @return list of enemies which have been killed
      */
     public List<BasicEnemy> runBattles() {
+                // TODO = modify this - currently the character automatically wins all battles without any damage!
+                List<BasicEnemy> defeatedEnemies = new ArrayList<BasicEnemy>();
+                for (BasicEnemy e: enemies){
+                    // Pythagoras: a^2+b^2 < radius^2 to see if within radius
+                    // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
+                    if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
+                        // fight...
+                        defeatedEnemies.add(e);
+                    }
+                }
+                for (BasicEnemy e: defeatedEnemies){
+                    // IMPORTANT = we kill enemies here, because killEnemy removes the enemy from the enemies list
+                    // if we killEnemy in prior loop, we get java.util.ConcurrentModificationException
+                    // due to mutating list we're iterating over
+                    killEnemy(e);
+                }
+                return defeatedEnemies;
+        
         //old stuff
         //// TODO = modify this - currently the character automatically wins all battles without any damage!
         //List<BasicEnemy> defeatedEnemies = new ArrayList<BasicEnemy>();
@@ -169,7 +192,7 @@ public class LoopManiaWorld {
         //    }
         //}
 
-        List<MovingEntity> battleEnemies = gatherEnemies();
+   /*     List<MovingEntity> battleEnemies = gatherEnemies();
         //If there is at least one enemy to fight, start a battle
         if (battleEnemies.size() > 0){
             List<MovingEntity> battleAllies = gatherAllies();
@@ -188,7 +211,7 @@ public class LoopManiaWorld {
         //If theres nothing to fight, return an empty list
         else {
             return new ArrayList<BasicEnemy>();
-        }
+        }*/
     }
 
     /**
@@ -277,6 +300,8 @@ public class LoopManiaWorld {
      * spawn a sword in the world and return the sword entity
      * @return a sword to be spawned in the controller as a JavaFX node
      */
+
+
     public Sword addUnequippedSword(){
         // TODO = expand this - we would like to be able to add multiple types of items, apart from swords
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
@@ -293,16 +318,122 @@ public class LoopManiaWorld {
         return sword;
     }
 
+
+    
+    public Sword addUnequippedSword(int x, int y){
+        // now we insert the new sword, as we know we have at least made a slot available...
+        Sword sword = new Sword(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        unequippedInventoryItems.add(sword);
+        return sword;
+    }
+
+    
+    public Sword addEquippedSword(int x, int y){
+        // now we insert the new sword, as we know we have at least made a slot available...
+        Sword sword = new Sword(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        equippedInventoryItems.add(sword);
+        return sword;
+    }
+
+    public void equip(Item item) {
+    //    Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+      //  equippedInventoryItems.add(item);
+       // removeUnequippedInventoryItemByCoordinates(x, y);
+        item.onEquip(character);
+    }
+
+    public Item moveFromEquippedToUnequipped(int x, int y) {
+        Item item = getEquippedInventoryItemEntityByCoordinates(x, y);
+        return item;
+    //    unequippedInventoryItems.add(item);
+      //  removeEquippedInventoryItemByCoordinates(x, y);
+        //item.onDeequip(character);
+    }
+    
+
+    public Stake addUnequippedStake() {
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null) {
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+        Stake stake = new Stake(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(stake);
+        return stake;
+    }
+
+    public Staff addUnequippedStaff() {
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null) {
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+        Staff staff = new Staff(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(staff);
+        return staff;
+    }
+
+    public Armour addUnequippedArmour() {
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null) {
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+        Armour armour = new Armour(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(armour);
+        return armour;
+    }
+
+    public Helmet addUnequippedHelmet() {
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null) {
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+
+        Helmet helmet = new Helmet(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(helmet);
+        return helmet;
+    }
+
+    public Shield addUnequippedShield() {
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null) {
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+
+        Shield shield = new Shield(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(shield);
+        return shield;
+    }
+
+
+    public TheOneRing addUnequippedOneRing() {
+        Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
+        if (firstAvailableSlot == null) {
+            removeItemByPositionInUnequippedInventoryItems(0);
+            firstAvailableSlot = getFirstAvailableSlotForItem();
+        }
+        TheOneRing oneRing = new TheOneRing(new SimpleIntegerProperty(firstAvailableSlot.getValue0()),
+                new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
+        unequippedInventoryItems.add(oneRing);
+        return oneRing;
+    }
+
+    
     public HealthPotion addUnequippedHealthPotion() {
         Pair<Integer, Integer> firstAvailableSlot = getFirstAvailableSlotForItem();
         if (firstAvailableSlot == null){
-            // eject the oldest unequipped item and replace it... oldest item is that at beginning of items
-            // TODO = give some cash/experience rewards for the discarding of the oldest sword
             removeItemByPositionInUnequippedInventoryItems(0);
             firstAvailableSlot = getFirstAvailableSlotForItem();
         }
         
-        // now we insert the new sword, as we know we have at least made a slot available...
         HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(firstAvailableSlot.getValue0()), new SimpleIntegerProperty(firstAvailableSlot.getValue1()));
         unequippedInventoryItems.add(healthPotion);
         healthPotions.add(healthPotion);
@@ -310,14 +441,21 @@ public class LoopManiaWorld {
         return healthPotion;
     }
 
+
+
     /**
      * remove an item by x,y coordinates
      * @param x x coordinate from 0 to width-1
      * @param y y coordinate from 0 to height-1
      */
     public void removeUnequippedInventoryItemByCoordinates(int x, int y){
-        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
         removeUnequippedInventoryItem(item);
+    }
+
+    public void removeEquippedInventoryItemByCoordinates(int x, int y){
+        Item item = getEquippedInventoryItemEntityByCoordinates(x, y);
+        removeEquippedInventoryItem(item);
     }
 
     /**
@@ -335,9 +473,14 @@ public class LoopManiaWorld {
      * remove an item from the unequipped inventory
      * @param item item to be removed
      */
-    private void removeUnequippedInventoryItem(Entity item){
+    private void removeUnequippedInventoryItem(Item item){
         item.destroy();
         unequippedInventoryItems.remove(item);
+    }
+
+    private void removeEquippedInventoryItem(Item item){
+        item.destroy();
+        equippedInventoryItems.remove(item);
     }
 
     /**
@@ -347,21 +490,31 @@ public class LoopManiaWorld {
      * @param y y index from 0 to height-1
      * @return unequipped inventory item at the input position
      */
-    private Entity getUnequippedInventoryItemEntityByCoordinates(int x, int y){
-        for (Entity e: unequippedInventoryItems){
+    private Item getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
+        for (Item e: unequippedInventoryItems){
             if ((e.getX() == x) && (e.getY() == y)){
                 return e;
             }
         }
         return null;
     }
+    
+    private Item getEquippedInventoryItemEntityByCoordinates(int x, int y) {
+        for (Item e: equippedInventoryItems) {
+            if ((e.getX() == x) && (e.getY() == y)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
      * @param index index from 0 to length-1
      */
     private void removeItemByPositionInUnequippedInventoryItems(int index){
-        Entity item = unequippedInventoryItems.get(index);
+        Item item = unequippedInventoryItems.get(index);
         item.destroy();
         unequippedInventoryItems.remove(index);
     }
@@ -376,6 +529,20 @@ public class LoopManiaWorld {
         for (int y=0; y<unequippedInventoryHeight; y++){
             for (int x=0; x<unequippedInventoryWidth; x++){
                 if (getUnequippedInventoryItemEntityByCoordinates(x, y) == null){
+                    return new Pair<Integer, Integer>(x, y);
+                }
+            }
+        }
+        return null;
+    }
+
+    
+    private Pair<Integer, Integer> getFirstAvailableSlotForInventoryItem(){
+        // first available slot for an item...
+        // IMPORTANT - have to check by y then x, since trying to find first available slot defined by looking row by row
+        for (int y=0; y<equippedInventoryHeight; y++){
+            for (int x=0; x<equippedInventoryWidth; x++){
+                if (getEquippedInventoryItemEntityByCoordinates(x, y) == null){
                     return new Pair<Integer, Integer>(x, y);
                 }
             }
@@ -474,5 +641,13 @@ public class LoopManiaWorld {
 
     public List<BasicEnemy> getEnemy() {
         return enemies;
+    }
+
+    public List<Item> getUnequippedItems() {
+        return unequippedInventoryItems;
+    }
+
+    public List<Item> getEquippedItems() {
+        return equippedInventoryItems;
     }
 }
