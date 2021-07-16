@@ -476,26 +476,32 @@ public class LoopManiaWorldController {
      * and load the image into the unequippedInventory GridPane.
      * @param sword
      */
-    private void onLoad(Item item) {
+    private void onLoad(Item item){
         String itemName = item.getName();
+        System.out.println(itemName);
         ImageView view = null;
         switch(itemName){
             case "Sword":
                  view = new ImageView(swordImage);
+                 break;
             case "Stake":
                 view = new ImageView(stakeImage);
+                break;
             case "Staff":
                 view = new ImageView(staffImage);
+                break;
             case "Armour":
                 view = new ImageView(armourImage);
+                break;
             case "Shield":
                 view = new ImageView(shieldImage);
-            //case "Gold"
-            //    view = new ImageView(goldImage);
+                break;
             case "Health Potion":
                 view = new ImageView(healthPotionImage);
+                break;
             case "The One Ring":
                 view = new ImageView(theOneRingImage);
+                break;
         }
         if(view != null) {
             addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
