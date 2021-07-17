@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import org.javatuples.Pair;
 
-import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.PathPosition;
-import unsw.loopmania.Character;
-import unsw.loopmania.HerosCastle;
-import unsw.loopmania.Slug;
-import unsw.loopmania.VillageCard;
-import unsw.loopmania.Building;
-import unsw.loopmania.CampfireBuilding;
-import unsw.loopmania.CampfireCard;
-import unsw.loopmania.Card;
+import unsw.loopmania.backend.Building;
+import unsw.loopmania.backend.CampfireBuilding;
+import unsw.loopmania.backend.CampfireCard;
+import unsw.loopmania.backend.Card;
+import unsw.loopmania.backend.Character;
+import unsw.loopmania.backend.HerosCastle;
+import unsw.loopmania.backend.LoopManiaWorld;
+import unsw.loopmania.backend.PathPosition;
+import unsw.loopmania.backend.Slug;
+import unsw.loopmania.backend.VillageCard;
 
 public class BuffBuildingsTest {
     @Test

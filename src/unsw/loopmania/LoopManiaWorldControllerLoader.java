@@ -11,6 +11,10 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import unsw.loopmania.backend.Character;
+import unsw.loopmania.backend.Entity;
+import unsw.loopmania.backend.HerosCastle;
+import unsw.loopmania.backend.PathTile;
 import javafx.geometry.Rectangle2D;
 
 import java.io.File;

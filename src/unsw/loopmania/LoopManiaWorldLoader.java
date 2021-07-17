@@ -10,6 +10,12 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.backend.Character;
+import unsw.loopmania.backend.Entity;
+import unsw.loopmania.backend.HerosCastle;
+import unsw.loopmania.backend.LoopManiaWorld;
+import unsw.loopmania.backend.PathPosition;
+import unsw.loopmania.backend.PathTile;
 
 import java.util.List;
 

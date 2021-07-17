@@ -37,7 +37,31 @@ import java.util.EnumMap;
 import java.io.File;
 import java.io.IOException;
 
-import unsw.loopmania.ItemFactory.ItemType;
+import unsw.loopmania.backend.BarracksBuilding;
+import unsw.loopmania.backend.BarracksCard;
+import unsw.loopmania.backend.BasicEnemy;
+import unsw.loopmania.backend.Building;
+import unsw.loopmania.backend.CampfireBuilding;
+import unsw.loopmania.backend.CampfireCard;
+import unsw.loopmania.backend.Card;
+import unsw.loopmania.backend.DragIcon;
+import unsw.loopmania.backend.Entity;
+import unsw.loopmania.backend.Item;
+import unsw.loopmania.backend.LoopManiaWorld;
+import unsw.loopmania.backend.Slug;
+import unsw.loopmania.backend.TowerBuilding;
+import unsw.loopmania.backend.TowerCard;
+import unsw.loopmania.backend.TrapBuilding;
+import unsw.loopmania.backend.TrapCard;
+import unsw.loopmania.backend.Vampire;
+import unsw.loopmania.backend.VampireCastleBuilding;
+import unsw.loopmania.backend.VampireCastleCard;
+import unsw.loopmania.backend.VillageBuilding;
+import unsw.loopmania.backend.VillageCard;
+import unsw.loopmania.backend.Zombie;
+import unsw.loopmania.backend.ZombiePitBuilding;
+import unsw.loopmania.backend.ZombiePitCard;
+import unsw.loopmania.backend.ItemFactory.ItemType;
 /**
  * the draggable types.
  * If you add more draggable types, add an enum value here.

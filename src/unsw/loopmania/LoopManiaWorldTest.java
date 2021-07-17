@@ -6,7 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.Test;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.ItemFactory.ItemType;
+import unsw.loopmania.backend.Ally;
+import unsw.loopmania.backend.BasicEnemy;
+import unsw.loopmania.backend.Card;
+import unsw.loopmania.backend.Character;
+import unsw.loopmania.backend.HerosCastle;
+import unsw.loopmania.backend.LoopManiaWorld;
+import unsw.loopmania.backend.PathPosition;
+import unsw.loopmania.backend.Slug;
+import unsw.loopmania.backend.TowerCard;
+import unsw.loopmania.backend.Vampire;
+import unsw.loopmania.backend.Zombie;
+import unsw.loopmania.backend.ItemFactory.ItemType;
 
 import java.util.List;
 import java.util.ArrayList;
