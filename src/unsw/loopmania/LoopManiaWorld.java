@@ -6,7 +6,9 @@ import java.util.Random;
 
 import org.javatuples.Pair;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.Item.Slot;
 import unsw.loopmania.ItemFactory.ItemType;
 
 /**
@@ -48,6 +50,7 @@ public class LoopManiaWorld {
 
     private int gold;
 
+
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
@@ -61,8 +64,6 @@ public class LoopManiaWorld {
 
     // TODO = expand the range of buildings
     private List<Building> buildingEntities;
-
-    private List<HealthPotion> healthPotions;
 
     private ItemFactory itemFactory;
 
@@ -94,7 +95,6 @@ public class LoopManiaWorld {
         //equippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
-        healthPotions = new ArrayList<>();
         this.itemFactory = new ItemFactory();
     }
 
@@ -350,14 +350,16 @@ public class LoopManiaWorld {
     }
 
     public Boolean usingPotion() {
-        if (!healthPotions.isEmpty() && character.getHealth() < 200) {
-            HealthPotion hp = healthPotions.get(0);
-            hp.useItem(character);
-            removeUnequippedInventoryItemByCoordinates(hp.getX(), hp.getY());
-            healthPotions.remove(hp);
+        Item healthPotion = character.getEquipment(Slot.POTION);
+        if (character.getHealth() < 200) {
+            healthPotion.useItem(character);
+            character.DeequipItem(healthPotion);
+            healthPotion.destroy();
             return true;
-        }
+        } 
+
         return false;
+
     }
 
     /**
