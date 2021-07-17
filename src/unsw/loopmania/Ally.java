@@ -1,4 +1,4 @@
-package unsw.loopmania.backend;
+package unsw.loopmania;
 
 public class Ally extends MovingEntity{
     //Used for turning allys into zombies upon critting

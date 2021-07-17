@@ -1,4 +1,4 @@
-package unsw.loopmania.backend;
+package unsw.loopmania;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
