@@ -14,9 +14,7 @@ public class HealthPotion extends Item {
 
     public void useItem(Character target)
     { 
-        // Restore health fully
-        //target.characterStats.modifyHealth(200);
-        target.modifyHealth(200);
+        target.setHealth(200);
     }
 
     public void onEquip(Stats stats)

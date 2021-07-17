@@ -41,15 +41,38 @@ public class LoopManiaApplication extends Application {
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("MainMenuView.fxml"));
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
-
+    
         // load the level selection screen
         LevelController levelController = new LevelController();
         FXMLLoader levelLoader = new FXMLLoader(getClass().getResource("LevelView.fxml"));
         levelLoader.setController(levelController);
         Parent LevelRoot = levelLoader.load();
+        
+        // Load the item menu
+        ItemMenuController itemMenuController = new ItemMenuController(mainController);
+        FXMLLoader itemLoader = new FXMLLoader(getClass().getResource("ItemMenuView.fxml"));
+        itemLoader.setController(itemMenuController);
+        Parent itemMenuRoot = itemLoader.load();
 
+        Scene itemScene = new Scene(itemMenuRoot);
+        
         // create new scene with the main menu (so we start with the main menu)
         Scene scene = new Scene(mainMenuRoot);
+
+        mainController.setItemMenuSwitcher(() -> {
+            switchToRoot(itemScene, itemMenuRoot, primaryStage);
+            itemMenuController.setGoldValue();
+            itemMenuController.setCycleValue();
+            itemMenuController.setExpValue();
+            itemMenuController.setShopInventory();
+        });
+        itemMenuController.setGameSwitcher(() -> {
+            itemMenuController.setUneqippedInventory();
+            switchToRoot(scene, gameRoot, primaryStage);
+            mainController.startTimer();
+        });
+
+        // create new scene with the main menu (so we start with the main menu)
         
         // set functions which are activated when button click to switch menu is pressed
         // e.g. from main menu to start the game, or from the game to return to main menu
@@ -58,6 +81,7 @@ public class LoopManiaApplication extends Application {
             switchToRoot(scene, LevelRoot, primaryStage);
             mainController.startTimer();
         });
+
         levelController.setGameSwitcher(() -> {switchToRoot(scene, gameRoot, primaryStage);});
         
         // deploy the main onto the stage

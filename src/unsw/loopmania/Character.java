@@ -76,12 +76,28 @@ public class Character extends MovingEntity{
         return equipment;
     }
 
+    public Item DeequipItemByCoordinate(int x, int y) {
+        for (Map.Entry<Slot, Item> e : equipment.entrySet()) {
+            if ((e.getValue().getX() == x) && (e.getValue().getY() == y)) {
+                Item item = e.getValue();
+                DeequipItem(item);
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public void DeequipItem(Item item) {
+        equipment.get(item.getSlot()).onDeequip(this);
+        equipment.put(item.getSlot(), null);
+    }
+
     public void equipItem(Item item)
     {
         if(equipment.get(item.getSlot()) != null)
         {
-            equipment.get(item.getSlot()).onDeequip(this);
-            equipment.get(item.getSlot()).destroy();
+            DeequipItem(item);
+
         }
         equipment.put(item.getSlot(), item);
         equipment.get(item.getSlot()).onEquip(this);

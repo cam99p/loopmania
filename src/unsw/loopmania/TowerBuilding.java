@@ -3,7 +3,7 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 import java.util.List;
 
-public class TowerBuilding extends Building implements DamageBuilding {
+public class TowerBuilding extends Building {
 
     private int supportRadius;  
     private boolean inBattle;

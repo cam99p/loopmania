@@ -6,7 +6,9 @@ import java.util.Random;
 
 import org.javatuples.Pair;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.Item.Slot;
 import unsw.loopmania.ItemFactory.ItemType;
 
 /**
@@ -20,6 +22,8 @@ public class LoopManiaWorld {
 
     public static final int unequippedInventoryWidth = 4;
     public static final int unequippedInventoryHeight = 4;
+    public static final int equippedInventoryWidth = 4;
+    public static final int equippedInventoryHeight = 2;
 
     /**
      * width of the world in GridPane cells
@@ -46,6 +50,7 @@ public class LoopManiaWorld {
 
     private int gold;
 
+
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
@@ -59,8 +64,6 @@ public class LoopManiaWorld {
 
     // TODO = expand the range of buildings
     private List<Building> buildingEntities;
-
-    private List<HealthPotion> healthPotions;
 
     private ItemFactory itemFactory;
 
@@ -89,9 +92,9 @@ public class LoopManiaWorld {
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
+        //equippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
-        healthPotions = new ArrayList<>();
         this.itemFactory = new ItemFactory();
     }
 
@@ -200,6 +203,7 @@ public class LoopManiaWorld {
         else {
             return new ArrayList<BasicEnemy>();
         }
+
     }
 
     /**
@@ -346,14 +350,16 @@ public class LoopManiaWorld {
     }
 
     public Boolean usingPotion() {
-        if (!healthPotions.isEmpty() && character.getHealth() < 200) {
-            HealthPotion hp = healthPotions.get(0);
-            hp.useItem(character);
-            removeUnequippedInventoryItemByCoordinates(hp.getX(), hp.getY());
-            healthPotions.remove(hp);
+        Item healthPotion = character.getEquipment(Slot.POTION);
+        if (healthPotion != null && character.getHealth() < 200) {
+            healthPotion.useItem(character);
+            character.DeequipItem(healthPotion);
+            healthPotion.destroy();
             return true;
-        }
+        } 
+
         return false;
+
     }
 
     /**
@@ -378,21 +384,48 @@ public class LoopManiaWorld {
         return item;
     }
 
+    public Item addUnequippedItemByCoordinate(ItemType itemType, int x, int y){
+        Item item = itemFactory.createItem(itemType, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        unequippedInventoryItems.add(item);
+        return item;
+    }
+
+    public Item addEquippedItemByCoordinate(ItemType itemType, int x, int y){
+        Item item = itemFactory.createItem(itemType, new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+        character.equipItem(item);
+        return item;
+    }
+
+
+
     /**
      * remove an item by x,y coordinates
      * @param x x coordinate from 0 to width-1
      * @param y y coordinate from 0 to height-1
      */
     public void removeUnequippedInventoryItemByCoordinates(int x, int y){
-        Entity item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
         removeUnequippedInventoryItem(item);
     }
+
+    public Item moveFromUnequippedToEquipped(int x, int y) {
+        Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        equipItem(item);
+        return item;
+    }
+
+    
+    public Item moveFromEquippedToUnequipped(int x, int y) {
+        Item item = character.DeequipItemByCoordinate(x, y);
+        return item;
+    } 
 
     /**
      * equip an item (move from unequipped inventory to character equipment)
      */
     public void equipItem(Item item){
         character.equipItem(item);
+        removeUnequippedInventoryItem(item);
     }
 
     /**
@@ -410,10 +443,17 @@ public class LoopManiaWorld {
      * remove an item from the unequipped inventory
      * @param item item to be removed
      */
-    private void removeUnequippedInventoryItem(Entity item){
+    private void removeUnequippedInventoryItem(Item item){
         item.destroy();
         unequippedInventoryItems.remove(item);
     }
+
+    /*
+    private void removeEquippedInventoryItem(Item item){
+        item.destroy();
+        equippedInventoryItems.remove(item);
+    }
+    */
 
     /**
      * return an unequipped inventory item by x and y coordinates
@@ -422,21 +462,22 @@ public class LoopManiaWorld {
      * @param y y index from 0 to height-1
      * @return unequipped inventory item at the input position
      */
-    private Entity getUnequippedInventoryItemEntityByCoordinates(int x, int y){
-        for (Entity e: unequippedInventoryItems){
+    private Item getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
+        for (Item e: unequippedInventoryItems){
             if ((e.getX() == x) && (e.getY() == y)){
                 return e;
             }
         }
         return null;
     }
+    
 
     /**
      * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
      * @param index index from 0 to length-1
      */
     private void removeItemByPositionInUnequippedInventoryItems(int index){
-        Entity item = unequippedInventoryItems.get(index);
+        Item item = unequippedInventoryItems.get(index);
         item.destroy();
         unequippedInventoryItems.remove(index);
     }
@@ -489,9 +530,8 @@ public class LoopManiaWorld {
         
         // has a chance spawning a basic enemy on a tile the character isn't on or immediately before or after (currently space required = 2)...
         Random rand = new Random();
-        int choice = rand.nextInt(2); // TODO = change based on spec... currently low value for dev purposes...
-        // TODO = change based on spec
-        if ((choice == 0) && (enemies.size() < 2)){
+        int choice = rand.nextInt(11);
+        if ((choice == 10) && (enemies.size() < 2)){
             List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
             int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
             // inclusive start and exclusive end of range of positions not allowed
@@ -707,6 +747,14 @@ public class LoopManiaWorld {
 
     public int getHerosCastleY() {
         return castle.getY();
+    }
+
+    public int getNumberOfAllies() {
+        return character.getAllies().size();
+    }
+
+    public List<Item> getUnequippedInventoryItems() {
+        return unequippedInventoryItems;
     }
 
     public Item randomItem() {
