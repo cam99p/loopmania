@@ -3,7 +3,7 @@ package unsw.loopmania;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+import java.util.Map;
 import org.javatuples.Pair;
 
 import javafx.beans.property.IntegerProperty;
@@ -637,6 +637,10 @@ public class LoopManiaWorld {
         return cycle;
     }
 
+    public void setCycle(int cycle) {
+        this.cycle = cycle;
+    }
+
     public int getExp() {
         return exp;
     }
@@ -745,6 +749,10 @@ public class LoopManiaWorld {
         return castle.getX();
     }
 
+    public HerosCastle getHerosCastle() {
+        return castle;
+    }
+
     public int getHerosCastleY() {
         return castle.getY();
     }
@@ -799,5 +807,54 @@ public class LoopManiaWorld {
             cardItemPair = loadCard(VillageCard.class);
         }
         return cardItemPair;
+    }
+
+    public void restartGame() {
+        character.setHealth(200);
+        character.unsetBlocking();
+        character.setDefense(0);
+        character.setSpeed(8);
+        character.setAttack(5);
+        character.unsetRevive();
+        character.setDoubleDamage(false);
+        for(Ally a : character.getAllies()) {
+            a.destroy();
+        }
+        character.getAllies().clear();
+        Map<Slot, Item> equipped = character.getMap();
+        for(Map.Entry<Slot, Item> entry : equipped.entrySet()) {
+            if(entry.getValue() != null) {
+                entry.getValue().destroy();
+            }
+        }
+        equipped.clear();
+
+        List<Building> removeBuildings = new ArrayList<>();
+        for(Building b : buildingEntities) {
+            if(!(b instanceof HerosCastle)) {
+                b.destroy();
+                removeBuildings.add(b);
+            }
+        }
+
+        for(Building b : removeBuildings) {
+            buildingEntities.remove(b);
+        }
+        
+        for(Item i : unequippedInventoryItems) {
+            i.destroy();
+        }
+        unequippedInventoryItems.clear();
+        for(Card c : cardEntities) {
+            c.destroy();
+        }
+        cardEntities.clear();
+        for(BasicEnemy e : enemies) {
+            e.destroy();
+        }
+        enemies.clear();
+        setGold(0);
+        setExp(0);
+        setCycle(0);
     }
 }

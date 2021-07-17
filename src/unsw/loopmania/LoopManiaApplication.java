@@ -1,5 +1,6 @@
 package unsw.loopmania;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -87,9 +88,12 @@ public class LoopManiaApplication extends Application {
         });
         deathMenuController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
+            mainController.resetGame();
+            mainController.startTimer();
         });
         deathMenuController.setMenuSwitcher(() -> {
             switchToRoot(scene, mainMenuRoot, primaryStage);
+            mainController.resetGame();
         });
 
         // deploy the main onto the stage

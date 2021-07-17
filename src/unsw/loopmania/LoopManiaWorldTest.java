@@ -1,8 +1,12 @@
 package unsw.loopmania;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
+
+import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.ItemFactory.ItemType;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -106,6 +110,51 @@ public class LoopManiaWorldTest {
         //Check that numbers have gone up
         assertTrue(d.getExp() == 50);
         assertTrue(d.getGold() == 50);
+
+    }
+
+    @Test
+    public void TestResetWorld() {
+        //Path
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+
+        //World
+        LoopManiaWorld d = new LoopManiaWorld(3, 3, dummyPath);
+        HerosCastle c = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        d.setCastle(c);
+
+        //Character
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
+        Character dummyChar = new Character(dummyPos);
+        d.setCharacter(dummyChar);
+
+        //Slug
+        Slug dummySlug = new Slug(dummyPos);
+        d.addEnemy(dummySlug);
+
+        d.addUnequippedItem(ItemType.SWORD);
+        d.addUnequippedItem(ItemType.SWORD);
+        d.addUnequippedItem(ItemType.SWORD);
+        d.addUnequippedItem(ItemType.SWORD);
+
+        Card towerCard = d.loadCard(TowerCard.class).getValue0();
+        d.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), 1, 1);
+        d.loadCard(TowerCard.class).getValue0();
+        d.loadCard(TowerCard.class).getValue0();
+        d.loadCard(TowerCard.class).getValue0();
+
+        assertEquals(2, d.getBuildings().size());
+        assertEquals(3, d.getCards().size());
+        assertEquals(1, d.getEnemy().size());
+        assertEquals(4, d.getUnequippedInventoryItems().size());
+
+        d.restartGame();
+
+        assertEquals(1, d.getBuildings().size());
+        assertEquals(0, d.getCards().size());
+        assertEquals(0, d.getEnemy().size());
+        assertEquals(0, d.getUnequippedInventoryItems().size());
 
     }
 

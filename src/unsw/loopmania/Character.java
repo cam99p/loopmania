@@ -22,7 +22,7 @@ public class Character extends MovingEntity{
         //Set stats
         setAttack(5);
         setDefense(0);
-        setHealth(30);
+        setHealth(200);
         setSpeed(8);
         this.canBlock = false;
         this.canRevive = false;

@@ -343,6 +343,7 @@ public class LoopManiaWorldController {
             world.runTickMoves();
             world.damageEnemy(null);
             world.buffCharacter();
+            setHealth();
             showAllies();
 
             // Battle enemies
@@ -1046,6 +1047,17 @@ public class LoopManiaWorldController {
     public void switchToDeathMenu() {
         timeline.stop();
         deathMenuSwitcher.switchMenu();
+    }
+
+    public void resetGame() {
+        while(true) {
+            if(world.getCharacterX() == world.getHerosCastleX() && world.getCharacterY() == world.getHerosCastleY()) {
+                break;
+            } else {
+                world.runTickMoves();
+            }
+        }
+        world.restartGame();
     }
 
     /**
