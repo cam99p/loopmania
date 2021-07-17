@@ -1,5 +1,6 @@
 package unsw.loopmania;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -82,8 +83,27 @@ public class LoopManiaApplication extends Application {
             mainController.startTimer();
         });
 
-        levelController.setGameSwitcher(() -> {switchToRoot(scene, gameRoot, primaryStage);});
-        
+
+        // Death Menu
+        DeathMenuController deathMenuController = new DeathMenuController(mainController);
+        FXMLLoader deathLoader = new FXMLLoader(getClass().getResource("DeathMenuView.fxml"));
+        deathLoader.setController(deathMenuController);
+        Parent deathMenuRoot = deathLoader.load();
+        Scene deathScene = new Scene(deathMenuRoot);
+
+        mainController.setDeathMenuSwitcher(() -> {
+            switchToRoot(deathScene, deathMenuRoot, primaryStage);
+        });
+        deathMenuController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+            mainController.resetGame();
+            mainController.startTimer();
+        });
+        deathMenuController.setMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
+            mainController.resetGame();
+        });
+
         // deploy the main onto the stage
         gameRoot.requestFocus();
         primaryStage.setScene(scene);
