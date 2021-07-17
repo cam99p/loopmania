@@ -125,6 +125,9 @@ public class LoopManiaWorldController {
     @FXML
     private Label cycle;
 
+    @FXML
+    private GridPane allies;
+
     private boolean isPaused;
     private LoopManiaWorld world;
 
@@ -155,6 +158,7 @@ public class LoopManiaWorldController {
     private Image slugImage;
     private Image vampireImage;
     private Image zombieImage;
+    private Image allyImage;
     //ITEM//
     private Image swordImage;
     private Image stakeImage;
@@ -236,6 +240,7 @@ public class LoopManiaWorldController {
         vampireImage = new Image((new File("src/images/vampire.png")).toURI().toString());
         zombieImage = new Image((new File("src/images/zombie.png")).toURI().toString());
         basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
+        allyImage = new Image((new File("src/images/deep_elf_master_archer.png")).toURI().toString());
         //ITEM//
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
         stakeImage = new Image((new File("src/images/stake.png")).toURI().toString());
@@ -336,7 +341,7 @@ public class LoopManiaWorldController {
             world.runTickMoves();
             world.damageEnemy(null);
             world.buffCharacter();
-            world.spawnAllies();
+            showAllies();
 
             // Battle enemies
             List<BasicEnemy> defeatedEnemies = world.runBattles();
@@ -1000,11 +1005,18 @@ public class LoopManiaWorldController {
         mainMenuSwitcher.switchMenu();
     }
 
+    /**
+     * Helper function to switch menu, pauses the game state
+     * @throws IOException
+     */
     public void switchToItemMenu() throws IOException {
         pause();
         itemMenuSwitcher.switchMenu();
     }
 
+    /**
+     * Switches to the item menu on cycles 1, 3, 6, and so on
+     */
     public void switchToMenu() {
         if(cycleCounter == world.getCycle()) {
             try {
@@ -1019,6 +1031,20 @@ public class LoopManiaWorldController {
     public void incrCycleCounter() {
         cycleCounter += increment;
         increment++;
+    }
+
+    /**
+     * Function to spawn and show the allies on the game screen
+     */
+    public void showAllies() {
+        world.spawnAllies();
+        allies.getChildren().clear();
+        int numberOfAllies = world.getNumberOfAllies();
+        System.out.println(numberOfAllies);
+        for(int i = 0; i < numberOfAllies; i++) {
+            ImageView view = new ImageView(allyImage);
+            allies.add(view, i, 0);
+        }
     }
 
     /**

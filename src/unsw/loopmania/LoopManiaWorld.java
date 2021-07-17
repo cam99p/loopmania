@@ -351,7 +351,7 @@ public class LoopManiaWorld {
 
     public Boolean usingPotion() {
         Item healthPotion = character.getEquipment(Slot.POTION);
-        if (character.getHealth() < 200) {
+        if (healthPotion != null && character.getHealth() < 200) {
             healthPotion.useItem(character);
             character.DeequipItem(healthPotion);
             healthPotion.destroy();
@@ -747,6 +747,10 @@ public class LoopManiaWorld {
 
     public int getHerosCastleY() {
         return castle.getY();
+    }
+
+    public int getNumberOfAllies() {
+        return character.getAllies().size();
     }
 
     public List<Item> getUnequippedInventoryItems() {
