@@ -330,8 +330,8 @@ public class LoopManiaWorld {
         setGold(getGold() + 10);
         setExp(getExp() + 100);
         Random rand = new Random();
-        int seed = rand.nextInt(21);
-        if(seed == 20) {
+        int seed = rand.nextInt(20);
+        if(seed == 19) {
             item = randomItem();
         }
         return item;
@@ -758,18 +758,18 @@ public class LoopManiaWorld {
     public Item randomItem() {
         Item item = null;
         Random rand = new Random();
-        int seed = rand.nextInt(8);
-        if(seed == 1) {
+        int seed = rand.nextInt(7);
+        if(seed == 0) {
             item = addUnequippedItem(ItemType.ARMOUR);
-        } else if(seed == 2) {
+        } else if(seed == 1) {
             item = addUnequippedItem(ItemType.HEALTH_POTION);
-        } else if(seed == 3) {
+        } else if(seed == 2) {
             item = addUnequippedItem(ItemType.SWORD);
-        } else if(seed == 4) {
+        } else if(seed == 3) {
             item = addUnequippedItem(ItemType.HELMET);
-        } else if(seed == 5) {
+        } else if(seed == 4) {
             item = addUnequippedItem(ItemType.SHIELD);
-        } else if(seed == 6) {
+        } else if(seed == 5) {
             item = addUnequippedItem(ItemType.STAKE);
         } else {
             item = addUnequippedItem(ItemType.STAFF);
@@ -780,18 +780,18 @@ public class LoopManiaWorld {
     public Pair<Card, Item> randomCard() {
         Pair<Card, Item> cardItemPair = null;
         Random rand = new Random();
-        int seed = rand.nextInt(8);
-        if(seed == 1) {
+        int seed = rand.nextInt(7);
+        if(seed == 0) {
             cardItemPair = loadCard(VampireCastleCard.class);
-        } else if(seed == 2) {
+        } else if(seed == 1) {
             cardItemPair = loadCard(ZombiePitCard.class);
-        } else if(seed == 3) {
+        } else if(seed == 2) {
             cardItemPair = loadCard(BarracksCard.class);
-        } else if(seed == 4) {
+        } else if(seed == 3) {
             cardItemPair = loadCard(CampfireCard.class);
-        } else if(seed == 5) {
+        } else if(seed == 4) {
             cardItemPair = loadCard(TowerCard.class);  
-        } else if(seed == 6) {
+        } else if(seed == 5) {
             cardItemPair = loadCard(TrapCard.class);
         } else {
             cardItemPair = loadCard(VillageCard.class);
