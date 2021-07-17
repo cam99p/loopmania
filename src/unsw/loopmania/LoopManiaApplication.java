@@ -42,7 +42,13 @@ public class LoopManiaApplication extends Application {
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("MainMenuView.fxml"));
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
-
+    
+        // load the level selection screen
+        LevelController levelController = new LevelController();
+        FXMLLoader levelLoader = new FXMLLoader(getClass().getResource("LevelView.fxml"));
+        levelLoader.setController(levelController);
+        Parent LevelRoot = levelLoader.load();
+        
         // Load the item menu
         ItemMenuController itemMenuController = new ItemMenuController(mainController);
         FXMLLoader itemLoader = new FXMLLoader(getClass().getResource("ItemMenuView.fxml"));
@@ -50,6 +56,8 @@ public class LoopManiaApplication extends Application {
         Parent itemMenuRoot = itemLoader.load();
 
         Scene itemScene = new Scene(itemMenuRoot);
+        
+        // create new scene with the main menu (so we start with the main menu)
         Scene scene = new Scene(mainMenuRoot);
 
         mainController.setItemMenuSwitcher(() -> {
@@ -70,8 +78,8 @@ public class LoopManiaApplication extends Application {
         // set functions which are activated when button click to switch menu is pressed
         // e.g. from main menu to start the game, or from the game to return to main menu
         mainController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
-        mainMenuController.setGameSwitcher(() -> {
-            switchToRoot(scene, gameRoot, primaryStage);
+        mainMenuController.setLevelSwitcher(() -> {
+            switchToRoot(scene, LevelRoot, primaryStage);
             mainController.startTimer();
         });
 

@@ -5,24 +5,24 @@ import javafx.fxml.FXML;
 
 /**
  * controller for the main menu.
- * TODO = you could extend this, for example with a settings menu, or a menu to load particular maps.
+ * you could extend this, for example with a settings menu, or a menu to load particular maps.
  */
 public class MainMenuController {
     /**
-     * facilitates switching to main game
+     * facilitates switching to level selection
      */
-    private MenuSwitcher gameSwitcher;
+    private MenuSwitcher LevelSwitcher;
 
-    public void setGameSwitcher(MenuSwitcher gameSwitcher){
-        this.gameSwitcher = gameSwitcher;
+    public void setLevelSwitcher(MenuSwitcher LevelSwitcher){
+        this.LevelSwitcher = LevelSwitcher;
     }
 
     /**
-     * facilitates switching to main game upon button click
+     * facilitates switching to level selection upon button click
      * @throws IOException
      */
     @FXML
-    private void switchToGame() throws IOException {
-        gameSwitcher.switchMenu();
+    private void switchToLevel() throws IOException {
+        LevelSwitcher.switchMenu();
     }
 }
