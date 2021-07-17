@@ -214,6 +214,8 @@ public class LoopManiaWorldController {
 
     private MenuSwitcher itemMenuSwitcher;
 
+    private MenuSwitcher deathMenuSwitcher;
+
     /**
      * @param world world object loaded from file
      * @param initialEntities the initial JavaFX nodes (ImageViews) which should be loaded into the GUI
@@ -344,6 +346,10 @@ public class LoopManiaWorldController {
 
             // Battle enemies
             List<BasicEnemy> defeatedEnemies = world.runBattles();
+
+            if(world.getCharacter().getHealth() <= 0) {
+                switchToDeathMenu();
+            }
             world.GainBattleRewards(defeatedEnemies);
             for (BasicEnemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
@@ -987,6 +993,10 @@ public class LoopManiaWorldController {
         this.itemMenuSwitcher = itemMenuSwitcher;
     }
 
+    public void setDeathMenuSwitcher(MenuSwitcher deathMenuSwitcher) {
+        this.deathMenuSwitcher = deathMenuSwitcher;
+    }
+
     /**
      * this method is triggered when click button to go to main menu in FXML
      * @throws IOException
@@ -1025,6 +1035,11 @@ public class LoopManiaWorldController {
         increment++;
     }
 
+    public void switchToDeathMenu() {
+        timeline.stop();
+        deathMenuSwitcher.switchMenu();
+    }
+
     /**
      * Function to spawn and show the allies on the game screen
      */
@@ -1032,7 +1047,6 @@ public class LoopManiaWorldController {
         world.spawnAllies();
         allies.getChildren().clear();
         int numberOfAllies = world.getNumberOfAllies();
-        System.out.println(numberOfAllies);
         for(int i = 0; i < numberOfAllies; i++) {
             ImageView view = new ImageView(allyImage);
             allies.add(view, i, 0);
