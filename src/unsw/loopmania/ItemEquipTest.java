@@ -152,6 +152,22 @@ public class ItemEquipTest {
     }
 
     @Test
+    public void TestDeequipItem(){
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
+        Character dummyChar = new Character(dummyPos);
+        Item dummyItem = itemFactory.createItem(ItemType.SWORD, new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+        dummyChar.equipItem(dummyItem);
+        Item deequippedItem = dummyChar.DeequipItemByCoordinate(dummyItem.getX(), dummyItem.getY());
+        
+        assertTrue(dummyItem == deequippedItem);
+        assertTrue(dummyChar.getEquipment(dummyItem.getSlot()) == null);
+    }
+    
+
+    @Test
     public void TestOverwritingEquipment(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
                                                                 new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));

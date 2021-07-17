@@ -78,6 +78,10 @@ public class Character extends MovingEntity{
 
     public Item DeequipItemByCoordinate(int x, int y) {
         for (Map.Entry<Slot, Item> e : equipment.entrySet()) {
+            // Skip entry if null value
+            if(e.getValue() == null)
+                continue;
+            // Get X and Y coordinate of item
             if ((e.getValue().getX() == x) && (e.getValue().getY() == y)) {
                 Item item = e.getValue();
                 DeequipItem(item);
