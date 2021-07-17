@@ -2,13 +2,12 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import java.util.List;
-import java.util.ArrayList;
 import org.javatuples.Pair;
 
 /**
  * a basic form of building in the world
  */
-public class VampireCastleBuilding extends Building implements SpawnEnemyBuilding {
+public class VampireCastleBuilding extends Building {
 
     public VampireCastleBuilding(SimpleIntegerProperty x, SimpleIntegerProperty y) {
         super(x, y);

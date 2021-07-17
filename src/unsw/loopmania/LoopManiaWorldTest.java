@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
 
-import javafx.beans.property.SimpleIntegerProperty;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,8 +21,8 @@ public class LoopManiaWorldTest {
         d.setCharacter(dummyChar);
         Ally dummyAlly = new Ally(dummyPos);
         dummyChar.AddAlly(dummyAlly);
-        TowerCard towerCard = d.loadTowerCard();
-        Building towerBuilding = d.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), 1, 1);
+        Card towerCard = d.loadCard(TowerCard.class).getValue0();
+        d.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), 1, 1);
 
         assertTrue(d.gatherAllies().size() == 3);
     }
@@ -110,4 +108,5 @@ public class LoopManiaWorldTest {
         assertTrue(d.getGold() == 50);
 
     }
+
 }

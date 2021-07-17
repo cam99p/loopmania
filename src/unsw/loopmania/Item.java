@@ -14,7 +14,7 @@ public abstract class Item extends StaticEntity implements ItemInterface{
     /**
      * An enum that will be allocated to every item to restrict item behaviour
      */
-    enum Slot{
+    public enum Slot{
         HEAD,
         CHEST,
         LEFT_ARM,

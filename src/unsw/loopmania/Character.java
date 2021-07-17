@@ -2,7 +2,11 @@ package unsw.loopmania;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+
+import unsw.loopmania.Item.Slot;
 
 /**
  * represents the main character in the backend of the game world
@@ -11,6 +15,7 @@ public class Character extends MovingEntity{
 
     private boolean doubleDamage;
     private List<Ally> allies;
+    private Map <Slot, Item> equipment;
 
     public Character(PathPosition position) {
         super(position);
@@ -23,6 +28,7 @@ public class Character extends MovingEntity{
         this.canRevive = false;
         this.doubleDamage = false;
         this.allies = new ArrayList<>();
+        initialiseEquipment();
     }
 
     //Attacks the specified target
@@ -59,5 +65,51 @@ public class Character extends MovingEntity{
     public List<Ally> getAllies() {
         return allies;
     }
+
+    public Item getEquipment(Slot slot)
+    {
+        return equipment.get(slot);
+    }
+
+    public Map<Slot, Item> getMap()
+    {
+        return equipment;
+    }
+
+    public Item DeequipItemByCoordinate(int x, int y) {
+        for (Map.Entry<Slot, Item> e : equipment.entrySet()) {
+            if ((e.getValue().getX() == x) && (e.getValue().getY() == y)) {
+                Item item = e.getValue();
+                DeequipItem(item);
+                return item;
+            }
+        }
+        return null;
+    }
+
+    private void DeequipItem(Item item) {
+        equipment.get(item.getSlot()).onDeequip(this);
+        equipment.put(item.getSlot(), null);
+    }
+
+    public void equipItem(Item item)
+    {
+        if(equipment.get(item.getSlot()) != null)
+        {
+            DeequipItem(item);
+
+        }
+        equipment.put(item.getSlot(), item);
+        equipment.get(item.getSlot()).onEquip(this);
+    }
     
+    private void initialiseEquipment(){
+        equipment = new EnumMap<Slot, Item>(Slot.class);
+        equipment.put(Slot.HEAD, null);
+        equipment.put(Slot.CHEST, null);
+        equipment.put(Slot.RIGHT_ARM, null);
+        equipment.put(Slot.LEFT_ARM, null);
+        equipment.put(Slot.POTION, null);
+        equipment.put(Slot.SPECIAL, null);
+    }
 }

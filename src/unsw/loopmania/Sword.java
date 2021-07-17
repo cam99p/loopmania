@@ -19,6 +19,7 @@ public class Sword extends Item{
 
     public void onEquip(Stats stats)
     {
+        
         stats.modifyAttack(getValue());
     }
 

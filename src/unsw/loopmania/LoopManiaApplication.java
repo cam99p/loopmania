@@ -30,7 +30,7 @@ public class LoopManiaApplication extends Application {
         primaryStage.setResizable(false);
 
         // load the main game
-        LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader("basic_world_with_player.json");
+        LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
         mainController = loopManiaLoader.loadController();
         FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("LoopManiaView.fxml"));
         gameLoader.setController(mainController);
@@ -42,8 +42,29 @@ public class LoopManiaApplication extends Application {
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
 
-        // create new scene with the main menu (so we start with the main menu)
+        // Load the item menu
+        ItemMenuController itemMenuController = new ItemMenuController(mainController);
+        FXMLLoader itemLoader = new FXMLLoader(getClass().getResource("ItemMenuView.fxml"));
+        itemLoader.setController(itemMenuController);
+        Parent itemMenuRoot = itemLoader.load();
+
+        Scene itemScene = new Scene(itemMenuRoot);
         Scene scene = new Scene(mainMenuRoot);
+
+        mainController.setItemMenuSwitcher(() -> {
+            switchToRoot(itemScene, itemMenuRoot, primaryStage);
+            itemMenuController.setGoldValue();
+            itemMenuController.setCycleValue();
+            itemMenuController.setExpValue();
+            itemMenuController.setShopInventory();
+        });
+        itemMenuController.setGameSwitcher(() -> {
+            itemMenuController.setUneqippedInventory();
+            switchToRoot(scene, gameRoot, primaryStage);
+            mainController.startTimer();
+        });
+
+        // create new scene with the main menu (so we start with the main menu)
         
         // set functions which are activated when button click to switch menu is pressed
         // e.g. from main menu to start the game, or from the game to return to main menu
@@ -52,7 +73,7 @@ public class LoopManiaApplication extends Application {
             switchToRoot(scene, gameRoot, primaryStage);
             mainController.startTimer();
         });
-        
+
         // deploy the main onto the stage
         gameRoot.requestFocus();
         primaryStage.setScene(scene);

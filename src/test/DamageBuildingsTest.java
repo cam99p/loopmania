@@ -1,6 +1,5 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,14 +17,15 @@ import unsw.loopmania.PathPosition;
 import unsw.loopmania.Character;
 import unsw.loopmania.HerosCastle;
 import unsw.loopmania.Slug;
+import unsw.loopmania.TowerAlly;
 import unsw.loopmania.TrapBuilding;
 import unsw.loopmania.TrapCard;
 import unsw.loopmania.Building;
 import unsw.loopmania.TowerBuilding;
 import unsw.loopmania.TowerCard;
 import unsw.loopmania.MovingEntity;
-import unsw.loopmania.Entity;
 import unsw.loopmania.Battle;
+import unsw.loopmania.Card;
 
 public class DamageBuildingsTest {
     @Test
@@ -47,7 +47,7 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TrapCard trapCard = world.loadTrapCard();
+        Card trapCard = world.loadCard(TrapCard.class).getValue0();
 
         assertDoesNotThrow(() -> world.convertCardToBuildingByCoordinates(trapCard.getX(), trapCard.getY(), 0, 1));
         assertEquals(2, world.getBuildings().size());
@@ -73,9 +73,11 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TrapCard trapCard = world.loadTrapCard();
+        Card trapCard = world.loadCard(TrapCard.class).getValue0();
 
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(trapCard.getX(), trapCard.getY(), 1, 1));
+        world.convertCardToBuildingByCoordinates(trapCard.getX(), trapCard.getY(), 1, 1);
+        assertEquals(1, world.getCards().size());
+        assertEquals(trapCard, world.getCards().get(0));
     }
 
     @Test
@@ -97,7 +99,7 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TrapCard trapCard = world.loadTrapCard();
+        Card trapCard = world.loadCard(TrapCard.class).getValue0();
         Building trapBuilding = world.convertCardToBuildingByCoordinates(trapCard.getX(), trapCard.getY(), 0, 1);
         assertEquals(2, world.getBuildings().size());
         assertEquals(trapBuilding, world.getBuildings().get(1));
@@ -132,7 +134,7 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TrapCard trapCard = world.loadTrapCard();
+        Card trapCard = world.loadCard(TrapCard.class).getValue0();
         Building trapBuilding = world.convertCardToBuildingByCoordinates(trapCard.getX(), trapCard.getY(), 0, 1);
         assertEquals(2, world.getBuildings().size());
         assertEquals(trapBuilding, world.getBuildings().get(1));
@@ -165,7 +167,7 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TowerCard towerCard = world.loadTowerCard();
+        Card towerCard = world.loadCard(TowerCard.class).getValue0();
         assertDoesNotThrow(() -> world.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), 1, 1));
         assertEquals(2, world.getBuildings().size());
         assertTrue(world.getBuildings().get(1) instanceof TowerBuilding);
@@ -190,8 +192,10 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TowerCard towerCard = world.loadTowerCard();
-        assertThrows(IllegalArgumentException.class, () -> world.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), 0, 1));
+        Card towerCard = world.loadCard(TowerCard.class).getValue0();
+        world.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), 0, 1);
+        assertEquals(1, world.getCards().size());
+        assertEquals(towerCard, world.getCards().get(0));
     }
 
     @Test
@@ -213,21 +217,20 @@ public class DamageBuildingsTest {
         world.setCharacter(character);
         world.setCastle(castle);
 
-        TowerCard towerCard = world.loadTowerCard();
-        Building towerBuilding = world.convertCardToBuildingByCoordinates(towerCard.getX(), towerCard.getY(), 1, 1);
+        TowerAlly towerAlly = new TowerAlly(new PathPosition(0, dummyPath));
 
         Slug dummySlug = new Slug(pos);
 
-        // ArrayList<Moving> allies = new ArrayList<Entity>();
-        // allies.add(character);
-        // allies.add(towerBuilding);
-        // ArrayList<MovingEntity> enemies = new ArrayList<MovingEntity>();
-        // enemies.add(dummySlug);
+        ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
+        allies.add(character);
+        allies.add(towerAlly);
+        ArrayList<MovingEntity> enemies = new ArrayList<MovingEntity>();
+        enemies.add(dummySlug);
 
-        // Battle dummyBattle = new Battle(allies, enemies);
+        Battle dummyBattle = new Battle(character, allies, enemies);
 
-        // //Check that the character, slug and tower are in the battle
-        // assertTrue(dummyBattle.getParticipants().size() == 3);
-        // dummyBattle.Fight();
+        //Check that the character, slug and tower are in the battle
+        assertTrue(dummyBattle.getParticipants().size() == 3);
+        dummyBattle.Fight();
     }
 }

@@ -3,7 +3,7 @@ package unsw.loopmania;
 import javafx.beans.property.SimpleIntegerProperty;
 import java.util.List;
 
-public class TrapBuilding extends Building implements DamageBuilding {
+public class TrapBuilding extends Building {
 
     private final static int TRAP_DAMAGE = 100;
 
@@ -25,6 +25,7 @@ public class TrapBuilding extends Building implements DamageBuilding {
         // Remove all enemies killed off by traps
         if(potentialDeadEnemy != null) {
             enemies.remove(potentialDeadEnemy);
+            potentialDeadEnemy.destroy();
             return this;
         } else {
             return null;
