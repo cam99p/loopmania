@@ -55,7 +55,7 @@ public class LoopManiaApplication extends Application {
         Parent itemMenuRoot = itemLoader.load();
 
         // Load the death menu
-        DeathMenuController deathMenuController = new DeathMenuController(mainController);
+        DeathMenuController deathMenuController = new DeathMenuController();
         FXMLLoader deathLoader = new FXMLLoader(getClass().getResource("DeathMenuView.fxml"));
         deathLoader.setController(deathMenuController);
         Parent deathMenuRoot = deathLoader.load();

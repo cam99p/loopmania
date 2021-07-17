@@ -10,12 +10,6 @@ public class DeathMenuController {
 
     MenuSwitcher menuSwitcher;
 
-    private LoopManiaWorldController mainController;
-
-    public DeathMenuController(LoopManiaWorldController mainController) {
-        this.mainController = mainController;
-    }
-
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
         this.gameSwitcher = gameSwitcher;
     }
