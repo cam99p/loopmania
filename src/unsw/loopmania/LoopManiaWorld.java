@@ -747,6 +747,10 @@ public class LoopManiaWorld {
         return castle.getY();
     }
 
+    public int getNumberOfAllies() {
+        return character.getAllies().size();
+    }
+
     public List<Item> getUnequippedInventoryItems() {
         return unequippedInventoryItems;
     }
