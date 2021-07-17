@@ -580,6 +580,7 @@ public class LoopManiaWorldController {
                 break;
             case "Helmet":
                 view = new ImageView(helmetImage);
+                break;
             case "Health Potion":
                 view = new ImageView(healthPotionImage);
                 break;
