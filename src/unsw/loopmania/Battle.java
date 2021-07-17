@@ -75,10 +75,23 @@ public class Battle {
                 //If the attack kills the ally, remove it from the heros ally list
                 if (target.getHealth() < 0){
                     if (target == hero){
-                        // heroDefeated(hero);
+                        heroDefeated(hero);
                     } else{
                         //Ally dies, remove from hero's list
                         hero.getAllies().remove(target);
+                        //Then check for zombification and react accordinly
+                        Ally deadAlly = (Ally)target;
+                        if (deadAlly.isZombified()){
+                            //Remove target from rotation, as added zombie wil re balance numbers
+                            participants.remove(target);
+                            //Create and add zombie to both necessary lists
+                            Zombie newZombie = new Zombie(target.getPosition());
+                            enemies.add(newZombie);
+                            participants.add(newZombie);
+                            //Re sort list
+                            participants.sort(Comparator.comparingInt(MovingEntity::getSpeed)); //Sorts by attack speed, lowest to highest
+                            Collections.reverse(participants); //reverses list to get highest to lowest
+                        }
                     }
                 }
             }

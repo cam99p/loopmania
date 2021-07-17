@@ -33,6 +33,7 @@ public class Zombie extends BasicEnemy{
         if (seed == 20 && target instanceof Ally){
             Ally ally = (Ally)target;
             ally.setZombified(true);
+            ally.setHealth(0); 
         }
 
         //Handle tarnce

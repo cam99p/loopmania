@@ -42,7 +42,7 @@ public class Character extends MovingEntity{
         }
 
         //Trancing an enemy case
-        if (this.getEquipment(Slot.RIGHT_ARM) instanceof Staff && seed <= 1){
+        if (this.getEquipment(Slot.RIGHT_ARM) instanceof Staff && seed >= 20){
             target.setTranced(true);
             target.setTranceTimer(3);
         }
