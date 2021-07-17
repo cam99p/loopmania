@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class VillageBuilding extends Building implements BuffBuilding {
+public class VillageBuilding extends Building {
 
     private final static int VILLAGE_HEAL = 60;
 

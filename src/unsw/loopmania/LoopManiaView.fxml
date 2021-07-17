@@ -123,10 +123,10 @@
          
                            <!-- clicking this button returns the human player to the main menu -->
             <Button onAction="#switchToMainMenu" text="Exit to Main Menu" />
-            <GridPane fx:id="stats" prefHeight="89.0" prefWidth="223.0">
+            <GridPane fx:id="stats" prefHeight="89.0" prefWidth="151.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.66669464111328" minWidth="10.0" prefWidth="108.33335367838542" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="47.66664632161458" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.66669464111328" minWidth="10.0" prefWidth="119.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="77.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="33.0" minHeight="5.0" prefHeight="21.0" vgrow="SOMETIMES" />
@@ -138,7 +138,7 @@
                <children>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>
-                        <Rectangle fx:id="healthBar" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="16.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                        <Rectangle fx:id="healthBar" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="16.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="87.0" />
                      </children>
                   </AnchorPane>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="XP" textFill="#1e00ff" GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="xpLabel">
@@ -148,7 +148,7 @@
                   </Label>
                   <Label fx:id="cycleLabel" alignment="CENTER" contentDisplay="CENTER" text="CYCLE" textFill="#000000" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                   <Label fx:id="goldValue" text="0" textFill="#d7a92d" GridPane.rowIndex="1">
@@ -168,9 +168,18 @@
                   </Label>
                </children>
             </GridPane>
-         
-                                    <!-- clicking this button returns the human player to the main menu -->
-            <Button onAction="#switchToMainMenu" text="Exit to Main Menu" />
+                              <!-- This is for the allies -->            
+               <GridPane fx:id="allies" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+                  <columnConstraints>
+                     <ColumnConstraints />
+                  </columnConstraints>
+                  <rowConstraints>
+                     <RowConstraints />
+                  </rowConstraints>
+                  <children>
+                     
+                  </children>
+               </GridPane>
          </children>
       </VBox>
    </HBox>
