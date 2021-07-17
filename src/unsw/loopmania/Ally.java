@@ -14,12 +14,13 @@ public class Ally extends MovingEntity{
         this.canBlock = false;
         this.canRevive = false;
         this.zombified = false;
+        this.tranced = false;
     }
     
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
         int damage = this.getAttack() - target.getDefense();
-        target.setHealth(target.getHealth() - damage);
+        target.damageHealth(damage);
     }
 
     public boolean isZombified() {

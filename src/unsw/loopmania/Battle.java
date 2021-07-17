@@ -47,7 +47,7 @@ public class Battle {
             }
 
             Random rand = new Random();
-            int seed = rand.nextInt(11); //Random number between 1 and 10 inclusive
+            int seed = rand.nextInt(21); //Random number between 1 and 20 inclusive
 
             //Its either an allied force
             if (allies.contains(attacker)){
@@ -61,7 +61,15 @@ public class Battle {
             } 
             //Or an Enemy
             else if (enemies.contains(attacker)){
-                MovingEntity target = getTargetAlly();
+                MovingEntity target;
+
+                //If enemy is tranced
+                if (attacker.getTranced()){
+                    target = getTargetEnemy();
+                } else {
+                    target = getTargetAlly();
+                }
+
                 attacker.AttackTarget(target, seed);
 
                 //If the attack kills the ally, remove it from the heros ally list

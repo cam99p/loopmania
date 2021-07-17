@@ -14,13 +14,15 @@ public class Zombie extends BasicEnemy{
         this.setDefense(0);
         this.setHealth(100);
         this.setSpeed(5);
+        //Set other
+        this.tranced = false;
     }
 
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
         int damage = this.getAttack() - target.getDefense();
 
-        //If the target enityt (currently only main character) successfully blocks, reduce damage to 0
+        //If the target entity (currently only main character) successfully blocks, reduce damage to 0
         if (target.tryBlock(seed)){
             damage = 0;
         }
@@ -28,9 +30,17 @@ public class Zombie extends BasicEnemy{
         target.damageHealth(damage);
 
         //Critical
-        if (seed == 10 && target instanceof Ally){
+        if (seed == 20 && target instanceof Ally){
             Ally ally = (Ally)target;
             ally.setZombified(true);
+        }
+
+        //Handle tarnce
+        if (getTranceTimer() == 0){
+            setTranced(false);
+        }
+        else if (tranced){
+            deincrementTranceTimer();
         }
     }
 

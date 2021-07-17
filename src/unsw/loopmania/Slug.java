@@ -14,6 +14,8 @@ public class Slug extends BasicEnemy{
         this.setDefense(0);
         this.setHealth(50);
         this.setSpeed(7);
+        //Set other
+        this.tranced = false;
     }
 
     //Attacks the specified target
@@ -26,6 +28,14 @@ public class Slug extends BasicEnemy{
         }
 
         target.damageHealth(damage);
+
+        //Handle trance
+        if (getTranceTimer() == 0){
+            setTranced(false);
+        }
+        else if (tranced){
+            deincrementTranceTimer();
+        }
     }
 
     /**
