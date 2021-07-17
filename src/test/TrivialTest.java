@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import unsw.loopmania.backend.LoopManiaWorld;
+import unsw.loopmania.LoopManiaWorld;
 
 
 /**

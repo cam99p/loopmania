@@ -1,6 +1,5 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,24 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 import org.javatuples.Pair;
 
-import unsw.loopmania.backend.BarracksBuilding;
-import unsw.loopmania.backend.BarracksCard;
-import unsw.loopmania.backend.BasicEnemy;
-import unsw.loopmania.backend.Building;
-import unsw.loopmania.backend.CampfireBuilding;
-import unsw.loopmania.backend.CampfireCard;
-import unsw.loopmania.backend.Card;
-import unsw.loopmania.backend.Character;
-import unsw.loopmania.backend.HerosCastle;
-import unsw.loopmania.backend.Item;
-import unsw.loopmania.backend.LoopManiaWorld;
-import unsw.loopmania.backend.PathPosition;
-import unsw.loopmania.backend.Slug;
-import unsw.loopmania.backend.TowerCard;
-import unsw.loopmania.backend.TrapCard;
-import unsw.loopmania.backend.VampireCastleCard;
-import unsw.loopmania.backend.VillageCard;
-import unsw.loopmania.backend.ZombiePitCard;
+import unsw.loopmania.BarracksCard;
+import unsw.loopmania.BasicEnemy;
+import unsw.loopmania.Card;
+import unsw.loopmania.Character;
+import unsw.loopmania.HerosCastle;
+import unsw.loopmania.Item;
+import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.PathPosition;
+import unsw.loopmania.Slug;
+import unsw.loopmania.TowerCard;
+import unsw.loopmania.TrapCard;
+import unsw.loopmania.VampireCastleCard;
+import unsw.loopmania.VillageCard;
+import unsw.loopmania.ZombiePitCard;
 
 public class CardsTest {
     @Test

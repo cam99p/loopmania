@@ -10,7 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import unsw.loopmania.backend.ItemFactory.ItemType;
+import unsw.loopmania.ItemFactory.ItemType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

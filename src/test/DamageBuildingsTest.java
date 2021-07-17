@@ -12,20 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 import org.javatuples.Pair;
 
-import unsw.loopmania.backend.Battle;
-import unsw.loopmania.backend.Building;
-import unsw.loopmania.backend.Card;
-import unsw.loopmania.backend.Character;
-import unsw.loopmania.backend.HerosCastle;
-import unsw.loopmania.backend.LoopManiaWorld;
-import unsw.loopmania.backend.MovingEntity;
-import unsw.loopmania.backend.PathPosition;
-import unsw.loopmania.backend.Slug;
-import unsw.loopmania.backend.TowerAlly;
-import unsw.loopmania.backend.TowerBuilding;
-import unsw.loopmania.backend.TowerCard;
-import unsw.loopmania.backend.TrapBuilding;
-import unsw.loopmania.backend.TrapCard;
+import unsw.loopmania.Battle;
+import unsw.loopmania.Building;
+import unsw.loopmania.Card;
+import unsw.loopmania.Character;
+import unsw.loopmania.HerosCastle;
+import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.MovingEntity;
+import unsw.loopmania.PathPosition;
+import unsw.loopmania.Slug;
+import unsw.loopmania.TowerAlly;
+import unsw.loopmania.TowerBuilding;
+import unsw.loopmania.TowerCard;
+import unsw.loopmania.TrapBuilding;
+import unsw.loopmania.TrapCard;
 
 public class DamageBuildingsTest {
     @Test
