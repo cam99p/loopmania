@@ -1,7 +1,6 @@
 package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Armour;
 
 /**
  * A factory class to create items

@@ -5,14 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.Test;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.PathPosition;
-import unsw.loopmania.Slug;
-import unsw.loopmania.Staff;
-import unsw.loopmania.Stake;
-import unsw.loopmania.Sword;
-import unsw.loopmania.Vampire;
-
-import java.util.List;
 import java.util.ArrayList;
 import org.javatuples.Pair;
 import java.util.Arrays;

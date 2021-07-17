@@ -11,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import unsw.loopmania.PathTile;
 import javafx.geometry.Rectangle2D;
 
 import java.io.File;

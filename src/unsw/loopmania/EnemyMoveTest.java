@@ -4,11 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
 
-import unsw.loopmania.PathPosition;
-import unsw.loopmania.Slug;
-import unsw.loopmania.Vampire;
-import unsw.loopmania.Zombie;
-
 import java.util.ArrayList;
 import org.javatuples.Pair;
 import java.util.Arrays;

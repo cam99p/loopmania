@@ -2,9 +2,7 @@ package unsw.loopmania;
 
 import org.junit.Test;
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.PathPosition;
 import unsw.loopmania.Item.Slot;
-import unsw.loopmania.ItemFactory.ItemType;
 import unsw.loopmania.ItemFactory.ItemType;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

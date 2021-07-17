@@ -1,8 +1,6 @@
 package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Stats;
-import unsw.loopmania.Character;
 
 /**
  * Defines the behaviour of Health Potion when used

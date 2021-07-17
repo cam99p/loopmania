@@ -3,7 +3,6 @@ package unsw.loopmania;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Menu;
 
 public class DeathMenuController {
 

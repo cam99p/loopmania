@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Comparator;
 import java.util.Random;
 
-import unsw.loopmania.MovingEntity;
-
 /**
  * Class which contains most of the battle logic
  * It is created whenever a battle occurs

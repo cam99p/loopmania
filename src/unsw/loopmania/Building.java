@@ -1,9 +1,6 @@
 package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.PathPosition;
-import unsw.loopmania.SpawnEnemyBuilding;
-import unsw.loopmania.StaticEntity;
 
 import java.util.List;
 import org.javatuples.Pair;

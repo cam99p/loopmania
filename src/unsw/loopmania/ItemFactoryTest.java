@@ -2,13 +2,7 @@ package unsw.loopmania;
 
 import org.junit.Test;
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.Shield;
-import unsw.loopmania.Staff;
-import unsw.loopmania.Stake;
-import unsw.loopmania.Sword;
-import unsw.loopmania.TheOneRing;
 import unsw.loopmania.Item.Slot;
-import unsw.loopmania.ItemFactory.ItemType;
 import unsw.loopmania.ItemFactory.ItemType;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

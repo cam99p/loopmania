@@ -10,9 +10,6 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.PathPosition;
-import unsw.loopmania.PathTile;
 
 import java.util.List;
 

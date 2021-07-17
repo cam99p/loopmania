@@ -6,12 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.Test;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.PathPosition;
-import unsw.loopmania.Slug;
-import unsw.loopmania.TowerCard;
-import unsw.loopmania.Vampire;
-import unsw.loopmania.Zombie;
 import unsw.loopmania.ItemFactory.ItemType;
 
 import java.util.List;

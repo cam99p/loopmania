@@ -1,14 +1,10 @@
 package unsw.loopmania;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import unsw.loopmania.MovingEntity;
-import unsw.loopmania.PathPosition;
-import unsw.loopmania.Item.Slot;
 import unsw.loopmania.Item.Slot;
 
 /**

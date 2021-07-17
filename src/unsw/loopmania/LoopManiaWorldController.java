@@ -37,20 +37,6 @@ import java.util.EnumMap;
 import java.io.File;
 import java.io.IOException;
 
-import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.Slug;
-import unsw.loopmania.TowerBuilding;
-import unsw.loopmania.TowerCard;
-import unsw.loopmania.TrapBuilding;
-import unsw.loopmania.TrapCard;
-import unsw.loopmania.Vampire;
-import unsw.loopmania.VampireCastleBuilding;
-import unsw.loopmania.VampireCastleCard;
-import unsw.loopmania.VillageBuilding;
-import unsw.loopmania.VillageCard;
-import unsw.loopmania.Zombie;
-import unsw.loopmania.ZombiePitBuilding;
-import unsw.loopmania.ZombiePitCard;
 import unsw.loopmania.ItemFactory.ItemType;
 /**
  * the draggable types.
