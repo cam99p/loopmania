@@ -168,6 +168,7 @@
                   </Label>
                </children>
             </GridPane>
+                              <!-- This is for the allies -->            
                <GridPane fx:id="allies" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
                   <columnConstraints>
                      <ColumnConstraints />
