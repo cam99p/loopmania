@@ -48,6 +48,8 @@ public class LoopManiaWorld {
 
     private int gold;
 
+    private Goal goal;
+
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
@@ -171,18 +173,6 @@ public class LoopManiaWorld {
      * @return list of enemies which have been killed
      */
     public List<BasicEnemy> runBattles() {
-        //old stuff
-        //// TODO = modify this - currently the character automatically wins all battles without any damage!
-        //List<BasicEnemy> defeatedEnemies = new ArrayList<BasicEnemy>();
-        //for (BasicEnemy e: enemies){
-        //    // Pythagoras: a^2+b^2 < radius^2 to see if within radius
-        //    // TODO = you should implement different RHS on this inequality, based on influence radii and battle radii
-        //    if (Math.pow((character.getX()-e.getX()), 2) +  Math.pow((character.getY()-e.getY()), 2) < 4){
-        //        // fight...
-        //        defeatedEnemies.add(e);
-        //    }
-        //}
-
         List<MovingEntity> battleEnemies = gatherEnemies();
         //If there is at least one enemy to fight, start a battle
         if (battleEnemies.size() > 0){
@@ -231,7 +221,6 @@ public class LoopManiaWorld {
                     TowerAlly tempTower = new TowerAlly(null);
                     allies.add(tempTower);
                 }
-                
             }
         }
 
@@ -262,7 +251,6 @@ public class LoopManiaWorld {
                     if (!battleEnemies.contains(e)){
                         battleEnemies.add(e);
                     }
-
                 }
             }   
         }
@@ -649,6 +637,14 @@ public class LoopManiaWorld {
 
     public void setGold(int gold) {
         this.gold = gold;
+    }
+
+    public Goal getGoal() {
+        return goal;
+    }
+
+    public void setGoal(Goal goal) {
+        this.goal = goal;
     }
 
     public List<Building> getBuildings() {

@@ -55,7 +55,7 @@ public class Battle {
                 attacker.AttackTarget(target, seed);
 
                 //If the attack kills the enemy, defeat it
-                if (target.getHealth() < 0){
+                if (target.getHealth() <= 0){
                     defeatEntity(target);
                 }
             } 
@@ -73,9 +73,12 @@ public class Battle {
                 attacker.AttackTarget(target, seed);
 
                 //If the attack kills the ally, remove it from the heros ally list
-                if (target.getHealth() < 0){
+                if (target.getHealth() <= 0){
                     if (target == hero){
                         heroDefeated(hero);
+                        if (hero.getHealth() <= 0){
+                            break; //Ends battle
+                        }
                     } else{
                         //Ally dies, remove from hero's list
                         hero.getAllies().remove(target);
@@ -106,13 +109,8 @@ public class Battle {
             //Set heros hp back to max
             hero.setHealth(200); 
             hero.unsetRevive();
-        } 
-        else {
-            //GAME OVER
-            System.out.println("GAME OVER");
-            System.exit(0);
-            //TODO: replace this with a pop up or something
         }
+        //else case now handled outside of func
     }
 
     public List<MovingEntity> getAllies() {

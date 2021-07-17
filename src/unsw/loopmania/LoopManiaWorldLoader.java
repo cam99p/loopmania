@@ -39,8 +39,14 @@ public abstract class LoopManiaWorldLoader {
 
         // path variable is collection of coordinates with directions of path taken...
         List<Pair<Integer, Integer>> orderedPath = loadPathTiles(json.getJSONObject("path"), width, height);
-
+        
         LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath);
+
+        // load goals from JSON
+        JSONObject jsonGoals = json.getJSONObject("goal-condition");
+        Goal mainGoal = JSONToGoal(jsonGoals);
+        world.setGoal(mainGoal); 
+        //Using a set rather than the constructor means no alterations required
 
         JSONArray jsonEntities = json.getJSONArray("entities");
 
@@ -50,6 +56,43 @@ public abstract class LoopManiaWorldLoader {
         }
 
         return world;
+    }
+
+    /** 
+     * Turns a JSON object representing a hierarchy of goals into a Goal object
+     * It is mostly just for starting the recursion
+     */
+    private Goal JSONToGoal(JSONObject json) {
+        //Starts recursively navigating through goals object to create ultimate goal
+        return RecursiveGoal(json.getString("goal"), json);
+    }
+
+    /**
+     * Does the hard work in parsing the JSON goals block
+     */
+    private Goal RecursiveGoal(String type, JSONObject json) {
+        if (type == "experience" || type == "gold" || type == "cycles") {
+            return new GoalSINGLE(type, json.getInt("amount"));
+        } 
+        else if (type == "AND") {
+            //Get subgoals
+            JSONArray subgoals = json.getJSONArray("subgoals");
+            Goal g1 = RecursiveGoal(subgoals.getJSONObject(0).getString("goal"), subgoals.getJSONObject(0));
+            Goal g2 = RecursiveGoal(subgoals.getJSONObject(1).getString("goal"), subgoals.getJSONObject(1));
+            return new GoalAND(g1, g2);
+        } 
+        else if (type == "OR") {
+            //Get subgoals
+            JSONArray subgoals = json.getJSONArray("subgoals");
+            Goal g1 = RecursiveGoal(subgoals.getJSONObject(0).getString("goal"), subgoals.getJSONObject(0));
+            Goal g2 = RecursiveGoal(subgoals.getJSONObject(1).getString("goal"), subgoals.getJSONObject(1));
+            return new GoalOR(g1, g2);
+        }
+        else {
+            //default case
+            return new GoalSINGLE("exp", 10000); //Placeholder
+        }
+
     }
 
     /**

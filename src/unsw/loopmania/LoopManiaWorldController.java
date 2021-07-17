@@ -344,6 +344,15 @@ public class LoopManiaWorldController {
                 reactToEnemyDefeat(e);
             }
 
+            //If a goal has been set
+            if (world.getGoal() != null){
+                //Check if goals have been reached
+                 if (world.getGoal().checkCompleted(world)){
+                    //Game has been won
+                    //TODO: Throw victory screen
+                }
+            }
+
             // Spawn Enemies
             List<BasicEnemy> newEnemies = world.possiblySpawnEnemies();
             List<BasicEnemy> newZombiesVampires = new ArrayList<>();
