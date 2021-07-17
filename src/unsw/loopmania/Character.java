@@ -87,7 +87,7 @@ public class Character extends MovingEntity{
         return null;
     }
 
-    private void DeequipItem(Item item) {
+    public void DeequipItem(Item item) {
         equipment.get(item.getSlot()).onDeequip(this);
         equipment.put(item.getSlot(), null);
     }

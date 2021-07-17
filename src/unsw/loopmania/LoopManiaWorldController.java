@@ -288,6 +288,7 @@ public class LoopManiaWorldController {
             }
         }
 
+
         // load entities loaded from the file in the loader into the squares gridpane
         for (ImageView entity : entityImages){
             squares.getChildren().add(entity);
@@ -435,12 +436,12 @@ public class LoopManiaWorldController {
         loadItem(ItemType.HEALTH_POTION);
         setXP();
         setGold();
+        setHealth();
         loadCard();
     }
 
     public void potionTrigger() {
         if (world.usingPotion()) { 
-            // Restores health fully
             double newBarLevel = 100; 
             healthBar.setWidth(newBarLevel);
         }
@@ -470,6 +471,13 @@ public class LoopManiaWorldController {
     //     Integer newCycle = Integer.parseInt(cycle.getText()) + 1;
     //     cycle.setText(newCycle.toString());
     // }
+
+    public void setHealth() {
+        int newHealth = world.getCharacter().getHealth();
+        healthBar.setWidth((double)newHealth/2);
+        //healthBar.setWidth(((double)newHealth*100/fullHealth));
+        
+    }
 
     public void setGold() {
         Integer newGold = world.getGold();
@@ -1138,5 +1146,7 @@ public class LoopManiaWorldController {
         System.out.println("current method = "+currentMethodLabel);
         System.out.println("In application thread? = "+Platform.isFxApplicationThread());
         System.out.println("Current system time = "+java.time.LocalDateTime.now().toString().replace('T', ' '));
+    
     }
+
 }
