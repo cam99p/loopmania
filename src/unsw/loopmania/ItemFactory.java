@@ -13,10 +13,14 @@ public class ItemFactory {
         ARMOUR,
         SHIELD,
         HELMET,
-        GOLD,
         HEALTH_POTION,
         THE_ONE_RING
     }
+
+    public static final int size;
+       static {
+          size = ItemType.values().length;
+       }
     
     public Item createItem(ItemType type, SimpleIntegerProperty x, SimpleIntegerProperty y)
     {
@@ -33,12 +37,15 @@ public class ItemFactory {
                 return new Shield(x, y);
             case HELMET:
                 return new Helmet(x, y);
-            case GOLD: // Might not be necessary
             case HEALTH_POTION:
                 return new HealthPotion(x, y);
             case THE_ONE_RING:
                 return new TheOneRing(x, y);
         }
         return null;
+    }
+    
+    public int getSpawnableItems() {
+        return size;
     }
 }

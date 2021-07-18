@@ -452,7 +452,15 @@ public class LoopManiaWorldController {
     public void loadItem(ItemType itemType){
         // TODO = load more types of weapon
         // start by getting first available coordinates
-        Item item = world.addUnequippedItem(itemType);
+        Item item;
+        if(itemType == null)
+        {
+            item = world.createRandomWeapon();
+            if(item == null)
+                return;
+        }
+        else
+            item = world.addUnequippedItem(itemType);
         onLoad(item);
     }
     
@@ -485,11 +493,10 @@ public class LoopManiaWorldController {
         // react to character defeating an enemy
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
-        loadItem(ItemType.SWORD);
-        loadItem(ItemType.HEALTH_POTION);
         setXP();
         setGold();
         setHealth();
+        loadItem(null);
         loadCard();
     }
 
@@ -774,7 +781,6 @@ public class LoopManiaWorldController {
                                     item = world.moveFromUnequippedToEquipped(nodeX, nodeY, x, y);
                                     addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, equippedItems, unequippedInventory);
                                     equippedItems.add(view, item.getX(), item.getY());
-                                    System.out.println("Moved from Inventory to equipment");
                                 }
                                 // Dequip item
                                 else if (sourceGridPane.equals(equippedItems) && targetGridPane.equals(unequippedInventory)) {
@@ -782,10 +788,7 @@ public class LoopManiaWorldController {
                                     item = world.moveFromEquippedToUnequipped(nodeX, nodeY, x, y);
                                     addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, equippedItems, unequippedInventory);
                                     unequippedInventory.add(view, item.getX(), item.getY());
-                                    System.out.println("Moved from equipment to Inventory");
                                 }
-                                else
-                                    System.out.println("Was not dragged and dropped between inventory and equipment");
                                 break;
                             default:
                                 break;
