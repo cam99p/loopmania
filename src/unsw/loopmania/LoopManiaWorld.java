@@ -67,6 +67,8 @@ public class LoopManiaWorld {
 
     private ItemFactory itemFactory;
 
+    private List<GoldSpawn> goldOnMap;
+
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse them
@@ -92,6 +94,7 @@ public class LoopManiaWorld {
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
+        goldOnMap = new ArrayList<>();
         //equippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
@@ -548,6 +551,65 @@ public class LoopManiaWorld {
             return spawnPosition;
         }
         return null;
+    }
+
+    /**
+     * Grabs potential spawning coordinates for the gold
+     * @return list of spawn positions for the gold to be spawned
+     */
+    private Pair<Integer, Integer> possibleGetGoldSpawnPosition() {
+        Random rand = new Random();
+        int choice = rand.nextInt(20);
+        if(choice == 19) {
+            List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
+            int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
+            int startNotAllowed = (indexPosition - 2 + orderedPath.size())%orderedPath.size();
+            int endNotAllowed = (indexPosition + 3)%orderedPath.size();
+            for (int i=endNotAllowed; i!=startNotAllowed; i=(i+1)%orderedPath.size()){
+                orderedPathSpawnCandidates.add(orderedPath.get(i));
+            }
+
+            Pair<Integer, Integer> spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
+
+            return spawnPosition;
+        }
+        return null;
+    }
+
+    /**
+     * spawns gold if the conditions warrant it, adds to world
+     * @return list of the gold to be displayed on screen
+     */
+    public List<GoldSpawn> possiblySpawnGold(){
+        Pair<Integer, Integer> pos = possibleGetGoldSpawnPosition();
+        List<GoldSpawn> spawningGold = new ArrayList<>();
+        if (pos != null){
+            GoldSpawn gold = new GoldSpawn(new SimpleIntegerProperty(pos.getValue0()), new SimpleIntegerProperty(pos.getValue1()));
+            goldOnMap.add(gold);
+            spawningGold.add(gold);
+        }
+        return spawningGold;
+    }
+
+    /**
+     * Character picks up gold and remove it from map
+     */
+    public void pickUpGold() {
+        List<GoldSpawn> removeGold = new ArrayList<>();
+        for(GoldSpawn gold : goldOnMap) {
+            if(gold.getX() == character.getX() && gold.getY() == character.getY()) {
+                setGold(getGold() + 10);
+                removeGold.add(gold);
+            }
+        }
+        for(GoldSpawn gold : removeGold) {
+            goldOnMap.remove(gold);
+            gold.destroy();
+        }
+    }
+
+    public List<GoldSpawn> getGoldOnMap() {
+        return goldOnMap;
     }
 
     /**

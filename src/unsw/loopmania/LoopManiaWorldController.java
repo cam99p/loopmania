@@ -343,7 +343,8 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             switchToMenu();
             world.runTickMoves();
-            world.damageEnemy();
+            loadGold();
+            loadTrapDamage();
             world.buffCharacter();
             setHealth();
             showAllies();
@@ -357,6 +358,12 @@ public class LoopManiaWorldController {
             world.GainBattleRewards(defeatedEnemies);
             for (BasicEnemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
+            }
+
+            // Spawn Gold
+            List<GoldSpawn> newGold = world.possiblySpawnGold();
+            for(GoldSpawn gold: newGold) {
+                onLoad(gold);
             }
 
             // Spawn Enemies
@@ -425,7 +432,23 @@ public class LoopManiaWorldController {
         Item item = world.addUnequippedItem(itemType);
         onLoad(item);
     }
+    
+    /**
+     * Load the picked up gold value into the display
+     */
+    public void loadGold() {
+        world.pickUpGold();
+        setGold();
+    }
 
+    /**
+     * Load the gold and exp from trap kills
+     */
+    public void loadTrapDamage() {
+        world.damageEnemy();
+        setGold();
+        setXP();
+    }
     
     /**
      * run GUI events after an enemy is defeated, such as spawning items/experience/gold
@@ -595,6 +618,16 @@ public class LoopManiaWorldController {
             addEntity(item, view);
             unequippedInventory.getChildren().add(view);
         }
+    }
+
+    /**
+     * Loads gold onto path tiles
+     * @param gold the gold to be loaded
+     */
+    private void onLoad(GoldSpawn gold) {
+        ImageView view = new ImageView(goldImage);
+        addEntity(gold, view);
+        squares.getChildren().add(view);
     }
     
     private void onLoadMovedItem(Item item, String status){
