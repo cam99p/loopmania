@@ -3,7 +3,7 @@ package unsw.loopmania;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+import java.util.Map;
 import org.javatuples.Pair;
 
 import javafx.beans.property.IntegerProperty;
@@ -330,8 +330,8 @@ public class LoopManiaWorld {
         setGold(getGold() + 10);
         setExp(getExp() + 100);
         Random rand = new Random();
-        int seed = rand.nextInt(21);
-        if(seed == 20) {
+        int seed = rand.nextInt(20);
+        if(seed == 19) {
             item = randomItem();
         }
         return item;
@@ -637,6 +637,10 @@ public class LoopManiaWorld {
         return cycle;
     }
 
+    public void setCycle(int cycle) {
+        this.cycle = cycle;
+    }
+
     public int getExp() {
         return exp;
     }
@@ -745,6 +749,10 @@ public class LoopManiaWorld {
         return castle.getX();
     }
 
+    public HerosCastle getHerosCastle() {
+        return castle;
+    }
+
     public int getHerosCastleY() {
         return castle.getY();
     }
@@ -760,18 +768,18 @@ public class LoopManiaWorld {
     public Item randomItem() {
         Item item = null;
         Random rand = new Random();
-        int seed = rand.nextInt(8);
-        if(seed == 1) {
+        int seed = rand.nextInt(7);
+        if(seed == 0) {
             item = addUnequippedItem(ItemType.ARMOUR);
-        } else if(seed == 2) {
+        } else if(seed == 1) {
             item = addUnequippedItem(ItemType.HEALTH_POTION);
-        } else if(seed == 3) {
+        } else if(seed == 2) {
             item = addUnequippedItem(ItemType.SWORD);
-        } else if(seed == 4) {
+        } else if(seed == 3) {
             item = addUnequippedItem(ItemType.HELMET);
-        } else if(seed == 5) {
+        } else if(seed == 4) {
             item = addUnequippedItem(ItemType.SHIELD);
-        } else if(seed == 6) {
+        } else if(seed == 5) {
             item = addUnequippedItem(ItemType.STAKE);
         } else {
             item = addUnequippedItem(ItemType.STAFF);
@@ -782,22 +790,71 @@ public class LoopManiaWorld {
     public Pair<Card, Item> randomCard() {
         Pair<Card, Item> cardItemPair = null;
         Random rand = new Random();
-        int seed = rand.nextInt(8);
-        if(seed == 1) {
+        int seed = rand.nextInt(7);
+        if(seed == 0) {
             cardItemPair = loadCard(VampireCastleCard.class);
-        } else if(seed == 2) {
+        } else if(seed == 1) {
             cardItemPair = loadCard(ZombiePitCard.class);
-        } else if(seed == 3) {
+        } else if(seed == 2) {
             cardItemPair = loadCard(BarracksCard.class);
-        } else if(seed == 4) {
+        } else if(seed == 3) {
             cardItemPair = loadCard(CampfireCard.class);
-        } else if(seed == 5) {
+        } else if(seed == 4) {
             cardItemPair = loadCard(TowerCard.class);  
-        } else if(seed == 6) {
+        } else if(seed == 5) {
             cardItemPair = loadCard(TrapCard.class);
         } else {
             cardItemPair = loadCard(VillageCard.class);
         }
         return cardItemPair;
+    }
+
+    public void restartGame() {
+        character.setHealth(200);
+        character.unsetBlocking();
+        character.setDefense(0);
+        character.setSpeed(8);
+        character.setAttack(5);
+        character.unsetRevive();
+        character.setDoubleDamage(false);
+        for(Ally a : character.getAllies()) {
+            a.destroy();
+        }
+        character.getAllies().clear();
+        Map<Slot, Item> equipped = character.getMap();
+        for(Map.Entry<Slot, Item> entry : equipped.entrySet()) {
+            if(entry.getValue() != null) {
+                entry.getValue().destroy();
+            }
+        }
+        equipped.clear();
+
+        List<Building> removeBuildings = new ArrayList<>();
+        for(Building b : buildingEntities) {
+            if(!(b instanceof HerosCastle)) {
+                b.destroy();
+                removeBuildings.add(b);
+            }
+        }
+
+        for(Building b : removeBuildings) {
+            buildingEntities.remove(b);
+        }
+        
+        for(Item i : unequippedInventoryItems) {
+            i.destroy();
+        }
+        unequippedInventoryItems.clear();
+        for(Card c : cardEntities) {
+            c.destroy();
+        }
+        cardEntities.clear();
+        for(BasicEnemy e : enemies) {
+            e.destroy();
+        }
+        enemies.clear();
+        setGold(0);
+        setExp(0);
+        setCycle(0);
     }
 }

@@ -54,6 +54,13 @@ public class LoopManiaApplication extends Application {
         itemLoader.setController(itemMenuController);
         Parent itemMenuRoot = itemLoader.load();
 
+        // Load the death menu
+        DeathMenuController deathMenuController = new DeathMenuController(mainController);
+        FXMLLoader deathLoader = new FXMLLoader(getClass().getResource("DeathMenuView.fxml"));
+        deathLoader.setController(deathMenuController);
+        Parent deathMenuRoot = deathLoader.load();
+        Scene deathScene = new Scene(deathMenuRoot);
+
         Scene itemScene = new Scene(itemMenuRoot);
         
         // create new scene with the main menu (so we start with the main menu)
@@ -81,7 +88,22 @@ public class LoopManiaApplication extends Application {
         });
 
         levelController.setGameSwitcher(() -> {switchToRoot(scene, gameRoot, primaryStage);});
-        
+
+
+
+        mainController.setDeathMenuSwitcher(() -> {
+            switchToRoot(deathScene, deathMenuRoot, primaryStage);
+        });
+        deathMenuController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+            mainController.resetGame();
+            mainController.startTimer();
+        });
+        deathMenuController.setMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
+            mainController.resetGame();
+        });
+
         // deploy the main onto the stage
         gameRoot.requestFocus();
         primaryStage.setScene(scene);
