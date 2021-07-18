@@ -132,7 +132,9 @@ public class CharacterTest {
         Slug dummySlug = new Slug(dummyPos);
         Character dummyChar = new Character(dummyPos);
 
-        dummyChar.setBlocking();
+        // Equip Shield
+        Shield dummyShield = new Shield (new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        dummyChar.equipItem(dummyShield);
 
         dummySlug.AttackTarget(dummyChar, 1);
 

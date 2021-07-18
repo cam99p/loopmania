@@ -96,7 +96,6 @@ public class Character extends MovingEntity{
             if ((e.getValue().getX() == x) && (e.getValue().getY() == y)) {
                 Item item = e.getValue();
                 DeequipItem(item);
-                System.out.println("YEET");
                 return item;
             }
         }
@@ -106,13 +105,16 @@ public class Character extends MovingEntity{
     public void DeequipItem(Item item) {
         equipment.get(item.getSlot()).onDeequip(this);
         equipment.put(item.getSlot(), null);
+
     }
 
     public void equipItem(Item item)
     {
         if(equipment.get(item.getSlot()) != null)
         {
-            DeequipItem(item);
+            Item equippedItem = equipment.get(item.getSlot());
+            DeequipItem(equippedItem);
+            equippedItem.destroy();
         }
         equipment.put(item.getSlot(), item);
         equipment.get(item.getSlot()).onEquip(this);
