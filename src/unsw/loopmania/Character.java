@@ -112,7 +112,9 @@ public class Character extends MovingEntity{
     {
         if(equipment.get(item.getSlot()) != null)
         {
-            DeequipItem(equipment.get(item.getSlot()));
+            Item equippedItem = equipment.get(item.getSlot());
+            DeequipItem(equippedItem);
+            equippedItem.destroy();
         }
         equipment.put(item.getSlot(), item);
         equipment.get(item.getSlot()).onEquip(this);
