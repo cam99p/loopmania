@@ -89,9 +89,14 @@ public class Character extends MovingEntity{
 
     public Item DeequipItemByCoordinate(int x, int y) {
         for (Map.Entry<Slot, Item> e : equipment.entrySet()) {
+            // Skip entry if null value
+            if(e.getValue() == null)
+                continue;
+            // Get X and Y coordinate of item
             if ((e.getValue().getX() == x) && (e.getValue().getY() == y)) {
                 Item item = e.getValue();
                 DeequipItem(item);
+                System.out.println("YEET");
                 return item;
             }
         }
@@ -108,7 +113,6 @@ public class Character extends MovingEntity{
         if(equipment.get(item.getSlot()) != null)
         {
             DeequipItem(item);
-
         }
         equipment.put(item.getSlot(), item);
         equipment.get(item.getSlot()).onEquip(this);

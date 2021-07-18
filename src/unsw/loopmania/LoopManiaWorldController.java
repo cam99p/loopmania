@@ -452,7 +452,15 @@ public class LoopManiaWorldController {
     public void loadItem(ItemType itemType){
         // TODO = load more types of weapon
         // start by getting first available coordinates
-        Item item = world.addUnequippedItem(itemType);
+        Item item;
+        if(itemType == null)
+        {
+            item = world.createRandomWeapon();
+            if(item == null)
+                return;
+        }
+        else
+            item = world.addUnequippedItem(itemType);
         onLoad(item);
     }
     
@@ -485,11 +493,10 @@ public class LoopManiaWorldController {
         // react to character defeating an enemy
         // in starter code, spawning extra card/weapon...
         // TODO = provide different benefits to defeating the enemy based on the type of enemy
-        loadItem(ItemType.SWORD);
-        loadItem(ItemType.HEALTH_POTION);
         setXP();
         setGold();
         setHealth();
+        loadItem(null);
         loadCard();
     }
 
@@ -666,53 +673,6 @@ public class LoopManiaWorldController {
         addEntity(potion, view);
         squares.getChildren().add(view);
     }
-
-    /**
-     * 
-     * @param item
-     * @param status
-     */
-    private void onLoadMovedItem(Item item, String status){
-        String itemName = item.getName();
-        System.out.println(itemName);
-        ImageView view = null;
-        switch(itemName){
-            case "Sword":
-                 view = new ImageView(swordImage);
-                 break;
-            case "Stake":
-                view = new ImageView(stakeImage);
-                break;
-            case "Staff":
-                view = new ImageView(staffImage);
-                break;
-            case "Armour":
-                view = new ImageView(armourImage);
-                break;
-            case "Shield":
-                view = new ImageView(shieldImage);
-                break;
-            case "Helmet":
-                view = new ImageView(helmetImage);
-            case "Health Potion":
-                view = new ImageView(healthPotionImage);
-                break;
-            case "The One Ring":
-                view = new ImageView(theOneRingImage);
-                break;
-        }
-        if (view != null) {
-            if (status.equals("equip")) {
-                addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, equippedItems, unequippedInventory);
-                addEntity(item, view);
-                equippedItems.add(view, item.getX(), item.getY());
-            } else {
-                addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-                addEntity(item, view);
-                unequippedInventory.add(view, item.getX(), item.getY());
-            }
-        }
-    }
       
     /**
      * load an enemy into the GUI
@@ -776,7 +736,6 @@ public class LoopManiaWorldController {
     private void buildNonEntityDragHandlers(DRAGGABLE_TYPE draggableType, GridPane sourceGridPane, GridPane targetGridPane){
         // TODO = be more selective about where something can be dropped
         // for example, in the specification, villages can only be dropped on path, whilst vampire castles cannot go on the path
-
         gridPaneSetOnDragDropped.put(draggableType, new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
                 // TODO = for being more selective about where something can be dropped, consider applying additional if-statement logic
@@ -801,7 +760,7 @@ public class LoopManiaWorldController {
                         int x = cIndex == null ? 0 : cIndex; // Drop location
                         int y = rIndex == null ? 0 : rIndex;
                         //Places at 0,0 - will need to take coordinates once that is implemented
-                        ImageView image = new ImageView(db.getImage());
+                        ImageView view = new ImageView(db.getImage());
 
                         int nodeX = GridPane.getColumnIndex(currentlyDraggedImage);
                         int nodeY = GridPane.getRowIndex(currentlyDraggedImage);
@@ -814,36 +773,22 @@ public class LoopManiaWorldController {
                                     onLoad(newBuilding);
                                 }
                                 break;
-                            case ITEM:
-                                removeDraggableDragEventHandlers(draggableType, targetGridPane);
-                                // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar
-                                //Sword sword = new Sword(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
-                                //onLoad(sword);                                
-                                
+                            case ITEM: 
+                                // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar                            
                                 // Equip item
                                 if (sourceGridPane.equals(unequippedInventory) && targetGridPane.equals(equippedItems)) {
-                                    
-                                    item = world.moveFromUnequippedToEquipped(nodeX, nodeY);
-
-                                    // Do for rest of items
-                                    if (item.getName().equals("Sword")) {
-                                        item = world.addEquippedItemByCoordinate(ItemType.SWORD, x, y);
-                                    } else if (item.getName().equals("Health Potion")) {
-                                        item = world.addEquippedItemByCoordinate(ItemType.HEALTH_POTION, x, y);
-                                    }
-                                    onLoadMovedItem(item, "equip");
-                                // Dequip item
-                                } else if (sourceGridPane.equals(equippedItems) && targetGridPane.equals(unequippedInventory)) {
-                                    item = world.moveFromEquippedToUnequipped(nodeX, nodeY);
-                                    if (item.getName().equals("Sword")) {
-                                        item = world.addEquippedItemByCoordinate(ItemType.SWORD, 0, 0);
-                                    }
-
-                                    onLoadMovedItem(item, "deequip");
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    item = world.moveFromUnequippedToEquipped(nodeX, nodeY, x, y);
+                                    addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, equippedItems, unequippedInventory);
+                                    equippedItems.add(view, item.getX(), item.getY());
                                 }
-
-                                   //targetGridPane.add(image, x, y, 1, 1);
-
+                                // Dequip item
+                                else if (sourceGridPane.equals(equippedItems) && targetGridPane.equals(unequippedInventory)) {
+                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
+                                    item = world.moveFromEquippedToUnequipped(nodeX, nodeY, x, y);
+                                    addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, equippedItems, unequippedInventory);
+                                    unequippedInventory.add(view, item.getX(), item.getY());
+                                }
                                 break;
                             default:
                                 break;
@@ -963,7 +908,7 @@ public class LoopManiaWorldController {
                 view.setVisible(false);
 
                 buildNonEntityDragHandlers(draggableType, sourceGridPane, targetGridPane);
-                unequippedInventory.getChildren().remove(view);
+                //unequippedInventory.getChildren().remove(view); Commented out so item returns to original position
                 if (sourceGridPane.equals(unequippedInventory) && targetGridPane.equals(equippedItems)) {
                     view.getX();
                 }
