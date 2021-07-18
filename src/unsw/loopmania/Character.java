@@ -1,7 +1,6 @@
 package unsw.loopmania;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -99,7 +98,7 @@ public class Character extends MovingEntity{
         return null;
     }
 
-    private void DeequipItem(Item item) {
+    public void DeequipItem(Item item) {
         equipment.get(item.getSlot()).onDeequip(this);
         equipment.put(item.getSlot(), null);
     }

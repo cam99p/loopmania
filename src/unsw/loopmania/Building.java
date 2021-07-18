@@ -1,6 +1,7 @@
 package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
+
 import java.util.List;
 import org.javatuples.Pair;
 
@@ -86,7 +87,7 @@ public abstract class Building extends StaticEntity implements SpawnEnemyBuildin
         throw new UnsupportedOperationException();
     }
 
-    public Building damage(List<BasicEnemy> enemies, List<Building> building, Battle battle) {
+    public Building damage(List<BasicEnemy> enemies, List<Building> building) {
         throw new UnsupportedOperationException();
     }
 

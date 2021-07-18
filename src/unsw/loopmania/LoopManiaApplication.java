@@ -41,14 +41,37 @@ public class LoopManiaApplication extends Application {
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("MainMenuView.fxml"));
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
-
+    
+        // load the level selection screen
+        LevelController levelController = new LevelController();
+        FXMLLoader levelLoader = new FXMLLoader(getClass().getResource("LevelView.fxml"));
+        levelLoader.setController(levelController);
+        Parent LevelRoot = levelLoader.load();
+        
         // Load the item menu
         ItemMenuController itemMenuController = new ItemMenuController(mainController);
         FXMLLoader itemLoader = new FXMLLoader(getClass().getResource("ItemMenuView.fxml"));
         itemLoader.setController(itemMenuController);
         Parent itemMenuRoot = itemLoader.load();
 
+        // Load the death menu
+        DeathMenuController deathMenuController = new DeathMenuController();
+        FXMLLoader deathLoader = new FXMLLoader(getClass().getResource("DeathMenuView.fxml"));
+        deathLoader.setController(deathMenuController);
+        Parent deathMenuRoot = deathLoader.load();
+
+        // Load the won menu
+        WonMenuController wonMenuController = new WonMenuController();
+        FXMLLoader wonLoader = new FXMLLoader(getClass().getResource("WonMenuView.fxml"));
+        wonLoader.setController(wonMenuController);
+        Parent wonMenuRoot = wonLoader.load();
+        Scene wonScene = new Scene(wonMenuRoot);
+
+        Scene deathScene = new Scene(deathMenuRoot);
+
         Scene itemScene = new Scene(itemMenuRoot);
+        
+        // create new scene with the main menu (so we start with the main menu)
         Scene scene = new Scene(mainMenuRoot);
 
         mainController.setItemMenuSwitcher(() -> {
@@ -63,15 +86,45 @@ public class LoopManiaApplication extends Application {
             switchToRoot(scene, gameRoot, primaryStage);
             mainController.startTimer();
         });
-
-        // create new scene with the main menu (so we start with the main menu)
         
         // set functions which are activated when button click to switch menu is pressed
         // e.g. from main menu to start the game, or from the game to return to main menu
         mainController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
-        mainMenuController.setGameSwitcher(() -> {
+        mainMenuController.setLevelSwitcher(() -> {
+            switchToRoot(scene, LevelRoot, primaryStage);
+        });
+
+        levelController.setGameSwitcher(() -> {
             switchToRoot(scene, gameRoot, primaryStage);
             mainController.startTimer();
+        });
+
+
+
+        mainController.setDeathMenuSwitcher(() -> {
+            switchToRoot(deathScene, deathMenuRoot, primaryStage);
+        });
+        deathMenuController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+            mainController.resetGame();
+            mainController.startTimer();
+        });
+        deathMenuController.setMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
+            mainController.resetGame();
+        });
+
+        mainController.setWonMenuSwitcher(() -> {
+            switchToRoot(wonScene, wonMenuRoot, primaryStage);
+        });
+        wonMenuController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+            mainController.resetGame();
+            mainController.startTimer();
+        });
+        wonMenuController.setMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
+            mainController.resetGame();
         });
 
         // deploy the main onto the stage
@@ -97,7 +150,7 @@ public class LoopManiaApplication extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+     public static void main(String[] args) {
         launch(args);
     }
 }

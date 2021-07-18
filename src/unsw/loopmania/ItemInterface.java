@@ -1,5 +1,6 @@
 package unsw.loopmania;
 
+
 /**
  * An interface for methods unique to item type 
  */
