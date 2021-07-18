@@ -59,6 +59,14 @@ public class LoopManiaApplication extends Application {
         FXMLLoader deathLoader = new FXMLLoader(getClass().getResource("DeathMenuView.fxml"));
         deathLoader.setController(deathMenuController);
         Parent deathMenuRoot = deathLoader.load();
+
+        // Load the won menu
+        WonMenuController wonMenuController = new WonMenuController();
+        FXMLLoader wonLoader = new FXMLLoader(getClass().getResource("WonMenuView.fxml"));
+        wonLoader.setController(wonMenuController);
+        Parent wonMenuRoot = wonLoader.load();
+        Scene wonScene = new Scene(wonMenuRoot);
+
         Scene deathScene = new Scene(deathMenuRoot);
 
         Scene itemScene = new Scene(itemMenuRoot);
@@ -86,10 +94,12 @@ public class LoopManiaApplication extends Application {
         mainController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
         mainMenuController.setLevelSwitcher(() -> {
             switchToRoot(scene, LevelRoot, primaryStage);
-            mainController.startTimer();
         });
 
-        levelController.setGameSwitcher(() -> {switchToRoot(scene, gameRoot, primaryStage);});
+        levelController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+            mainController.startTimer();
+        });
 
 
 
@@ -102,6 +112,19 @@ public class LoopManiaApplication extends Application {
             mainController.startTimer();
         });
         deathMenuController.setMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
+            mainController.resetGame();
+        });
+
+        mainController.setWonMenuSwitcher(() -> {
+            switchToRoot(wonScene, wonMenuRoot, primaryStage);
+        });
+        wonMenuController.setGameSwitcher(() -> {
+            switchToRoot(scene, gameRoot, primaryStage);
+            mainController.resetGame();
+            mainController.startTimer();
+        });
+        wonMenuController.setMenuSwitcher(() -> {
             switchToRoot(scene, mainMenuRoot, primaryStage);
             mainController.resetGame();
         });

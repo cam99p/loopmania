@@ -216,6 +216,8 @@ public class LoopManiaWorldController {
 
     private MenuSwitcher deathMenuSwitcher;
 
+    private MenuSwitcher wonMenuSwitcher;
+
     /**
      * @param world world object loaded from file
      * @param initialEntities the initial JavaFX nodes (ImageViews) which should be loaded into the GUI
@@ -1007,6 +1009,10 @@ public class LoopManiaWorldController {
         this.deathMenuSwitcher = deathMenuSwitcher;
     }
 
+    public void setWonMenuSwitcher(MenuSwitcher wonMenuSwitcher) {
+        this.wonMenuSwitcher = wonMenuSwitcher;
+    }
+
     /**
      * this method is triggered when click button to go to main menu in FXML
      * @throws IOException
@@ -1040,16 +1046,34 @@ public class LoopManiaWorldController {
         }
     }
 
+    /**
+     * Increments the cycle counts to enter the shop menu in the hero's castle
+     */
     public void incrCycleCounter() {
         cycleCounter += increment;
         increment++;
     }
 
+    /**
+     * Switch to death menu once health <= 0
+     */
     public void switchToDeathMenu() {
         timeline.stop();
         deathMenuSwitcher.switchMenu();
     }
 
+    /**
+     * Switch to the won menu once completed the goals
+     */
+    public void switchToWonMenu() {
+        timeline.stop();
+        wonMenuSwitcher.switchMenu();
+    }
+
+    /**
+     * Restarts the data in the game upon death/winning the game
+     * Loops back the character to starting position (Hero's Castle)
+     */
     public void resetGame() {
         while(true) {
             if(world.getCharacterX() == world.getHerosCastleX() && world.getCharacterY() == world.getHerosCastleY()) {
@@ -1059,6 +1083,10 @@ public class LoopManiaWorldController {
             }
         }
         world.restartGame();
+        setCycle();
+        setGold();
+        setXP();
+        setHealth();
     }
 
     /**
