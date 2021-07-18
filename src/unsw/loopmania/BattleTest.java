@@ -161,6 +161,10 @@ public class BattleTest {
 
         Battle dummyBattle = new Battle(dummyChar, allies, enemies);
 
-        //dummyBattle.Fight(); //Currently this throws an endless loop. How do we check that the hero has been reduced to 0 hp?
+        dummyBattle.Fight(); 
+
+        //Battle should break when hero is 0hp or less
+
+        assertTrue(dummyChar.getHealth() <= 0);
     }
 }

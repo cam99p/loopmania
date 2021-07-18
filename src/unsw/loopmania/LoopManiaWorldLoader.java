@@ -71,17 +71,17 @@ public abstract class LoopManiaWorldLoader {
      * Does the hard work in parsing the JSON goals block
      */
     private Goal RecursiveGoal(String type, JSONObject json) {
-        if (type == "experience" || type == "gold" || type == "cycles") {
-            return new GoalSINGLE(type, json.getInt("amount"));
+        if (type.equals("experience") || type.equals("gold") || type.equals("cycles")) {
+            return new GoalSINGLE(type, json.getInt("quantity"));
         } 
-        else if (type == "AND") {
+        else if (type.equals("AND")) {
             //Get subgoals
             JSONArray subgoals = json.getJSONArray("subgoals");
             Goal g1 = RecursiveGoal(subgoals.getJSONObject(0).getString("goal"), subgoals.getJSONObject(0));
             Goal g2 = RecursiveGoal(subgoals.getJSONObject(1).getString("goal"), subgoals.getJSONObject(1));
             return new GoalAND(g1, g2);
         } 
-        else if (type == "OR") {
+        else if (type.equals("OR")) {
             //Get subgoals
             JSONArray subgoals = json.getJSONArray("subgoals");
             Goal g1 = RecursiveGoal(subgoals.getJSONObject(0).getString("goal"), subgoals.getJSONObject(0));
@@ -89,8 +89,8 @@ public abstract class LoopManiaWorldLoader {
             return new GoalOR(g1, g2);
         }
         else {
-            //default case
-            return new GoalSINGLE("exp", 10000); //Placeholder
+            //default case, something may have gone wrong, so give basic goal
+            return new GoalSINGLE("experience", 10000); //Placeholder
         }
 
     }
