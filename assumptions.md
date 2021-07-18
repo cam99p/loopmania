@@ -43,3 +43,9 @@
 - Cannot purchase items from shop if inventory is full
 
 - Upon death, accomplishing the goal and winning the game, resetting back to main menu, a new game is started
+
+- Shields and Helmets boosts character defense by 5
+
+- Armours boosts character defene by 10
+
+- Random chance of getting an item when card is disposed or reward from battles is equal across all types of item except for The One Ring
