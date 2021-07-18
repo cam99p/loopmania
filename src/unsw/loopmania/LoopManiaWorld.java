@@ -907,13 +907,11 @@ public class LoopManiaWorld {
         // No reward given if number is bigger than 10
         if (int_random >= 10)
             return null;
-
         // Passes 10% chance
         else
         {
-            createRandomWeapon();
+            return createRandomWeapon();
         }
-        return null;
     }
     
     /**

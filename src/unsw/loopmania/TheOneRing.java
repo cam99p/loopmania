@@ -14,7 +14,8 @@ public class TheOneRing extends Item {
 
     public void useItem(Character target)
     {
-        
+        target.unsetRevive();
+        destroy();
     }
 
     public void onEquip(Stats stats)

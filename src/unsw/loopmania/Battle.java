@@ -110,7 +110,9 @@ public class Battle {
         if (hero.canRevive){
             //Set heros hp back to max
             hero.setHealth(200); 
-            hero.DeequipItem(hero.getEquipment(Slot.SPECIAL));
+            Item reviveItem = hero.getEquipment(Slot.SPECIAL);
+            hero.DeequipItem(reviveItem);
+            reviveItem.destroy();
         }
         //else case now handled outside of func
     }
