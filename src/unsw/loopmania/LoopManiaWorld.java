@@ -410,7 +410,7 @@ public class LoopManiaWorld {
         item.setY(y2);
         unequippedInventoryItems.add(item);
         return item;
-    } 
+    }
 
     /**
      * equip an item (move from unequipped inventory to character equipment)
