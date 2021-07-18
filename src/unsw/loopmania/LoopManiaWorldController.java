@@ -371,9 +371,9 @@ public class LoopManiaWorldController {
                 //Check if goals have been reached
                  if (world.getGoal().checkCompleted(world)){
                     //Game has been won
-                    //TODO: Throw victory screen
+                    switchToWonMenu();
                 }
-                
+            }    
             // Spawn gold or potions
             Pair<List<HealthPotion>, List<GoldSpawn>> goldOrPotion = world.possiblySpawnItem();
 
