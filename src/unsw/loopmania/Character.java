@@ -1,7 +1,6 @@
 package unsw.loopmania;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +84,7 @@ public class Character extends MovingEntity{
             if ((e.getValue().getX() == x) && (e.getValue().getY() == y)) {
                 Item item = e.getValue();
                 DeequipItem(item);
+                System.out.println("YEET");
                 return item;
             }
         }
@@ -101,7 +101,6 @@ public class Character extends MovingEntity{
         if(equipment.get(item.getSlot()) != null)
         {
             DeequipItem(item);
-
         }
         equipment.put(item.getSlot(), item);
         equipment.get(item.getSlot()).onEquip(this);

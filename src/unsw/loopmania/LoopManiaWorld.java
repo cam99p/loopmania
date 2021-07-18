@@ -394,8 +394,6 @@ public class LoopManiaWorld {
         return item;
     }
 
-
-
     /**
      * remove an item by x,y coordinates
      * @param x x coordinate from 0 to width-1
@@ -406,24 +404,29 @@ public class LoopManiaWorld {
         removeUnequippedInventoryItem(item);
     }
 
-    public Item moveFromUnequippedToEquipped(int x, int y) {
+    public Item moveFromUnequippedToEquipped(int x, int y, int x2, int y2) {
         Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
         equipItem(item);
+        item.setX(x2);
+        item.setY(y2);
+        unequippedInventoryItems.remove(item);
         return item;
     }
-
     
-    public Item moveFromEquippedToUnequipped(int x, int y) {
+    public Item moveFromEquippedToUnequipped(int x, int y, int x2, int y2) {
         Item item = character.DeequipItemByCoordinate(x, y);
+        item.setX(x2);
+        item.setY(y2);
+        unequippedInventoryItems.add(item);
         return item;
     } 
 
     /**
      * equip an item (move from unequipped inventory to character equipment)
      */
-    public void equipItem(Item item){
+    private void equipItem(Item item){
         character.equipItem(item);
-        removeUnequippedInventoryItem(item);
+        unequippedInventoryItems.remove(item);
     }
 
     /**
@@ -460,7 +463,7 @@ public class LoopManiaWorld {
      * @param y y index from 0 to height-1
      * @return unequipped inventory item at the input position
      */
-    private Item getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
+    public Item getUnequippedInventoryItemEntityByCoordinates(int x, int y) {
         for (Item e: unequippedInventoryItems){
             if ((e.getX() == x) && (e.getY() == y)){
                 return e;
