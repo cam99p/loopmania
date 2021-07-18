@@ -12,20 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 import org.javatuples.Pair;
 
-import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.PathPosition;
+import unsw.loopmania.Battle;
+import unsw.loopmania.Building;
+import unsw.loopmania.Card;
 import unsw.loopmania.Character;
 import unsw.loopmania.HerosCastle;
+import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.MovingEntity;
+import unsw.loopmania.PathPosition;
 import unsw.loopmania.Slug;
 import unsw.loopmania.TowerAlly;
-import unsw.loopmania.TrapBuilding;
-import unsw.loopmania.TrapCard;
-import unsw.loopmania.Building;
 import unsw.loopmania.TowerBuilding;
 import unsw.loopmania.TowerCard;
-import unsw.loopmania.MovingEntity;
-import unsw.loopmania.Battle;
-import unsw.loopmania.Card;
+import unsw.loopmania.TrapBuilding;
+import unsw.loopmania.TrapCard;
 
 public class DamageBuildingsTest {
     @Test
@@ -109,7 +109,7 @@ public class DamageBuildingsTest {
         assertEquals(1, world.getEnemy().size());
         assertEquals(slug, world.getEnemy().get(0));
 
-        world.damageEnemy(null);
+        world.damageEnemy();
         assertEquals(0, world.getEnemy().size());
         assertEquals(1, world.getBuildings().size());
         assertEquals(castle, world.getBuildings().get(0));
@@ -141,7 +141,7 @@ public class DamageBuildingsTest {
         assertTrue(character.getHealth() == 200);
 
         character.moveDownPath();
-        world.damageEnemy(null);
+        world.damageEnemy();
 
         assertEquals(2, world.getBuildings().size());
         assertEquals(trapBuilding, world.getBuildings().get(1));

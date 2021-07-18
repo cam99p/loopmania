@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 
-public class DeathMenuController {
-
+public class WonMenuController {
+    
     MenuSwitcher gameSwitcher;
 
     MenuSwitcher menuSwitcher;

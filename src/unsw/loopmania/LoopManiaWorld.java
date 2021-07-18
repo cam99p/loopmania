@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.Map;
 import org.javatuples.Pair;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.Item.Slot;
 import unsw.loopmania.ItemFactory.ItemType;
@@ -67,6 +66,9 @@ public class LoopManiaWorld {
 
     private ItemFactory itemFactory;
 
+    private List<GoldSpawn> goldOnMap;
+
+    private List<HealthPotion> healthPotionOnMap;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse them
@@ -92,6 +94,8 @@ public class LoopManiaWorld {
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
+        goldOnMap = new ArrayList<>();
+        healthPotionOnMap = new ArrayList<>();
         //equippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
@@ -551,6 +555,121 @@ public class LoopManiaWorld {
     }
 
     /**
+     * Grabs potential spawning coordinates for the gold
+     * @return list of spawn positions for the gold to be spawned
+     */
+    private Pair<Integer, Integer> possibleGetItemSpawnPosition() {
+        Random rand = new Random();
+        int choice = rand.nextInt(50);
+        if(choice == 19) {
+            List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
+            int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
+            int startNotAllowed = (indexPosition - 2 + orderedPath.size())%orderedPath.size();
+            int endNotAllowed = (indexPosition + 3)%orderedPath.size();
+            for (int i=endNotAllowed; i!=startNotAllowed; i=(i+1)%orderedPath.size()){
+                orderedPathSpawnCandidates.add(orderedPath.get(i));
+            }
+
+            Pair<Integer, Integer> spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
+
+            return spawnPosition;
+        }
+        return null;
+    }
+
+    /**
+     * spawns gold if the conditions warrant it, adds to world
+     * @return list of the gold to be displayed on screen
+     */
+    public List<GoldSpawn> possiblySpawnGold(){
+        Pair<Integer, Integer> pos = possibleGetItemSpawnPosition();
+        List<GoldSpawn> spawningGold = new ArrayList<>();
+        if (pos != null){
+            GoldSpawn gold = new GoldSpawn(new SimpleIntegerProperty(pos.getValue0()), new SimpleIntegerProperty(pos.getValue1()));
+            goldOnMap.add(gold);
+            spawningGold.add(gold);
+        }
+        return spawningGold;
+    }
+
+    /**
+     * Character picks up gold and remove it from map
+     */
+    public void pickUpGold() {
+        List<GoldSpawn> removeGold = new ArrayList<>();
+        for(GoldSpawn gold : goldOnMap) {
+            if(gold.getX() == character.getX() && gold.getY() == character.getY()) {
+                setGold(getGold() + 10);
+                removeGold.add(gold);
+            }
+        }
+        for(GoldSpawn gold : removeGold) {
+            goldOnMap.remove(gold);
+            gold.destroy();
+        }
+    }
+
+    public List<GoldSpawn> getGoldOnMap() {
+        return goldOnMap;
+    }
+
+    /**
+     * Spawns potion on the world map
+     * @return the list of spawned potions
+     */
+    public List<HealthPotion> possiblySpawnPotion() {
+        Pair<Integer, Integer> pos = possibleGetItemSpawnPosition();
+        List<HealthPotion> spawningPotion = new ArrayList<>();
+        if (pos != null){
+            HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(pos.getValue0()), new SimpleIntegerProperty(pos.getValue1()));
+            healthPotionOnMap.add(healthPotion);
+            spawningPotion.add(healthPotion);
+        }
+        return spawningPotion;
+    }
+
+    /**
+     * Picks up the spawned potion on the map when character walks over it
+     */
+    public Item pickUpPotion() {
+        List<HealthPotion> removePotion = new ArrayList<>();
+        Item item = null;
+        for(HealthPotion p : healthPotionOnMap) {
+            if(p.getX() == character.getX() && p.getY() == character.getY()) {
+                item = addUnequippedItem(ItemType.HEALTH_POTION);
+                removePotion.add(p);
+            }
+        }
+        for(HealthPotion p : removePotion) {
+            healthPotionOnMap.remove(p);
+            p.destroy();
+        }
+        return item;
+    }
+    
+    public List<HealthPotion> getPotionOnMap() {
+        return healthPotionOnMap;
+    }
+
+    /**
+     * Spawn either a gold or potion with 50% chance
+     * @return a pair of a list of potions and gold spawned
+     */
+    public Pair<List<HealthPotion>, List<GoldSpawn>> possiblySpawnItem() {
+        Pair<List<HealthPotion>, List<GoldSpawn>> goldOrPotion = new Pair<>(new ArrayList<>(), new ArrayList<>());
+        Random rand = new Random();
+        int choice = rand.nextInt(2);
+        if(choice == 0) {
+            List<HealthPotion> potion = possiblySpawnPotion();
+            goldOrPotion.getValue0().addAll(potion);
+        } else {
+            List<GoldSpawn> gold = possiblySpawnGold();
+            goldOrPotion.getValue1().addAll(gold);
+        }
+        return goldOrPotion;
+    }
+
+    /**
      * remove a card by its x, y coordinates
      * @param cardNodeX x index from 0 to width-1 of card to be removed
      * @param cardNodeY y index from 0 to height-1 of card to be removed
@@ -669,6 +788,10 @@ public class LoopManiaWorld {
         return cardEntities;
     }
 
+    /**
+     * Spawns zombie and vampires on the map from their respective buildings
+     * @return list of spawned enemies that were spawned from either a zombie pit or vampire castle
+     */
     public List<BasicEnemy> spawnEnemies() {
         List<BasicEnemy> spawnedEnemies = new ArrayList<>();
         for(Building b : buildingEntities) {
@@ -682,6 +805,10 @@ public class LoopManiaWorld {
         return spawnedEnemies;
     }
 
+    /**
+     * Spawns an ally when the hero passes over the barracks
+     * @return the ally to be spawned
+     */
     public Ally spawnAllies() {
         Ally newAlly = null;
         for(Building b : buildingEntities) {
@@ -693,6 +820,9 @@ public class LoopManiaWorld {
         return newAlly;
     }
 
+    /**
+     * Applies all the buffs to the character if within the radius/tile of buildings that give buffs
+     */
     public void buffCharacter() {
         for(Building b : buildingEntities) {
             if(b instanceof CampfireBuilding || b instanceof VillageBuilding) {
@@ -701,11 +831,14 @@ public class LoopManiaWorld {
         }
     }
 
-    public void damageEnemy(Battle battle) {
+    /**
+     * Trap building damages the enemies and removes them from the game map
+     */
+    public void damageEnemy() {
         List<Building> buildingsToRemove = new ArrayList<>();
         for(Building b : buildingEntities) {
-            if(b instanceof TrapBuilding || b instanceof TowerBuilding) {
-                if(b.damage(enemies, buildingEntities, battle) != null) {
+            if(b instanceof TrapBuilding) {
+                if(b.damage(enemies, buildingEntities) != null) {
                     buildingsToRemove.add(b);
                     setGold(getGold() + 50);
                     setExp(getExp() + 50);
@@ -718,6 +851,12 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * Checks if there is a spawn position for the zombie/vampire and decides given by the implementation
+     * @param x x coordinate of the building
+     * @param y y coordinate of the building
+     * @return true if there is a spawn position, false otherwise
+     */
     public boolean checkIfAdjacentPathTile(int x, int y) {
         Pair<Integer, Integer> posLeft = new Pair<Integer, Integer>(x - 1, y);
         Pair<Integer, Integer> posRight = new Pair<Integer, Integer>(x + 1, y);
@@ -765,6 +904,10 @@ public class LoopManiaWorld {
         return unequippedInventoryItems;
     }
 
+    /**
+     * Returns an item with equal chance
+     * @return item to be returned
+     */
     public Item randomItem() {
         Item item = null;
         Random rand = new Random();
@@ -787,6 +930,10 @@ public class LoopManiaWorld {
         return item;
     }
 
+    /**
+     * Returns a card at equal chance
+     * @return a pair of a card and an item
+     */
     public Pair<Card, Item> randomCard() {
         Pair<Card, Item> cardItemPair = null;
         Random rand = new Random();
@@ -809,6 +956,9 @@ public class LoopManiaWorld {
         return cardItemPair;
     }
 
+    /**
+     * Restarts the game, resets all the data in the game world
+     */
     public void restartGame() {
         character.setHealth(200);
         character.unsetBlocking();
@@ -817,10 +967,13 @@ public class LoopManiaWorld {
         character.setAttack(5);
         character.unsetRevive();
         character.setDoubleDamage(false);
+        // Clear Allies
         for(Ally a : character.getAllies()) {
             a.destroy();
         }
         character.getAllies().clear();
+
+        // Clear Equipped Items
         Map<Slot, Item> equipped = character.getMap();
         for(Map.Entry<Slot, Item> entry : equipped.entrySet()) {
             if(entry.getValue() != null) {
@@ -829,6 +982,7 @@ public class LoopManiaWorld {
         }
         equipped.clear();
 
+        // Clear buildings
         List<Building> removeBuildings = new ArrayList<>();
         for(Building b : buildingEntities) {
             if(!(b instanceof HerosCastle)) {
@@ -836,11 +990,11 @@ public class LoopManiaWorld {
                 removeBuildings.add(b);
             }
         }
-
         for(Building b : removeBuildings) {
             buildingEntities.remove(b);
         }
-        
+
+        // Clear Inventory
         for(Item i : unequippedInventoryItems) {
             i.destroy();
         }
@@ -849,10 +1003,24 @@ public class LoopManiaWorld {
             c.destroy();
         }
         cardEntities.clear();
+
+        // Clear all enemies
         for(BasicEnemy e : enemies) {
             e.destroy();
         }
         enemies.clear();
+
+        // Clear all spawned potions
+        for(HealthPotion p : healthPotionOnMap) {
+            p.destroy();
+        }
+        healthPotionOnMap.clear();
+
+        // Clear all spawned gold on map
+        for(GoldSpawn g : goldOnMap) {
+            g.destroy();
+        }
+        goldOnMap.clear();
         setGold(0);
         setExp(0);
         setCycle(0);

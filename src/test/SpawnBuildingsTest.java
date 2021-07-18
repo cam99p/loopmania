@@ -12,19 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 import org.javatuples.Pair;
 
-import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.PathPosition;
-import unsw.loopmania.VampireCastleBuilding;
-import unsw.loopmania.Character;
-import unsw.loopmania.HerosCastle;
-import unsw.loopmania.VampireCastleCard;
-import unsw.loopmania.Vampire;
-import unsw.loopmania.Zombie;
 import unsw.loopmania.BarracksBuilding;
 import unsw.loopmania.BarracksCard;
 import unsw.loopmania.Building;
-import unsw.loopmania.ZombiePitCard;
 import unsw.loopmania.Card;
+import unsw.loopmania.Character;
+import unsw.loopmania.HerosCastle;
+import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.PathPosition;
+import unsw.loopmania.Vampire;
+import unsw.loopmania.VampireCastleBuilding;
+import unsw.loopmania.VampireCastleCard;
+import unsw.loopmania.Zombie;
+import unsw.loopmania.ZombiePitCard;
 
 public class SpawnBuildingsTest {
     @Test

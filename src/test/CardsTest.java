@@ -1,6 +1,5 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,24 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 import org.javatuples.Pair;
 
-import unsw.loopmania.LoopManiaWorld;
-import unsw.loopmania.PathPosition;
+import unsw.loopmania.BarracksCard;
+import unsw.loopmania.BasicEnemy;
+import unsw.loopmania.Card;
 import unsw.loopmania.Character;
 import unsw.loopmania.HerosCastle;
+import unsw.loopmania.Item;
+import unsw.loopmania.LoopManiaWorld;
+import unsw.loopmania.PathPosition;
 import unsw.loopmania.Slug;
 import unsw.loopmania.TowerCard;
 import unsw.loopmania.TrapCard;
 import unsw.loopmania.VampireCastleCard;
 import unsw.loopmania.VillageCard;
 import unsw.loopmania.ZombiePitCard;
-import unsw.loopmania.BarracksBuilding;
-import unsw.loopmania.BarracksCard;
-import unsw.loopmania.Building;
-import unsw.loopmania.CampfireBuilding;
-import unsw.loopmania.CampfireCard;
-import unsw.loopmania.Card;
-import unsw.loopmania.BasicEnemy;
-import unsw.loopmania.Item;
 
 public class CardsTest {
     @Test

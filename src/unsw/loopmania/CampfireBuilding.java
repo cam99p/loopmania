@@ -2,7 +2,7 @@ package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class CampfireBuilding extends Building implements BuffBuilding {
+public class CampfireBuilding extends Building {
 
     private int buffRadius;
 
