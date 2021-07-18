@@ -666,53 +666,6 @@ public class LoopManiaWorldController {
         addEntity(potion, view);
         squares.getChildren().add(view);
     }
-
-    /**
-     * 
-     * @param item
-     * @param status
-     */
-    private void onLoadMovedItem(Item item, String status){
-        String itemName = item.getName();
-        System.out.println(itemName);
-        ImageView view = null;
-        switch(itemName){
-            case "Sword":
-                 view = new ImageView(swordImage);
-                 break;
-            case "Stake":
-                view = new ImageView(stakeImage);
-                break;
-            case "Staff":
-                view = new ImageView(staffImage);
-                break;
-            case "Armour":
-                view = new ImageView(armourImage);
-                break;
-            case "Shield":
-                view = new ImageView(shieldImage);
-                break;
-            case "Helmet":
-                view = new ImageView(helmetImage);
-            case "Health Potion":
-                view = new ImageView(healthPotionImage);
-                break;
-            case "The One Ring":
-                view = new ImageView(theOneRingImage);
-                break;
-        }
-        if (view != null) {
-            if (status.equals("equip")) {
-                addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, equippedItems, unequippedInventory);
-                addEntity(item, view);
-                equippedItems.add(view, item.getX(), item.getY());
-            } else {
-                addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
-                addEntity(item, view);
-                unequippedInventory.add(view, item.getX(), item.getY());
-            }
-        }
-    }
       
     /**
      * load an enemy into the GUI
