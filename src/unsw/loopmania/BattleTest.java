@@ -3,6 +3,10 @@ package unsw.loopmania;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayNameGenerator.Simple;
+
+import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.ItemFactory.ItemType;
 
 import java.util.ArrayList;
 import org.javatuples.Pair;
@@ -129,7 +133,8 @@ public class BattleTest {
         Slug dummySlug = new Slug(dummyPos);
         Character dummyChar = new Character(dummyPos);
         dummyChar.setHealth(1);
-        dummyChar.setRevive();
+        ItemFactory itemfactory = new ItemFactory();
+        dummyChar.equipItem(itemfactory.createItem(ItemType.THE_ONE_RING, new SimpleIntegerProperty(0), new SimpleIntegerProperty(0)));
 
         ArrayList<MovingEntity> allies = new ArrayList<MovingEntity>();
         allies.add(dummyChar);
