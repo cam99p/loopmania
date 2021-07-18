@@ -777,14 +777,12 @@ public class LoopManiaWorldController {
                                 // TODO = spawn an item in the new location. The above code for spawning a building will help, it is very similar                            
                                 // Equip item
                                 if (sourceGridPane.equals(unequippedInventory) && targetGridPane.equals(equippedItems)) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     item = world.moveFromUnequippedToEquipped(nodeX, nodeY, x, y);
                                     addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, equippedItems, unequippedInventory);
                                     equippedItems.add(view, item.getX(), item.getY());
                                 }
                                 // Dequip item
                                 else if (sourceGridPane.equals(equippedItems) && targetGridPane.equals(unequippedInventory)) {
-                                    removeDraggableDragEventHandlers(draggableType, targetGridPane);
                                     item = world.moveFromEquippedToUnequipped(nodeX, nodeY, x, y);
                                     addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, equippedItems, unequippedInventory);
                                     unequippedInventory.add(view, item.getX(), item.getY());
