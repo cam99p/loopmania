@@ -896,7 +896,7 @@ public class LoopManiaWorld {
      * Creates a random item based on rng
      * @return
      */
-    public Item createRandomWeapon() {
+    public Item createRandomWeaponWithRare() {
         Random rand = new Random();
         int int_random = rand.nextInt(100);
         
@@ -911,8 +911,18 @@ public class LoopManiaWorld {
         // Passes 10% chance
         else
         {
-            rand = new Random();
-            int_random = rand.nextInt(7);
+            createRandomWeapon();
+        }
+        return null;
+    }
+    
+    /**
+     * Creates a random item based on rng
+     * @return
+     */
+    public Item createRandomWeapon() {
+        Random rand = new Random();
+            int int_random = rand.nextInt(7);
             switch(int_random){
                 case 0:
                     return addUnequippedItem(ItemType.SWORD);
@@ -929,7 +939,6 @@ public class LoopManiaWorld {
                 case 6:
                     return addUnequippedItem(ItemType.HEALTH_POTION);
             }
-        }
         return null;
     }
 

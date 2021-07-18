@@ -37,3 +37,5 @@
 - The Vampire and Zombie spawns in order left tile, up tile, right tile and down tile. If no tiles are satisfied, it will then spawn left up tile, right up tile, down right tile and then left down tile.
 
 - There is a 2% chance for gold and health potions to spawn on path tiles
+
+- Health potions like other misc items have a 10% of spawning upon defeating an enemy, instead of the forementioned 20%
