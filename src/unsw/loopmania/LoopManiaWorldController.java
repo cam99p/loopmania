@@ -455,7 +455,7 @@ public class LoopManiaWorldController {
         Item item;
         if(itemType == null)
         {
-            item = world.createRandomWeapon();
+            item = world.createRandomWeaponWithRare();
             if(item == null)
                 return;
         }
