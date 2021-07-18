@@ -14,6 +14,8 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     private PathPosition position;
     protected Boolean canBlock;
     protected Boolean canRevive;
+    protected Boolean tranced;
+    protected int tranceTimer;
 
     /**
      * object holding position in the path
@@ -136,6 +138,26 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
         this.canRevive = false; 
     }
 
+    public Boolean getTranced() {
+        return tranced;
+    }
+
+    public void setTranced(Boolean tranced) {
+        this.tranced = tranced;
+    }
+
+    public int getTranceTimer() {
+        return tranceTimer;
+    }
+
+    public void setTranceTimer(int tranceTimer) {
+        this.tranceTimer = tranceTimer;
+    }
+
+    public void deincrementTranceTimer() {
+        this.tranceTimer--;
+    }
+
     //Used when the MovingEntity takes damage
     public void damageHealth(int value) {
         health -= value;
@@ -143,7 +165,7 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
 
     //Used when the entity is attacked, and will try to block
     public boolean tryBlock(int seed) {
-        if (this.canBlock && seed <= 2){
+        if (this.canBlock && seed <= 4){
             return true;
         } else {
             return false;

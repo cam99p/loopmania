@@ -47,7 +47,7 @@ public class Battle {
             }
 
             Random rand = new Random();
-            int seed = rand.nextInt(11); //Random number between 1 and 10 inclusive
+            int seed = rand.nextInt(21); //Random number between 1 and 20 inclusive
 
             //Its either an allied force
             if (allies.contains(attacker)){
@@ -55,23 +55,46 @@ public class Battle {
                 attacker.AttackTarget(target, seed);
 
                 //If the attack kills the enemy, defeat it
-                if (target.getHealth() < 0){
+                if (target.getHealth() <= 0){
                     defeatEntity(target);
                 }
             } 
             //Or an Enemy
             else if (enemies.contains(attacker)){
-                MovingEntity target = getTargetAlly();
+                MovingEntity target;
+
+                //If enemy is tranced
+                if (attacker.getTranced()){
+                    target = getTargetEnemy();
+                } else {
+                    target = getTargetAlly();
+                }
+
                 attacker.AttackTarget(target, seed);
 
                 //If the attack kills the ally, remove it from the heros ally list
-                if (target.getHealth() < 0){
+                if (target.getHealth() <= 0){
                     if (target == hero){
                         heroDefeated(hero);
-                        break;
+                        if (hero.getHealth() <= 0){
+                            break; //Ends battle
+                        }
                     } else{
                         //Ally dies, remove from hero's list
                         hero.getAllies().remove(target);
+                        //Then check for zombification and react accordinly
+                        Ally deadAlly = (Ally)target;
+                        if (deadAlly.isZombified()){
+                            //Remove target from rotation, as added zombie wil re balance numbers
+                            participants.remove(target);
+                            //Create and add zombie to both necessary lists
+                            Zombie newZombie = new Zombie(target.getPosition());
+                            enemies.add(newZombie);
+                            participants.add(newZombie);
+                            //Re sort list
+                            participants.sort(Comparator.comparingInt(MovingEntity::getSpeed)); //Sorts by attack speed, lowest to highest
+                            Collections.reverse(participants); //reverses list to get highest to lowest
+                        }
                     }
                 }
             }
@@ -86,12 +109,8 @@ public class Battle {
             //Set heros hp back to max
             hero.setHealth(200); 
             hero.unsetRevive();
-        } 
-        else {
-            //GAME OVER
-            System.out.println("GAME OVER");
-            //TODO: replace this with a pop up or something
         }
+        //else case now handled outside of func
     }
 
     public List<MovingEntity> getAllies() {

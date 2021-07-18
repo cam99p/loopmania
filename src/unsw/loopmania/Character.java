@@ -26,6 +26,7 @@ public class Character extends MovingEntity{
         this.canBlock = false;
         this.canRevive = false;
         this.doubleDamage = false;
+        this.tranced = false;
         this.allies = new ArrayList<>();
         initialiseEquipment();
     }
@@ -34,12 +35,23 @@ public class Character extends MovingEntity{
     public void AttackTarget(MovingEntity target, int seed){
         int damage = this.getAttack() - target.getDefense();
 
-        //TODO: Account for stake vs vampire case
-
-        if (doubleDamage){
-            damage = damage*2;
+        //Attacking Vampire with a stake case
+        if (this.getEquipment(Slot.RIGHT_ARM) instanceof Stake && target instanceof Vampire){
+            damage+=30;
         }
-        target.setHealth(target.getHealth() - damage);
+
+        //Trancing an enemy case
+        if (this.getEquipment(Slot.RIGHT_ARM) instanceof Staff && seed >= 20){
+            target.setTranced(true);
+            target.setTranceTimer(3);
+        }
+
+        //Near campfire damage adjustment
+        if (doubleDamage){
+            damage = damage * 2;
+        }
+
+        target.damageHealth(damage);
     }
 
     public void setDoubleDamage(boolean bool) {

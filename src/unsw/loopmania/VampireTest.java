@@ -54,7 +54,7 @@ public class VampireTest {
         Vampire dummyVamp = new Vampire(dummyPos);
         Character dummyChar = new Character(dummyPos);
 
-        dummyVamp.AttackTarget(dummyChar, 10);
+        dummyVamp.AttackTarget(dummyChar, 20);
 
         assertTrue(dummyVamp.getFrenzyTimer() != 0); 
     }
