@@ -39,8 +39,14 @@ public abstract class LoopManiaWorldLoader {
 
         // path variable is collection of coordinates with directions of path taken...
         List<Pair<Integer, Integer>> orderedPath = loadPathTiles(json.getJSONObject("path"), width, height);
-
+        
         LoopManiaWorld world = new LoopManiaWorld(width, height, orderedPath);
+
+        // load goals from JSON
+        JSONObject jsonGoals = json.getJSONObject("goal-condition");
+        Goal mainGoal = JSONToGoal(jsonGoals);
+        world.setGoal(mainGoal); 
+        //Using a set rather than the constructor means no alterations required
 
         JSONArray jsonEntities = json.getJSONArray("entities");
 
@@ -50,6 +56,43 @@ public abstract class LoopManiaWorldLoader {
         }
 
         return world;
+    }
+
+    /** 
+     * Turns a JSON object representing a hierarchy of goals into a Goal object
+     * It is mostly just for starting the recursion
+     */
+    private Goal JSONToGoal(JSONObject json) {
+        //Starts recursively navigating through goals object to create ultimate goal
+        return RecursiveGoal(json.getString("goal"), json);
+    }
+
+    /**
+     * Does the hard work in parsing the JSON goals block
+     */
+    private Goal RecursiveGoal(String type, JSONObject json) {
+        if (type.equals("experience") || type.equals("gold") || type.equals("cycles")) {
+            return new GoalSINGLE(type, json.getInt("quantity"));
+        } 
+        else if (type.equals("AND")) {
+            //Get subgoals
+            JSONArray subgoals = json.getJSONArray("subgoals");
+            Goal g1 = RecursiveGoal(subgoals.getJSONObject(0).getString("goal"), subgoals.getJSONObject(0));
+            Goal g2 = RecursiveGoal(subgoals.getJSONObject(1).getString("goal"), subgoals.getJSONObject(1));
+            return new GoalAND(g1, g2);
+        } 
+        else if (type.equals("OR")) {
+            //Get subgoals
+            JSONArray subgoals = json.getJSONArray("subgoals");
+            Goal g1 = RecursiveGoal(subgoals.getJSONObject(0).getString("goal"), subgoals.getJSONObject(0));
+            Goal g2 = RecursiveGoal(subgoals.getJSONObject(1).getString("goal"), subgoals.getJSONObject(1));
+            return new GoalOR(g1, g2);
+        }
+        else {
+            //default case, something may have gone wrong, so give basic goal
+            return new GoalSINGLE("experience", 10000); //Placeholder
+        }
+
     }
 
     /**
@@ -66,19 +109,25 @@ public abstract class LoopManiaWorldLoader {
         assert indexInPath != -1;
 
         Entity entity = null;
+        Entity base = null;
         // TODO = load more entity types from the file
         switch (type) {
         case "hero_castle":
             Character character = new Character(new PathPosition(indexInPath, orderedPath));
+            HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(x), new SimpleIntegerProperty(y));
+            onLoad(castle);
             world.setCharacter(character);
+            world.setCastle(castle);
             onLoad(character);
             entity = character;
+            base = castle;
             break;
         case "path_tile":
             throw new RuntimeException("path_tile's aren't valid entities, define the path externally.");
         // TODO Handle other possible entities
         }
         world.addEntity(entity);
+        world.addEntity(base);
     }
 
     /**
@@ -146,6 +195,7 @@ public abstract class LoopManiaWorldLoader {
 
     public abstract void onLoad(Character character);
     public abstract void onLoad(PathTile pathTile, PathTile.Direction into, PathTile.Direction out);
+    public abstract void onLoad(HerosCastle castle);
 
     // TODO Create additional abstract methods for the other entities
 

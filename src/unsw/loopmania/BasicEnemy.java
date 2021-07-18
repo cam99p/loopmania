@@ -2,10 +2,16 @@ package unsw.loopmania;
 
 import java.util.Random;
 
+
 /**
  * a basic form of enemy in the world
  */
-public class BasicEnemy extends MovingEntity {
+public abstract class BasicEnemy extends MovingEntity{
+    //Attributes
+    private int battleRadius;
+    private int supportRadius;
+    private int tranceTimer;
+
     // TODO = modify this, and add additional forms of enemy
     public BasicEnemy(PathPosition position) {
         super(position);
@@ -25,4 +31,30 @@ public class BasicEnemy extends MovingEntity {
             moveDownPath();
         }
     }
+
+    public int getBattleRadius() {
+        return battleRadius;
+    }
+
+    public void setBattleRadius(int battleRadius) {
+        this.battleRadius = battleRadius;
+    }
+
+    public int getSupportRadius() {
+        return supportRadius;
+    }
+
+    public void setSupportRadius(int supportRadius) {
+        this.supportRadius = supportRadius;
+    }
+
+    public int getTranceTimer() {
+        return tranceTimer;
+    }
+
+    public void setTranceTimer(int tranceTimer) {
+        this.tranceTimer = tranceTimer;
+    }
+
+    
 }

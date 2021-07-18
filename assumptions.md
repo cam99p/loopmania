@@ -21,3 +21,23 @@
 - Cards can only be placed on empty tiles (cannot place buildings ontop of other buildings). 
 
 - When a Character walks onto a path tile with buildings or loot, the interactions between those should occur first before any battles with enemies.
+
+- All items can be sold for 50G at the Hero's Castle
+
+- Tower has a support radius of 3 tiles
+
+- The campfire has a buff radius of 2 tiles, if the Character engages in a battle within the two tiles of the campfire, the Character will deal double damage
+
+- The Character gains 50G upon defeating an enemy, 50G when replacing an old item
+
+- The Character gains 100 experience points when an old item is replaced
+
+- The Character consumes a health potion when pressing the button P
+
+- The Vampire and Zombie spawns in order left tile, up tile, right tile and down tile. If no tiles are satisfied, it will then spawn left up tile, right up tile, down right tile and then left down tile.
+
+- There is a 2% chance for gold and health potions to spawn on path tiles
+
+- Health potions like other misc items have a 10% of spawning upon defeating an enemy, instead of the forementioned 20%
+
+- Cannot purchase items from shop if inventory is full
