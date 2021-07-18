@@ -6,8 +6,6 @@
 
 - The player will receive a maximum of 1 card when defeating an enemy. 
 
-- There can only be one enemy per tile. 
-
 - A battle commences when the Character is in the range of the battle radius of the enemy regardless of whether the Character and monster are along the same section of the path. 
 
 - Gold, Potion and Slug spawns are rolled every time the character moves 
@@ -32,7 +30,7 @@
 
 - The Character gains 100 experience points when an old item is replaced
 
-- The Character consumes a health potion when pressing the button P
+- The Character consumes a health potion when pressing the button P, restoring their health to full
 
 - The Vampire and Zombie spawns in order left tile, up tile, right tile and down tile. If no tiles are satisfied, it will then spawn left up tile, right up tile, down right tile and then left down tile.
 
