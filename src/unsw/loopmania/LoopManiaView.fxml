@@ -60,7 +60,7 @@
          <children>
             <!-- equippedItems contains the equipment equipped by the character in special slots -->
             <!-- TODO = extend this to have slots for equipping armour, shields, helmets, and any other equippable items -->
-            <Label fx:id="equippedLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="95.0" text="INVENTORY">
+            <Label fx:id="equippedLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="95.0" text="EQUIPMENT">
                <font>
                      <Font name="Franklin Gothic Medium" size="15.0" />
                   </font>
@@ -104,7 +104,7 @@
                </children>
             </GridPane>
 
-            <Label fx:id="unequippedLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="95.0" text="EQUIPMENT">
+            <Label fx:id="unequippedLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="95.0" text="INVENTORY">
             <font>
                   <Font name="Franklin Gothic Medium" size="15.0" />
                </font>
