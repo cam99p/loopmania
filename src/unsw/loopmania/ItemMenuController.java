@@ -86,7 +86,6 @@ public class ItemMenuController {
     @FXML 
     public void handlePotion() throws IOException {
         // Check if the player has enough money
-        System.out.println(mainController.getWorldUnequippedInventory().size());
         int currentGold = mainController.getGold();
         if(currentGold >= 50 && mainController.getWorldUnequippedInventory().size() < 16) {
             mainController.loadItem(ItemType.HEALTH_POTION);
