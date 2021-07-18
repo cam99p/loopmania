@@ -91,7 +91,7 @@ public class LoopManiaWorld {
         castle = null;
         cycle = 0;
         exp = 0;
-        gold = 0;
+        gold = 10000;
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
@@ -392,7 +392,9 @@ public class LoopManiaWorld {
      */
     public void removeUnequippedInventoryItemByCoordinates(int x, int y){
         Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
-        removeUnequippedInventoryItem(item);
+        if(item != null) {
+            removeUnequippedInventoryItem(item);
+        }
     }
 
     public Item moveFromUnequippedToEquipped(int x, int y, int x2, int y2) {

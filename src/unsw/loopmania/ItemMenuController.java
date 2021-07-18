@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
+import java.util.List;
 import org.javatuples.Pair;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -85,8 +86,9 @@ public class ItemMenuController {
     @FXML 
     public void handlePotion() throws IOException {
         // Check if the player has enough money
+        System.out.println(mainController.getWorldUnequippedInventory().size());
         int currentGold = mainController.getGold();
-        if(currentGold >= 50) {
+        if(currentGold >= 50 && mainController.getWorldUnequippedInventory().size() < 16) {
             mainController.loadItem(ItemType.HEALTH_POTION);
             setShopInventory();
             mainController.minusGold(50);
@@ -97,7 +99,7 @@ public class ItemMenuController {
     @FXML
     public void handleHelmet() throws IOException {
         int currentGold = mainController.getGold();
-        if(currentGold >= 300) {
+        if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16) {
             mainController.loadItem(ItemType.HELMET);
             mainController.minusGold(300);
             setShopInventory();
@@ -108,7 +110,7 @@ public class ItemMenuController {
     @FXML
     public void handleSword() throws IOException {
         int currentGold = mainController.getGold();
-        if(currentGold >= 300) {
+        if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16) {
             mainController.loadItem(ItemType.SWORD);
             mainController.minusGold(300);
             setShopInventory();
@@ -119,7 +121,7 @@ public class ItemMenuController {
     @FXML
     public void handleShield() throws IOException {
         int currentGold = mainController.getGold();
-        if(currentGold >= 300) {
+        if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16) {
             mainController.loadItem(ItemType.SHIELD);
             mainController.minusGold(300);
             setShopInventory();
@@ -130,7 +132,7 @@ public class ItemMenuController {
     @FXML
     public void handleStake() throws IOException {
         int currentGold = mainController.getGold();
-        if(currentGold >= 300) {
+        if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16) {
             mainController.loadItem(ItemType.STAKE);
             mainController.minusGold(300);
             setShopInventory();
@@ -141,7 +143,7 @@ public class ItemMenuController {
     @FXML
     public void handleStaff() throws IOException {
         int currentGold = mainController.getGold();
-        if(currentGold >= 300) {
+        if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16) {
             mainController.loadItem(ItemType.STAFF);
             mainController.minusGold(300);
             setShopInventory();
@@ -152,7 +154,7 @@ public class ItemMenuController {
     @FXML 
     public void handleArmor() throws IOException {
         int currentGold = mainController.getGold();
-        if(currentGold >= 300) {
+        if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16) {
             mainController.loadItem(ItemType.ARMOUR);
             mainController.minusGold(300);
             setShopInventory();
@@ -163,22 +165,13 @@ public class ItemMenuController {
     @FXML
     public void sellAllItems() throws IOException {
         setUneqippedInventory();
-        GridPane unequippedItems = mainController.getUneqippedInventory();
-        ObservableList<Node> children = unequippedItems.getChildren();
-        ArrayList<Pair<Integer, Integer>> toBeRemoved = new ArrayList<>();
-
-        // TODO: Sell item if an item is in a cell
-        for(Node n : children) {
-            if(n.getOnDragDetected() != null) {
-                Pair<Integer, Integer> pair = new Pair<Integer, Integer>(GridPane.getColumnIndex(n), GridPane.getRowIndex(n));
-                toBeRemoved.add(pair);
-            }
+        List<Item> removedItems = new ArrayList<>();
+        for(Item i : mainController.getWorldUnequippedInventory()) {
+            removedItems.add(i);
         }
-
-        for(Pair<Integer, Integer> p : toBeRemoved) {
-            mainController.removeItemByCoordinates(p.getValue0(), p.getValue1());
+        for(Item i : removedItems) {
+            mainController.removeItemByCoordinates(i.getX(), i.getY());
             mainController.addGold(50);
-            setGoldValue();
         }
         setShopInventory();
     }
