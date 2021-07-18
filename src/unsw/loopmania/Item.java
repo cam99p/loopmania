@@ -58,4 +58,12 @@ public abstract class Item extends StaticEntity implements ItemInterface{
     {
         this.value = value;
     }
+
+    public void setX(int x) {
+        x().set(x);
+    }
+
+    public void setY(int y) {
+        y().set(y);
+    }
 }
