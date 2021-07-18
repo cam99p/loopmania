@@ -632,11 +632,12 @@ public class LoopManiaWorld {
     /**
      * Picks up the spawned potion on the map when character walks over it
      */
-    public void pickUpPotion() {
+    public Item pickUpPotion() {
         List<HealthPotion> removePotion = new ArrayList<>();
+        Item item = null;
         for(HealthPotion p : healthPotionOnMap) {
             if(p.getX() == character.getX() && p.getY() == character.getY()) {
-                addUnequippedItem(ItemType.HEALTH_POTION);
+                item = addUnequippedItem(ItemType.HEALTH_POTION);
                 removePotion.add(p);
             }
         }
@@ -644,6 +645,7 @@ public class LoopManiaWorld {
             healthPotionOnMap.remove(p);
             p.destroy();
         }
+        return item;
     }
     
     public List<HealthPotion> getPotionOnMap() {

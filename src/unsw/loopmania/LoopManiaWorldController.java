@@ -343,7 +343,7 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             switchToMenu();
             world.runTickMoves();
-            loadGold();
+            loadGoldAndPotion();
             loadTrapDamage();
             world.buffCharacter();
             setHealth();
@@ -364,6 +364,12 @@ public class LoopManiaWorldController {
             List<GoldSpawn> newGold = world.possiblySpawnGold();
             for(GoldSpawn gold: newGold) {
                 onLoad(gold);
+            }
+
+            // Spawn Potions
+            List<HealthPotion> newPotion = world.possiblySpawnPotion();
+            for(HealthPotion potion: newPotion) {
+                onLoad(potion);
             }
 
             // Spawn Enemies
@@ -434,11 +440,15 @@ public class LoopManiaWorldController {
     }
     
     /**
-     * Load the picked up gold value into the display
+     * Load the picked up gold/potion into the display
      */
-    public void loadGold() {
+    public void loadGoldAndPotion() {
         world.pickUpGold();
         setGold();
+        Item item = world.pickUpPotion();
+        if(item != null) {
+            onLoad(item);
+        }
     }
 
     /**
@@ -629,7 +639,22 @@ public class LoopManiaWorldController {
         addEntity(gold, view);
         squares.getChildren().add(view);
     }
-    
+
+    /**
+     * Loads the potion onto path tiles
+     * @param potion potion to be loaded
+     */
+    private void onLoad(HealthPotion potion) {
+        ImageView view = new ImageView(healthPotionImage);
+        addEntity(potion, view);
+        squares.getChildren().add(view);
+    }
+
+    /**
+     * 
+     * @param item
+     * @param status
+     */
     private void onLoadMovedItem(Item item, String status){
         String itemName = item.getName();
         System.out.println(itemName);
