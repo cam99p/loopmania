@@ -24,7 +24,7 @@
 
 - All items can be sold for 50G at the Hero's Castle
 
-- Tower has a support radius of 3 tiles
+- Tower has a support radius of 8 tiles
 
 - The campfire has a buff radius of 2 tiles, if the Character engages in a battle within the two tiles of the campfire, the Character will deal double damage
 
@@ -41,3 +41,5 @@
 - Health potions like other misc items have a 10% of spawning upon defeating an enemy, instead of the forementioned 20%
 
 - Cannot purchase items from shop if inventory is full
+
+- Upon death, accomplishing the goal and winning the game, resetting back to main menu, a new game is started
