@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.Map;
 import org.javatuples.Pair;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.Item.Slot;
 import unsw.loopmania.ItemFactory.ItemType;
