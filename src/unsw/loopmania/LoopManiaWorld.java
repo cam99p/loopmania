@@ -323,7 +323,7 @@ public class LoopManiaWorld {
         Random rand = new Random();
         int seed = rand.nextInt(20);
         if(seed == 19) {
-            item = randomItem();
+            item = createRandomWeapon();
         }
         return item;
     }
@@ -348,9 +348,7 @@ public class LoopManiaWorld {
             healthPotion.destroy();
             return true;
         } 
-
         return false;
-
     }
 
     /**
@@ -442,13 +440,6 @@ public class LoopManiaWorld {
         unequippedInventoryItems.remove(item);
     }
 
-    /*
-    private void removeEquippedInventoryItem(Item item){
-        item.destroy();
-        equippedInventoryItems.remove(item);
-    }
-    */
-
     /**
      * return an unequipped inventory item by x and y coordinates
      * assumes that no 2 unequipped inventory items share x and y coordinates
@@ -464,7 +455,6 @@ public class LoopManiaWorld {
         }
         return null;
     }
-    
 
     /**
      * remove item at a particular index in the unequipped inventory items list (this is ordered based on age in the starter code)
@@ -903,29 +893,44 @@ public class LoopManiaWorld {
     }
 
     /**
-     * Returns an item with equal chance
-     * @return item to be returned
+     * Creates a random item based on rng
+     * @return
      */
-    public Item randomItem() {
-        Item item = null;
+    public Item createRandomWeapon() {
         Random rand = new Random();
-        int seed = rand.nextInt(7);
-        if(seed == 0) {
-            item = addUnequippedItem(ItemType.ARMOUR);
-        } else if(seed == 1) {
-            item = addUnequippedItem(ItemType.HEALTH_POTION);
-        } else if(seed == 2) {
-            item = addUnequippedItem(ItemType.SWORD);
-        } else if(seed == 3) {
-            item = addUnequippedItem(ItemType.HELMET);
-        } else if(seed == 4) {
-            item = addUnequippedItem(ItemType.SHIELD);
-        } else if(seed == 5) {
-            item = addUnequippedItem(ItemType.STAKE);
-        } else {
-            item = addUnequippedItem(ItemType.STAFF);
+        int int_random = rand.nextInt(100);
+        
+        // If it passes the 1% chance spawn rare item
+        if(int_random == 0)
+            return addUnequippedItem(ItemType.THE_ONE_RING);
+        
+        // No reward given if number is bigger than 10
+        if (int_random >= 10)
+            return null;
+
+        // Passes 10% chance
+        else
+        {
+            rand = new Random();
+            int_random = rand.nextInt(7);
+            switch(int_random){
+                case 0:
+                    return addUnequippedItem(ItemType.SWORD);
+                case 1:
+                    return addUnequippedItem(ItemType.STAKE);
+                case 2:
+                    return addUnequippedItem(ItemType.STAFF);
+                case 3:
+                    return addUnequippedItem(ItemType.ARMOUR);
+                case 4:
+                    return addUnequippedItem(ItemType.SHIELD);
+                case 5:
+                    return addUnequippedItem(ItemType.HELMET);
+                case 6:
+                    return addUnequippedItem(ItemType.HEALTH_POTION);
+            }
         }
-        return item;
+        return null;
     }
 
     /**
