@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Comparator;
 import java.util.Random;
 
+import unsw.loopmania.Item.Slot;
+
 /**
  * Class which contains most of the battle logic
  * It is created whenever a battle occurs
@@ -108,7 +110,7 @@ public class Battle {
         if (hero.canRevive){
             //Set heros hp back to max
             hero.setHealth(200); 
-            hero.unsetRevive();
+            hero.DeequipItem(hero.getEquipment(Slot.SPECIAL));
         }
         //else case now handled outside of func
     }
