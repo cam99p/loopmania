@@ -282,4 +282,33 @@ public class LoopManiaWorldTest {
         }
         assertTrue(d.getUnequippedInventoryItems().size() > 0);
     }
+
+    @Test
+    public void TestItemSpawn() {
+        //Path
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+
+        //World
+        LoopManiaWorld d = new LoopManiaWorld(3, 3, dummyPath);
+        HerosCastle c = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        d.setCastle(c);
+
+        //Character
+        PathPosition dummyPos = new PathPosition(1, dummyPath);
+        Character dummyChar = new Character(dummyPos);
+        d.setCharacter(dummyChar);
+
+        for(int i = 0; i < 200; i++) {
+            d.possiblySpawnItem();
+        }
+
+        for(int i = 0; i < 9; i++) {
+            d.runTickMoves();
+            d.pickUpPotion();
+            d.pickUpGold();
+        }
+        assertTrue(d.getGold() > 0);
+        assertTrue(d.getUnequippedInventoryItems().size() > 0);
+    }
 }

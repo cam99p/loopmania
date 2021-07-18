@@ -652,6 +652,10 @@ public class LoopManiaWorld {
         return healthPotionOnMap;
     }
 
+    /**
+     * Spawn either a gold or potion with 50% chance
+     * @return a pair of a list of potions and gold spawned
+     */
     public Pair<List<HealthPotion>, List<GoldSpawn>> possiblySpawnItem() {
         Pair<List<HealthPotion>, List<GoldSpawn>> goldOrPotion = new Pair<>(new ArrayList<>(), new ArrayList<>());
         Random rand = new Random();
