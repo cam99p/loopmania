@@ -39,3 +39,5 @@
 - There is a 2% chance for gold and health potions to spawn on path tiles
 
 - Health potions like other misc items have a 10% of spawning upon defeating an enemy, instead of the forementioned 20%
+
+- Cannot purchase items from shop if inventory is full
