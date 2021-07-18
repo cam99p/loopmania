@@ -576,6 +576,10 @@ public class LoopManiaWorldController {
     public GridPane getUneqippedInventory() {
         return unequippedInventory;
     }
+
+    public List<Item> getWorldUnequippedInventory() {
+        return world.getUnequippedInventoryItems();
+    }
     /**
      * load a vampire castle card into the GUI.
      * Particularly, we must connect to the drag detection event handler,
@@ -877,7 +881,6 @@ public class LoopManiaWorldController {
      */
     public void removeItemByCoordinates(int nodeX, int nodeY) {
         world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
-        
     }
 
     /*
