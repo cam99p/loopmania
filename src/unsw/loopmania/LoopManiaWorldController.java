@@ -343,7 +343,7 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             switchToMenu();
             world.runTickMoves();
-            world.damageEnemy(null);
+            world.damageEnemy();
             world.buffCharacter();
             setHealth();
             showAllies();

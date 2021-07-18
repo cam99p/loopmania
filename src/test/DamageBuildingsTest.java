@@ -109,7 +109,7 @@ public class DamageBuildingsTest {
         assertEquals(1, world.getEnemy().size());
         assertEquals(slug, world.getEnemy().get(0));
 
-        world.damageEnemy(null);
+        world.damageEnemy();
         assertEquals(0, world.getEnemy().size());
         assertEquals(1, world.getBuildings().size());
         assertEquals(castle, world.getBuildings().get(0));
@@ -141,7 +141,7 @@ public class DamageBuildingsTest {
         assertTrue(character.getHealth() == 200);
 
         character.moveDownPath();
-        world.damageEnemy(null);
+        world.damageEnemy();
 
         assertEquals(2, world.getBuildings().size());
         assertEquals(trapBuilding, world.getBuildings().get(1));

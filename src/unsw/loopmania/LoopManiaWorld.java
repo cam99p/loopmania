@@ -669,6 +669,10 @@ public class LoopManiaWorld {
         return cardEntities;
     }
 
+    /**
+     * Spawns zombie and vampires on the map from their respective buildings
+     * @return list of spawned enemies that were spawned from either a zombie pit or vampire castle
+     */
     public List<BasicEnemy> spawnEnemies() {
         List<BasicEnemy> spawnedEnemies = new ArrayList<>();
         for(Building b : buildingEntities) {
@@ -682,6 +686,10 @@ public class LoopManiaWorld {
         return spawnedEnemies;
     }
 
+    /**
+     * Spawns an ally when the hero passes over the barracks
+     * @return the ally to be spawned
+     */
     public Ally spawnAllies() {
         Ally newAlly = null;
         for(Building b : buildingEntities) {
@@ -693,6 +701,9 @@ public class LoopManiaWorld {
         return newAlly;
     }
 
+    /**
+     * Applies all the buffs to the character if within the radius/tile of buildings that give buffs
+     */
     public void buffCharacter() {
         for(Building b : buildingEntities) {
             if(b instanceof CampfireBuilding || b instanceof VillageBuilding) {
@@ -701,7 +712,10 @@ public class LoopManiaWorld {
         }
     }
 
-    public void damageEnemy(Battle battle) {
+    /**
+     * Trap building damages the enemies and removes them from the game map
+     */
+    public void damageEnemy() {
         List<Building> buildingsToRemove = new ArrayList<>();
         for(Building b : buildingEntities) {
             if(b instanceof TrapBuilding) {
@@ -718,6 +732,12 @@ public class LoopManiaWorld {
         }
     }
 
+    /**
+     * Checks if there is a spawn position for the zombie/vampire and decides given by the implementation
+     * @param x x coordinate of the building
+     * @param y y coordinate of the building
+     * @return true if there is a spawn position, false otherwise
+     */
     public boolean checkIfAdjacentPathTile(int x, int y) {
         Pair<Integer, Integer> posLeft = new Pair<Integer, Integer>(x - 1, y);
         Pair<Integer, Integer> posRight = new Pair<Integer, Integer>(x + 1, y);
@@ -765,6 +785,10 @@ public class LoopManiaWorld {
         return unequippedInventoryItems;
     }
 
+    /**
+     * Returns an item with equal chance
+     * @return item to be returned
+     */
     public Item randomItem() {
         Item item = null;
         Random rand = new Random();
@@ -787,6 +811,10 @@ public class LoopManiaWorld {
         return item;
     }
 
+    /**
+     * Returns a card at equal chance
+     * @return a pair of a card and an item
+     */
     public Pair<Card, Item> randomCard() {
         Pair<Card, Item> cardItemPair = null;
         Random rand = new Random();
@@ -809,6 +837,9 @@ public class LoopManiaWorld {
         return cardItemPair;
     }
 
+    /**
+     * Restarts the game, resets all the data in the game world
+     */
     public void restartGame() {
         character.setHealth(200);
         character.unsetBlocking();
