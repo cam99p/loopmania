@@ -13,11 +13,12 @@ public class TowerAlly extends MovingEntity{
         setSpeed(1);
         this.canBlock = false;
         this.canRevive = false;
+        this.tranced = false;
     }
     
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
         int damage = this.getAttack() - target.getDefense();
-        target.setHealth(target.getHealth() - damage);
+        target.damageHealth(damage);
     }
 }

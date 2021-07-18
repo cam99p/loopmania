@@ -30,7 +30,7 @@ public class ZombieTest {
         Zombie dummyZombie = new Zombie(dummyPos);
         Ally dummyAlly = new Ally(dummyPos);
 
-        dummyZombie.AttackTarget(dummyAlly, 10);
+        dummyZombie.AttackTarget(dummyAlly, 20);
 
         assertTrue(dummyAlly.isZombified());
     }

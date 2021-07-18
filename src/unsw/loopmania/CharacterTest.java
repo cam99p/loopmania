@@ -35,7 +35,7 @@ public class CharacterTest {
 
         //Equip Sword
         Sword dummySword = new Sword(new SimpleIntegerProperty(), new SimpleIntegerProperty());
-        dummySword.onEquip(dummyChar);
+        dummyChar.equipItem(dummySword);
 
         dummyChar.AttackTarget(dummySlug, 0);
 
@@ -53,7 +53,7 @@ public class CharacterTest {
 
         //Equip Stake
         Stake dummyStake = new Stake(new SimpleIntegerProperty(), new SimpleIntegerProperty());
-        dummyStake.onEquip(dummyChar);
+        dummyChar.equipItem(dummyStake);
 
         dummyChar.AttackTarget(dummySlug, 0);
 
@@ -71,11 +71,11 @@ public class CharacterTest {
 
         //Equip Stake
         Stake dummyStake = new Stake(new SimpleIntegerProperty(), new SimpleIntegerProperty());
-        dummyStake.onEquip(dummyChar);
+        dummyChar.equipItem(dummyStake); //CHANGE ALL EQUIP ITEM CODE
 
         dummyChar.AttackTarget(dummyVamp, 0);
 
-        assertTrue(dummyVamp.getHealth() == 165); 
+        assertTrue(dummyVamp.getHealth() == 158); 
     }
 
     //Tests that the characters staff attack does the right amount of damage
@@ -89,7 +89,7 @@ public class CharacterTest {
 
         //Equip Staff
         Staff dummyStaff = new Staff(new SimpleIntegerProperty(), new SimpleIntegerProperty());
-        dummyStaff.onEquip(dummyChar);
+        dummyChar.equipItem(dummyStaff);
 
         dummyChar.AttackTarget(dummySlug, 0);
 
