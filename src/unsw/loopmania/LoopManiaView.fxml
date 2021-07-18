@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
@@ -183,4 +184,13 @@
          </children>
       </VBox>
    </HBox>
+   <Pane fx:id="pausePane" layoutX="101.0" layoutY="200.0" prefHeight="200.0" prefWidth="200.0">
+      <children>
+         <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../images/pause.PNG" />
+            </image>
+         </ImageView>
+      </children>
+   </Pane>
 </AnchorPane>
