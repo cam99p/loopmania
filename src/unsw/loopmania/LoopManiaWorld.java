@@ -69,6 +69,7 @@ public class LoopManiaWorld {
 
     private List<GoldSpawn> goldOnMap;
 
+    private List<HealthPotion> healthPotionOnMap;
 
     /**
      * list of x,y coordinate pairs in the order by which moving entities traverse them
@@ -95,6 +96,7 @@ public class LoopManiaWorld {
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
         goldOnMap = new ArrayList<>();
+        healthPotionOnMap = new ArrayList<>();
         //equippedInventoryItems = new ArrayList<>();
         this.orderedPath = orderedPath;
         buildingEntities = new ArrayList<>();
@@ -557,9 +559,9 @@ public class LoopManiaWorld {
      * Grabs potential spawning coordinates for the gold
      * @return list of spawn positions for the gold to be spawned
      */
-    private Pair<Integer, Integer> possibleGetGoldSpawnPosition() {
+    private Pair<Integer, Integer> possibleGetItemSpawnPosition() {
         Random rand = new Random();
-        int choice = rand.nextInt(20);
+        int choice = rand.nextInt(50);
         if(choice == 19) {
             List<Pair<Integer, Integer>> orderedPathSpawnCandidates = new ArrayList<>();
             int indexPosition = orderedPath.indexOf(new Pair<Integer, Integer>(character.getX(), character.getY()));
@@ -581,7 +583,7 @@ public class LoopManiaWorld {
      * @return list of the gold to be displayed on screen
      */
     public List<GoldSpawn> possiblySpawnGold(){
-        Pair<Integer, Integer> pos = possibleGetGoldSpawnPosition();
+        Pair<Integer, Integer> pos = possibleGetItemSpawnPosition();
         List<GoldSpawn> spawningGold = new ArrayList<>();
         if (pos != null){
             GoldSpawn gold = new GoldSpawn(new SimpleIntegerProperty(pos.getValue0()), new SimpleIntegerProperty(pos.getValue1()));
@@ -610,6 +612,42 @@ public class LoopManiaWorld {
 
     public List<GoldSpawn> getGoldOnMap() {
         return goldOnMap;
+    }
+
+    /**
+     * Spawns potion on the world map
+     * @return the list of spawned potions
+     */
+    public List<HealthPotion> possiblySpawnPotion() {
+        Pair<Integer, Integer> pos = possibleGetItemSpawnPosition();
+        List<HealthPotion> spawningPotion = new ArrayList<>();
+        if (pos != null){
+            HealthPotion healthPotion = new HealthPotion(new SimpleIntegerProperty(pos.getValue0()), new SimpleIntegerProperty(pos.getValue1()));
+            healthPotionOnMap.add(healthPotion);
+            spawningPotion.add(healthPotion);
+        }
+        return spawningPotion;
+    }
+
+    /**
+     * Picks up the spawned potion on the map when character walks over it
+     */
+    public void pickUpPotion() {
+        List<HealthPotion> removePotion = new ArrayList<>();
+        for(HealthPotion p : healthPotionOnMap) {
+            if(p.getX() == character.getX() && p.getY() == character.getY()) {
+                addUnequippedItem(ItemType.HEALTH_POTION);
+                removePotion.add(p);
+            }
+        }
+        for(HealthPotion p : removePotion) {
+            healthPotionOnMap.remove(p);
+            p.destroy();
+        }
+    }
+    
+    public List<HealthPotion> getPotionOnMap() {
+        return healthPotionOnMap;
     }
 
     /**
