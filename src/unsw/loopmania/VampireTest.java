@@ -3,6 +3,7 @@ package unsw.loopmania;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
+
 import java.util.ArrayList;
 import org.javatuples.Pair;
 import java.util.Arrays;
@@ -53,7 +54,7 @@ public class VampireTest {
         Vampire dummyVamp = new Vampire(dummyPos);
         Character dummyChar = new Character(dummyPos);
 
-        dummyVamp.AttackTarget(dummyChar, 10);
+        dummyVamp.AttackTarget(dummyChar, 20);
 
         assertTrue(dummyVamp.getFrenzyTimer() != 0); 
     }

@@ -2,6 +2,7 @@ package unsw.loopmania;
 
 import java.util.Random;
 
+
 /**
  * a basic form of enemy in the world
  */

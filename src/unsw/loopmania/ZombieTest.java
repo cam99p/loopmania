@@ -3,6 +3,7 @@ package unsw.loopmania;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
+
 import java.util.ArrayList;
 import org.javatuples.Pair;
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public class ZombieTest {
         Zombie dummyZombie = new Zombie(dummyPos);
         Ally dummyAlly = new Ally(dummyPos);
 
-        dummyZombie.AttackTarget(dummyAlly, 10);
+        dummyZombie.AttackTarget(dummyAlly, 20);
 
         assertTrue(dummyAlly.isZombified());
     }

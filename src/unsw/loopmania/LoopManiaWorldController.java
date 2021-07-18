@@ -27,6 +27,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
@@ -128,6 +129,9 @@ public class LoopManiaWorldController {
     @FXML
     private GridPane allies;
 
+    @FXML
+    private Pane pausePane;
+
     private boolean isPaused;
     private LoopManiaWorld world;
 
@@ -214,6 +218,10 @@ public class LoopManiaWorldController {
 
     private MenuSwitcher itemMenuSwitcher;
 
+    private MenuSwitcher deathMenuSwitcher;
+
+    private MenuSwitcher wonMenuSwitcher;
+
     /**
      * @param world world object loaded from file
      * @param initialEntities the initial JavaFX nodes (ImageViews) which should be loaded into the GUI
@@ -286,6 +294,7 @@ public class LoopManiaWorldController {
             }
         }
 
+
         // load entities loaded from the file in the loader into the squares gridpane
         for (ImageView entity : entityImages){
             squares.getChildren().add(entity);
@@ -325,6 +334,8 @@ public class LoopManiaWorldController {
         draggedEntity.setVisible(false);
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
+
+        pausePane.setVisible(false);
     }
 
     /**
@@ -338,15 +349,44 @@ public class LoopManiaWorldController {
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             switchToMenu();
             world.runTickMoves();
-            world.damageEnemy(null);
+            loadGoldAndPotion();
+            loadTrapDamage();
             world.buffCharacter();
+            setHealth();
             showAllies();
 
             // Battle enemies
             List<BasicEnemy> defeatedEnemies = world.runBattles();
+
+            if(world.getCharacter().getHealth() <= 0) {
+                switchToDeathMenu();
+            }
             world.GainBattleRewards(defeatedEnemies);
             for (BasicEnemy e: defeatedEnemies){
                 reactToEnemyDefeat(e);
+            }
+
+            //If a goal has been set
+            if (world.getGoal() != null){
+                //Check if goals have been reached
+                 if (world.getGoal().checkCompleted(world)){
+                    //Game has been won
+                    switchToWonMenu();
+                }
+            }    
+            // Spawn gold or potions
+            Pair<List<HealthPotion>, List<GoldSpawn>> goldOrPotion = world.possiblySpawnItem();
+
+            // // Spawn Gold
+            // List<GoldSpawn> newGold = world.possiblySpawnGold();
+            for(GoldSpawn gold: goldOrPotion.getValue1()) {
+                onLoad(gold);
+            }
+
+            // // Spawn Potions
+            // List<HealthPotion> newPotion = world.possiblySpawnPotion();
+            for(HealthPotion potion: goldOrPotion.getValue0()) {
+                onLoad(potion);
             }
 
             // Spawn Enemies
@@ -415,7 +455,27 @@ public class LoopManiaWorldController {
         Item item = world.addUnequippedItem(itemType);
         onLoad(item);
     }
+    
+    /**
+     * Load the picked up gold/potion into the display
+     */
+    public void loadGoldAndPotion() {
+        world.pickUpGold();
+        setGold();
+        Item item = world.pickUpPotion();
+        if(item != null) {
+            onLoad(item);
+        }
+    }
 
+    /**
+     * Load the gold and exp from trap kills
+     */
+    public void loadTrapDamage() {
+        world.damageEnemy();
+        setGold();
+        setXP();
+    }
     
     /**
      * run GUI events after an enemy is defeated, such as spawning items/experience/gold
@@ -429,12 +489,12 @@ public class LoopManiaWorldController {
         loadItem(ItemType.HEALTH_POTION);
         setXP();
         setGold();
+        setHealth();
         loadCard();
     }
 
     public void potionTrigger() {
         if (world.usingPotion()) { 
-            // Restores health fully
             double newBarLevel = 100; 
             healthBar.setWidth(newBarLevel);
         }
@@ -464,6 +524,13 @@ public class LoopManiaWorldController {
     //     Integer newCycle = Integer.parseInt(cycle.getText()) + 1;
     //     cycle.setText(newCycle.toString());
     // }
+
+    public void setHealth() {
+        int newHealth = world.getCharacter().getHealth();
+        healthBar.setWidth((double)newHealth/2);
+        //healthBar.setWidth(((double)newHealth*100/fullHealth));
+        
+    }
 
     public void setGold() {
         Integer newGold = world.getGold();
@@ -565,6 +632,7 @@ public class LoopManiaWorldController {
                 break;
             case "Helmet":
                 view = new ImageView(helmetImage);
+                break;
             case "Health Potion":
                 view = new ImageView(healthPotionImage);
                 break;
@@ -576,6 +644,73 @@ public class LoopManiaWorldController {
             addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
             addEntity(item, view);
             unequippedInventory.getChildren().add(view);
+        }
+    }
+
+    /**
+     * Loads gold onto path tiles
+     * @param gold the gold to be loaded
+     */
+    private void onLoad(GoldSpawn gold) {
+        ImageView view = new ImageView(goldImage);
+        addEntity(gold, view);
+        squares.getChildren().add(view);
+    }
+
+    /**
+     * Loads the potion onto path tiles
+     * @param potion potion to be loaded
+     */
+    private void onLoad(HealthPotion potion) {
+        ImageView view = new ImageView(healthPotionImage);
+        addEntity(potion, view);
+        squares.getChildren().add(view);
+    }
+
+    /**
+     * 
+     * @param item
+     * @param status
+     */
+    private void onLoadMovedItem(Item item, String status){
+        String itemName = item.getName();
+        System.out.println(itemName);
+        ImageView view = null;
+        switch(itemName){
+            case "Sword":
+                 view = new ImageView(swordImage);
+                 break;
+            case "Stake":
+                view = new ImageView(stakeImage);
+                break;
+            case "Staff":
+                view = new ImageView(staffImage);
+                break;
+            case "Armour":
+                view = new ImageView(armourImage);
+                break;
+            case "Shield":
+                view = new ImageView(shieldImage);
+                break;
+            case "Helmet":
+                view = new ImageView(helmetImage);
+            case "Health Potion":
+                view = new ImageView(healthPotionImage);
+                break;
+            case "The One Ring":
+                view = new ImageView(theOneRingImage);
+                break;
+        }
+        if (view != null) {
+            if (status.equals("equip")) {
+                addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, equippedItems, unequippedInventory);
+                addEntity(item, view);
+                equippedItems.add(view, item.getX(), item.getY());
+            } else {
+                addDragEventHandlers(view, DRAGGABLE_TYPE.ITEM, unequippedInventory, equippedItems);
+                addEntity(item, view);
+                unequippedInventory.add(view, item.getX(), item.getY());
+            }
         }
     }
       
@@ -901,7 +1036,6 @@ public class LoopManiaWorldController {
         }
     }
 
-
     /**
      * handle the pressing of keyboard keys.
      * Specifically, we should pause when pressing SPACE
@@ -913,9 +1047,13 @@ public class LoopManiaWorldController {
         switch (event.getCode()) {
         case SPACE:
             if (isPaused){
+                pausePane.setVisible(false);
+                changeOpacity(1.0);
                 startTimer();
             }
             else{
+                pausePane.setVisible(true);
+                changeOpacity(0.5);
                 pause();
             }
             break;
@@ -925,6 +1063,16 @@ public class LoopManiaWorldController {
             break;
         }
     }
+    
+    // Change opacity
+    public void changeOpacity(double opacity){
+        squares.setOpacity(opacity);
+        cards.setOpacity(opacity);
+        equippedItems.setOpacity(opacity);
+        unequippedInventory.setOpacity(opacity);
+        allies.setOpacity(opacity);
+        stats.setOpacity(opacity);
+    }
 
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher){
         this.mainMenuSwitcher = mainMenuSwitcher;
@@ -932,6 +1080,14 @@ public class LoopManiaWorldController {
 
     public void setItemMenuSwitcher(MenuSwitcher itemMenuSwitcher) {
         this.itemMenuSwitcher = itemMenuSwitcher;
+    }
+
+    public void setDeathMenuSwitcher(MenuSwitcher deathMenuSwitcher) {
+        this.deathMenuSwitcher = deathMenuSwitcher;
+    }
+
+    public void setWonMenuSwitcher(MenuSwitcher wonMenuSwitcher) {
+        this.wonMenuSwitcher = wonMenuSwitcher;
     }
 
     /**
@@ -967,9 +1123,47 @@ public class LoopManiaWorldController {
         }
     }
 
+    /**
+     * Increments the cycle counts to enter the shop menu in the hero's castle
+     */
     public void incrCycleCounter() {
         cycleCounter += increment;
         increment++;
+    }
+
+    /**
+     * Switch to death menu once health <= 0
+     */
+    public void switchToDeathMenu() {
+        timeline.stop();
+        deathMenuSwitcher.switchMenu();
+    }
+
+    /**
+     * Switch to the won menu once completed the goals
+     */
+    public void switchToWonMenu() {
+        timeline.stop();
+        wonMenuSwitcher.switchMenu();
+    }
+
+    /**
+     * Restarts the data in the game upon death/winning the game
+     * Loops back the character to starting position (Hero's Castle)
+     */
+    public void resetGame() {
+        while(true) {
+            if(world.getCharacterX() == world.getHerosCastleX() && world.getCharacterY() == world.getHerosCastleY()) {
+                break;
+            } else {
+                world.runTickMoves();
+            }
+        }
+        world.restartGame();
+        setCycle();
+        setGold();
+        setXP();
+        setHealth();
     }
 
     /**
@@ -979,7 +1173,6 @@ public class LoopManiaWorldController {
         world.spawnAllies();
         allies.getChildren().clear();
         int numberOfAllies = world.getNumberOfAllies();
-        System.out.println(numberOfAllies);
         for(int i = 0; i < numberOfAllies; i++) {
             ImageView view = new ImageView(allyImage);
             allies.add(view, i, 0);
@@ -1071,5 +1264,7 @@ public class LoopManiaWorldController {
         System.out.println("current method = "+currentMethodLabel);
         System.out.println("In application thread? = "+Platform.isFxApplicationThread());
         System.out.println("Current system time = "+java.time.LocalDateTime.now().toString().replace('T', ' '));
+    
     }
+
 }

@@ -1,6 +1,7 @@
 package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
+
 import java.util.List;
 
 public class TrapBuilding extends Building {
@@ -11,7 +12,7 @@ public class TrapBuilding extends Building {
         super(x, y);
     }
 
-    public Building damage(List<BasicEnemy> enemies, List<Building> buildings, Battle battle) {
+    public Building damage(List<BasicEnemy> enemies, List<Building> buildings) {
         BasicEnemy potentialDeadEnemy = null;
         for(BasicEnemy e : enemies) {
             if(e.getX() == this.getX() && e.getY() == this.getY()) {

@@ -17,6 +17,8 @@ public class Vampire extends BasicEnemy{
         this.setDefense(0);
         this.setHealth(200);
         this.setSpeed(10);
+        //Set other
+        this.tranced = false;
     }
 
     //Attacks the specified target
@@ -31,7 +33,7 @@ public class Vampire extends BasicEnemy{
         target.damageHealth(damage);
 
         //Critical
-        if (seed == 10){
+        if (seed == 20){
             //Check if hero is target and has shield
             if (target instanceof Character && target.canBlock){
                 var rand = new Random();
@@ -54,6 +56,14 @@ public class Vampire extends BasicEnemy{
         //Deincrement frenzy
         else {
             frenzyTimer--; 
+        }
+
+        //Handle tarnce
+        if (getTranceTimer() == 0){
+            setTranced(false);
+        }
+        else if (tranced){
+            deincrementTranceTimer();
         }
     }
 
