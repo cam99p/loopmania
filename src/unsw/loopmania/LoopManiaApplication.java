@@ -86,8 +86,6 @@ public class LoopManiaApplication extends Application {
             switchToRoot(scene, gameRoot, primaryStage);
             mainController.startTimer();
         });
-
-        // create new scene with the main menu (so we start with the main menu)
         
         // set functions which are activated when button click to switch menu is pressed
         // e.g. from main menu to start the game, or from the game to return to main menu
@@ -152,7 +150,7 @@ public class LoopManiaApplication extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+     public static void main(String[] args) {
         launch(args);
     }
 }

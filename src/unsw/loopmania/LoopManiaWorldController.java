@@ -27,6 +27,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
@@ -127,6 +128,9 @@ public class LoopManiaWorldController {
 
     @FXML
     private GridPane allies;
+
+    @FXML
+    private Pane pausePane;
 
     private boolean isPaused;
     private LoopManiaWorld world;
@@ -330,6 +334,8 @@ public class LoopManiaWorldController {
         draggedEntity.setVisible(false);
         draggedEntity.setOpacity(0.7);
         anchorPaneRoot.getChildren().add(draggedEntity);
+
+        pausePane.setVisible(false);
     }
 
     /**
@@ -1033,7 +1039,6 @@ public class LoopManiaWorldController {
         }
     }
 
-
     /**
      * handle the pressing of keyboard keys.
      * Specifically, we should pause when pressing SPACE
@@ -1045,9 +1050,13 @@ public class LoopManiaWorldController {
         switch (event.getCode()) {
         case SPACE:
             if (isPaused){
+                pausePane.setVisible(false);
+                changeOpacity(1.0);
                 startTimer();
             }
             else{
+                pausePane.setVisible(true);
+                changeOpacity(0.5);
                 pause();
             }
             break;
@@ -1056,6 +1065,16 @@ public class LoopManiaWorldController {
         default:
             break;
         }
+    }
+    
+    // Change opacity
+    public void changeOpacity(double opacity){
+        squares.setOpacity(opacity);
+        cards.setOpacity(opacity);
+        equippedItems.setOpacity(opacity);
+        unequippedInventory.setOpacity(opacity);
+        allies.setOpacity(opacity);
+        stats.setOpacity(opacity);
     }
 
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher){
