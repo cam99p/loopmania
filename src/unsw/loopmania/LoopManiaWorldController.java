@@ -1116,6 +1116,8 @@ public class LoopManiaWorldController {
                 world.runTickMoves();
             }
         }
+        cycleCounter = 1;
+        increment = 2;
         world.restartGame();
         setCycle();
         setGold();
