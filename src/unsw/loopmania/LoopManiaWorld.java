@@ -652,6 +652,20 @@ public class LoopManiaWorld {
         return healthPotionOnMap;
     }
 
+    public Pair<List<HealthPotion>, List<GoldSpawn>> possiblySpawnItem() {
+        Pair<List<HealthPotion>, List<GoldSpawn>> goldOrPotion = new Pair<>(new ArrayList<>(), new ArrayList<>());
+        Random rand = new Random();
+        int choice = rand.nextInt(2);
+        if(choice == 0) {
+            List<HealthPotion> potion = possiblySpawnPotion();
+            goldOrPotion.getValue0().addAll(potion);
+        } else {
+            List<GoldSpawn> gold = possiblySpawnGold();
+            goldOrPotion.getValue1().addAll(gold);
+        }
+        return goldOrPotion;
+    }
+
     /**
      * remove a card by its x, y coordinates
      * @param cardNodeX x index from 0 to width-1 of card to be removed
@@ -950,10 +964,13 @@ public class LoopManiaWorld {
         character.setAttack(5);
         character.unsetRevive();
         character.setDoubleDamage(false);
+        // Clear Allies
         for(Ally a : character.getAllies()) {
             a.destroy();
         }
         character.getAllies().clear();
+
+        // Clear Equipped Items
         Map<Slot, Item> equipped = character.getMap();
         for(Map.Entry<Slot, Item> entry : equipped.entrySet()) {
             if(entry.getValue() != null) {
@@ -962,6 +979,7 @@ public class LoopManiaWorld {
         }
         equipped.clear();
 
+        // Clear buildings
         List<Building> removeBuildings = new ArrayList<>();
         for(Building b : buildingEntities) {
             if(!(b instanceof HerosCastle)) {
@@ -969,11 +987,11 @@ public class LoopManiaWorld {
                 removeBuildings.add(b);
             }
         }
-
         for(Building b : removeBuildings) {
             buildingEntities.remove(b);
         }
 
+        // Clear Inventory
         for(Item i : unequippedInventoryItems) {
             i.destroy();
         }
@@ -982,10 +1000,24 @@ public class LoopManiaWorld {
             c.destroy();
         }
         cardEntities.clear();
+
+        // Clear all enemies
         for(BasicEnemy e : enemies) {
             e.destroy();
         }
         enemies.clear();
+
+        // Clear all spawned potions
+        for(HealthPotion p : healthPotionOnMap) {
+            p.destroy();
+        }
+        healthPotionOnMap.clear();
+
+        // Clear all spawned gold on map
+        for(GoldSpawn g : goldOnMap) {
+            g.destroy();
+        }
+        goldOnMap.clear();
         setGold(0);
         setExp(0);
         setCycle(0);

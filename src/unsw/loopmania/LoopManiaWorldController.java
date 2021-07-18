@@ -360,15 +360,18 @@ public class LoopManiaWorldController {
                 reactToEnemyDefeat(e);
             }
 
-            // Spawn Gold
-            List<GoldSpawn> newGold = world.possiblySpawnGold();
-            for(GoldSpawn gold: newGold) {
+            // Spawn gold or potions
+            Pair<List<HealthPotion>, List<GoldSpawn>> goldOrPotion = world.possiblySpawnItem();
+
+            // // Spawn Gold
+            // List<GoldSpawn> newGold = world.possiblySpawnGold();
+            for(GoldSpawn gold: goldOrPotion.getValue1()) {
                 onLoad(gold);
             }
 
-            // Spawn Potions
-            List<HealthPotion> newPotion = world.possiblySpawnPotion();
-            for(HealthPotion potion: newPotion) {
+            // // Spawn Potions
+            // List<HealthPotion> newPotion = world.possiblySpawnPotion();
+            for(HealthPotion potion: goldOrPotion.getValue0()) {
                 onLoad(potion);
             }
 
