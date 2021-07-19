@@ -66,3 +66,13 @@ Topics of Discussion:
 •	Milestone 2 project check in: discussed questions about submission, pattern usage and connecting the backend to the front end
 •	Discussed progress on backend functions
 •	Worked to merge branches again
+Date - 19/07/2021
+Attendees:
+-	Cameron
+-	Abrar
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Discussion of remaining Milestone 2 features that had not been implemented in time
+•	Distribution of Milestone 3 tasks
