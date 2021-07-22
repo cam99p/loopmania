@@ -30,7 +30,7 @@ public class LoopManiaApplication extends Application {
         primaryStage.setResizable(false);
 
         // load the main game
-        LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader("world_with_twists_and_turns.json");
+        LoopManiaWorldControllerLoader loopManiaLoader = new LoopManiaWorldControllerLoader("4_by_4_world.json");
         mainController = loopManiaLoader.loadController();
         FXMLLoader gameLoader = new FXMLLoader(getClass().getResource("LoopManiaView.fxml"));
         gameLoader.setController(mainController);
@@ -89,7 +89,10 @@ public class LoopManiaApplication extends Application {
         
         // set functions which are activated when button click to switch menu is pressed
         // e.g. from main menu to start the game, or from the game to return to main menu
-        mainController.setMainMenuSwitcher(() -> {switchToRoot(scene, mainMenuRoot, primaryStage);});
+        mainController.setMainMenuSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);
+            mainController.resetGame();
+        });
         mainMenuController.setLevelSwitcher(() -> {
             switchToRoot(scene, LevelRoot, primaryStage);
         });

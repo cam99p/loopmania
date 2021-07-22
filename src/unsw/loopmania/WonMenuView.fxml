@@ -19,7 +19,7 @@
             <Font name="System Bold" size="50.0" />
          </font>
       </Label>
-      <Button fx:id="exitGame" layoutX="207.0" layoutY="232.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="81.0" text="Exit" />
-      <Button fx:id="restartGame" layoutX="85.0" layoutY="232.0" maxWidth="81.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="81.0" text="Restart" />
+      <Button layoutX="207.0" layoutY="232.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="35.0" prefWidth="81.0" text="Exit" />
+      <Button layoutX="85.0" layoutY="232.0" maxWidth="81.0" mnemonicParsing="false" onAction="#restartGame" prefHeight="35.0" prefWidth="81.0" text="Restart" />
    </children>
 </Pane>
