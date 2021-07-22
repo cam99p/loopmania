@@ -2,6 +2,8 @@ package unsw.loopmania;
 
 import java.util.Random;
 
+import unsw.loopmania.Item.Slot;
+
 public class Zombie extends BasicEnemy{
     //Construct enemy at certain position, and set all attributes
     public Zombie(PathPosition position) {
@@ -21,6 +23,14 @@ public class Zombie extends BasicEnemy{
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
         int damage = this.getAttack() - target.getDefense();
+
+        //If the target entity (currently only main character) is wearing armor, halve damage
+        if (target instanceof Character){
+            Character hero = (Character)target;
+            if (hero.getEquipment(Slot.CHEST) instanceof Armour){
+                damage = damage/2;
+            }
+        }
 
         //If the target entity (currently only main character) successfully blocks, reduce damage to 0
         if (target.tryBlock(seed)){
