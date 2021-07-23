@@ -17,6 +17,7 @@ public class Doggie extends BasicEnemy{
         //Set other
         this.tranced = false;
         this.stunned = false;
+        this.canBlock = false;
         this.isBoss = true;
     }
 
