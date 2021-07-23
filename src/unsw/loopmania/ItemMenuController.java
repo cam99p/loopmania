@@ -171,6 +171,7 @@ public class ItemMenuController {
         for(Item i : removedItems) {
             mainController.removeItemByCoordinates(i.getX(), i.getY());
             mainController.addGold(50);
+            goldValue.setText(mainController.getGoldString());
         }
         setShopInventory();
     }
