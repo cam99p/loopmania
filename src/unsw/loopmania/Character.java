@@ -27,6 +27,7 @@ public class Character extends MovingEntity{
         this.canRevive = false;
         this.doubleDamage = false;
         this.tranced = false;
+        this.stunned = false;
         this.allies = new ArrayList<>();
         initialiseEquipment();
     }

@@ -15,6 +15,7 @@ public class Elan extends BasicEnemy{
         //Set other
         this.tranced = true; //This is to switch Elan to target the enemies for his healing
                             //Alternatviely, could check if its an instance of Elan in Battle
+        this.stunned = false;
         this.isBoss = true;
     }
 

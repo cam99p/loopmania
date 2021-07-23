@@ -18,6 +18,7 @@ public class Zombie extends BasicEnemy{
         this.setSpeed(5);
         //Set other
         this.tranced = false;
+        this.stunned = false;
         this.isBoss = false;
     }
 

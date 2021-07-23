@@ -21,6 +21,7 @@ public class Vampire extends BasicEnemy{
         this.setSpeed(10);
         //Set other
         this.tranced = false;
+        this.stunned = false;
         this.isBoss = false;
     }
 
