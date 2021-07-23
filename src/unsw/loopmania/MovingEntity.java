@@ -16,6 +16,7 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     protected Boolean canRevive;
     protected Boolean tranced;
     protected int tranceTimer;
+    protected Boolean stunned;
 
     /**
      * object holding position in the path

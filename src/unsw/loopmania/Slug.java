@@ -18,6 +18,7 @@ public class Slug extends BasicEnemy{
         this.setSpeed(7);
         //Set other
         this.tranced = false;
+        this.isBoss = false;
     }
 
     //Attacks the specified target
