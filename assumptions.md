@@ -49,3 +49,7 @@
 - Random chance of getting an item when card is disposed or reward from battles is equal across all types of item except for The One Ring
 
 - Player character can only equip one equipment for each Slot type
+
+- Bosses cannot be tranced
+
+- Doggie's stun effect on character lasts 1 turn
