@@ -22,6 +22,7 @@ public class DoggieTest {
         assertTrue(dummyChar.getHealth() == 150); 
     }
 
+    @Test
     public void TestStun(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
                                                                 new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));

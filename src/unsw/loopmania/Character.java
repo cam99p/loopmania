@@ -51,7 +51,16 @@ public class Character extends MovingEntity{
             damage = damage * 2;
         }
 
-        target.damageHealth(damage);
+        //If not stunned, attack, 
+        if (!stunned){
+            target.damageHealth(damage);
+        } 
+        //otherwise, deal no damage, but recover from stunned
+        else {
+            this.stunned = false;
+        }
+
+        
     }
 
     public void setDoubleDamage(boolean bool) {
