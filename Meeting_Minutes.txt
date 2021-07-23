@@ -76,3 +76,13 @@ Attendees:
 Topics of Discussion:
 •	Discussion of remaining Milestone 2 features that had not been implemented in time
 •	Distribution of Milestone 3 tasks
+Date - 23/07/2021
+Attendees:
+-	Cameron
+-	Abrar
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Milesone 2 presentation
+•	Milesone 3 discussion: current progress, fourth pattern ideas, minor bug fix to-dos, etc.
