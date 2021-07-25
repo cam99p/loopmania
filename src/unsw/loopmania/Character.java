@@ -43,8 +43,12 @@ public class Character extends MovingEntity{
 
         //Trancing an enemy case
         if (this.getEquipment(Slot.RIGHT_ARM) instanceof Staff && seed >= 20){
-            target.setTranced(true);
-            target.setTranceTimer(3);
+            //If it isnt a boss, trance it
+            BasicEnemy enemy = (BasicEnemy)target;
+            if (!enemy.isBoss){
+                target.setTranced(true);
+                target.setTranceTimer(3);
+            }
         }
 
         //Near campfire damage adjustment

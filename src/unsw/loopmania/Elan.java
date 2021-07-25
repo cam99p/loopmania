@@ -24,5 +24,6 @@ public class Elan extends BasicEnemy{
     public void AttackTarget(MovingEntity target, int seed){
         
         //We do not deincrement Elans trance timer
+        target.modifyHealth(seed);
     }
 }
