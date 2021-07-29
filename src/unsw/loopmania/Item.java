@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * represents an item in the backend world
  */
-public abstract class Item extends StaticEntity implements ItemInterface{
+public abstract class Item extends StaticEntity implements Equipment{
     private String name;
     private Slot slot;
     // This could be used for multiple purpose

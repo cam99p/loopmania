@@ -88,4 +88,30 @@ public class ItemFactoryTest {
           assertTrue(dummyItem.getSlot().equals(Slot.SPECIAL));
           assertTrue(dummyItem.getValue() == 1);
     }
+
+    @Test
+    public void TestCreateAnduril(){
+          Item dummyItem = itemFactory.createItem(ItemType.ANDURIL, new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+          assertTrue(dummyItem.getClass() == Anduril.class);
+          assertTrue(dummyItem.getName().equals("Anduril, Flame of the West"));
+          assertTrue(dummyItem.getSlot().equals(Slot.RIGHT_ARM));
+          assertTrue(dummyItem.getValue() == 30);
+    }
+
+    @Test
+    public void TestCreateTreeStump(){
+          Item dummyItem = itemFactory.createItem(ItemType.TREE_STUMP, new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+          assertTrue(dummyItem.getClass() == TreeStump.class);
+          assertTrue(dummyItem.getName().equals("Tree Stump"));
+          assertTrue(dummyItem.getSlot().equals(Slot.LEFT_ARM));
+          assertTrue(dummyItem.getValue() == 30);
+    }
+
+    @Test
+    public void TestCreateDoggieCoin(){
+          Item dummyItem = itemFactory.createItem(ItemType.DOGGIE_COIN, new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+          assertTrue(dummyItem.getClass() == DoggieCoin.class);
+          assertTrue(dummyItem.getName().equals("Doggie Coin"));
+          assertTrue(dummyItem.getValue() == 0);
+    }
 }

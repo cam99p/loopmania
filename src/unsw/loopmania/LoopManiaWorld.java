@@ -341,7 +341,7 @@ public class LoopManiaWorld {
     }
 
     public Boolean usingPotion() {
-        Item healthPotion = character.getEquipment(Slot.POTION);
+        HealthPotion healthPotion = (HealthPotion)character.getEquipment(Slot.POTION);
         if (healthPotion != null && character.getHealth() < 200) {
             healthPotion.useItem(character);
             character.DeequipItem(healthPotion);
@@ -904,7 +904,17 @@ public class LoopManiaWorld {
         
         // If it passes the 1% chance spawn rare item
         if(int_random == 0)
-            return addUnequippedItem(ItemType.THE_ONE_RING);
+        {
+            int_random = rand.nextInt(3);
+            switch(int_random){
+                case 0:
+                    return addUnequippedItem(ItemType.THE_ONE_RING);
+                case 1:
+                    return addUnequippedItem(ItemType.ANDURIL);
+                case 2:
+                    return addUnequippedItem(ItemType.TREE_STUMP);
+            }
+        }
         
         // No reward given if number is bigger than 10
         if (int_random >= 10)
