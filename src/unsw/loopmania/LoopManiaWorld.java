@@ -392,7 +392,9 @@ public class LoopManiaWorld {
      */
     public void removeUnequippedInventoryItemByCoordinates(int x, int y){
         Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
-        removeUnequippedInventoryItem(item);
+        if(item != null) {
+            removeUnequippedInventoryItem(item);
+        }
     }
 
     public Item moveFromUnequippedToEquipped(int x, int y, int x2, int y2) {

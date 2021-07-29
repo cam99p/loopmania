@@ -42,4 +42,47 @@ Attendees:
 -	Amon
 Topics of Discussion:
 •	Discussed implementation ideas for the initial/high priority backend functions
-•	Divide up the backend functions amongst the group
+•	Divided up the backend functions amongst the group
+Date - 12/07/2021
+Attendees:
+-	Cameron
+-	Abrar
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Presented our progress on our backend functions
+•	Merged branches with completed work, in order to continue working on sections with interdependancies
+•	Brainstormed how to handle these interdependancies (ie, how to properly integrate items with battles, and the like)
+Date - 16/07/2021
+Attendees:
+-	Cameron
+-	Abrar
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Milestone 1 presentation
+•	Milestone 2 project check in: discussed questions about submission, pattern usage and connecting the backend to the front end
+•	Discussed progress on backend functions
+•	Worked to merge branches again
+Date - 19/07/2021
+Attendees:
+-	Cameron
+-	Abrar
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Discussion of remaining Milestone 2 features that had not been implemented in time
+•	Distribution of Milestone 3 tasks
+Date - 23/07/2021
+Attendees:
+-	Cameron
+-	Abrar
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Milesone 2 presentation
+•	Milesone 3 discussion: current progress, fourth pattern ideas, minor bug fix to-dos, etc.
