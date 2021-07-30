@@ -13,8 +13,15 @@ public class MainMenuController {
      */
     private MenuSwitcher LevelSwitcher;
 
+    private MenuSwitcher instructionsSwitcher;
+
     public void setLevelSwitcher(MenuSwitcher LevelSwitcher){
         this.LevelSwitcher = LevelSwitcher;
+    }
+
+
+    public void setInstructionsSwitcher(MenuSwitcher instructionsSwitcher){
+        this.instructionsSwitcher = instructionsSwitcher;
     }
 
     /**
@@ -24,5 +31,10 @@ public class MainMenuController {
     @FXML
     private void switchToLevel() throws IOException {
         LevelSwitcher.switchMenu();
+    }
+
+    @FXML
+    private void switchToInstructions() throws IOException {
+        instructionsSwitcher.switchMenu();
     }
 }

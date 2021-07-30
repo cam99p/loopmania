@@ -7,6 +7,7 @@ import java.util.Map;
 import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.GameMode.Mode;
 import unsw.loopmania.Item.Slot;
 import unsw.loopmania.ItemFactory.ItemType;
 
@@ -51,6 +52,8 @@ public class LoopManiaWorld {
 
     private Goal goal;
 
+    private Mode gameMode;
+
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
@@ -92,6 +95,7 @@ public class LoopManiaWorld {
         cycle = 0;
         exp = 0;
         gold = 0;
+        this.gameMode = null;
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
@@ -122,6 +126,14 @@ public class LoopManiaWorld {
     public void setCastle(HerosCastle castle) {
         this.castle = castle;
         buildingEntities.add(castle);
+    }
+
+    public void setGameMode(Mode mode) {
+        this.gameMode = mode;
+    }
+
+    public Mode getGameMode() {
+        return gameMode;
     }
 
     public Character getCharacter() {
@@ -915,6 +927,7 @@ public class LoopManiaWorld {
             return createRandomWeapon();
         }
     }
+
     
     /**
      * Creates a random item based on rng

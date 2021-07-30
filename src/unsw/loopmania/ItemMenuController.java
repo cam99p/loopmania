@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import unsw.loopmania.GameMode.Mode;
 import unsw.loopmania.ItemFactory.ItemType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -69,6 +70,7 @@ public class ItemMenuController {
     ImageView shieldImage = new ImageView(new Image((new File("src/images/shield.png")).toURI().toString()));
     ImageView theOneRingImage = new ImageView(new Image((new File("src/images/the_one_ring.png")).toURI().toString()));
     ImageView helmetImage = new ImageView(new Image((new File("src/images/helmet.png")).toURI().toString()));
+    List<ItemType> purchasedItems = new ArrayList<>();
 
     public ItemMenuController (LoopManiaWorldController mainController) {
         this.mainController = mainController;
@@ -81,14 +83,16 @@ public class ItemMenuController {
     @FXML
     public void switchToGame() throws IOException {
         gameSwitcher.switchMenu();
+        purchasedItems.clear();
     }
 
     @FXML 
     public void handlePotion() throws IOException {
         // Check if the player has enough money
         int currentGold = mainController.getGold();
-        if(currentGold >= 50 && mainController.getWorldUnequippedInventory().size() < 16) {
+        if(currentGold >= 50 && mainController.getWorldUnequippedInventory().size() < 16 && canPurchaseInMode(ItemType.HEALTH_POTION)) {
             mainController.loadItem(ItemType.HEALTH_POTION);
+            purchasedItems.add(ItemType.HEALTH_POTION);
             setShopInventory();
             mainController.minusGold(50);
             goldValue.setText(mainController.getGoldString());
@@ -98,8 +102,9 @@ public class ItemMenuController {
     @FXML
     public void handleHelmet() throws IOException {
         int currentGold = mainController.getGold();
-        if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16) {
+        if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16 && canPurchaseInMode(ItemType.HELMET)) {
             mainController.loadItem(ItemType.HELMET);
+            purchasedItems.add(ItemType.HELMET);
             mainController.minusGold(300);
             setShopInventory();
             goldValue.setText(mainController.getGoldString());
@@ -111,6 +116,7 @@ public class ItemMenuController {
         int currentGold = mainController.getGold();
         if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16) {
             mainController.loadItem(ItemType.SWORD);
+            purchasedItems.add(ItemType.SWORD);
             mainController.minusGold(300);
             setShopInventory();
             goldValue.setText(mainController.getGoldString());
@@ -120,8 +126,9 @@ public class ItemMenuController {
     @FXML
     public void handleShield() throws IOException {
         int currentGold = mainController.getGold();
-        if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16) {
+        if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16 && canPurchaseInMode(ItemType.SHIELD)) {
             mainController.loadItem(ItemType.SHIELD);
+            purchasedItems.add(ItemType.SHIELD);
             mainController.minusGold(300);
             setShopInventory();
             goldValue.setText(mainController.getGoldString());
@@ -133,6 +140,7 @@ public class ItemMenuController {
         int currentGold = mainController.getGold();
         if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16) {
             mainController.loadItem(ItemType.STAKE);
+            purchasedItems.add(ItemType.STAKE);
             mainController.minusGold(300);
             setShopInventory();
             goldValue.setText(mainController.getGoldString());
@@ -144,6 +152,7 @@ public class ItemMenuController {
         int currentGold = mainController.getGold();
         if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16) {
             mainController.loadItem(ItemType.STAFF);
+            purchasedItems.add(ItemType.STAFF);
             mainController.minusGold(300);
             setShopInventory();
             goldValue.setText(mainController.getGoldString());
@@ -153,8 +162,9 @@ public class ItemMenuController {
     @FXML 
     public void handleArmor() throws IOException {
         int currentGold = mainController.getGold();
-        if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16) {
+        if(currentGold >= 300 && mainController.getWorldUnequippedInventory().size() < 16 && canPurchaseInMode(ItemType.ARMOUR)) {
             mainController.loadItem(ItemType.ARMOUR);
+            purchasedItems.add(ItemType.ARMOUR);
             mainController.minusGold(300);
             setShopInventory();
             goldValue.setText(mainController.getGoldString());
@@ -185,6 +195,22 @@ public class ItemMenuController {
 
     public void setCycleValue() {
         this.cycleValue.setText(mainController.getCycleString());
+    }
+
+    public Boolean canPurchaseInMode(ItemType item) {
+        if (mainController.getGameMode().equals(Mode.SURVIVAL)) {
+            if (purchasedItems.contains(ItemType.HEALTH_POTION) && item.equals(ItemType.HEALTH_POTION)) {
+                return false;
+            } 
+        } else if (mainController.getGameMode().equals(Mode.BERSERKER) 
+                   && (item.equals(ItemType.ARMOUR)) || (item.equals(ItemType.HELMET)) || (item.equals(ItemType.SHIELD))) {
+            if (purchasedItems.contains(ItemType.ARMOUR) || purchasedItems.contains(ItemType.HELMET) 
+            || purchasedItems.contains(ItemType.SHIELD)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void setShopInventory() {

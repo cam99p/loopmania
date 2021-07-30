@@ -39,6 +39,7 @@ import java.io.File;
 import java.io.IOException;
 
 import unsw.loopmania.ItemFactory.ItemType;
+import unsw.loopmania.GameMode.Mode;
 /**
  * the draggable types.
  * If you add more draggable types, add an enum value here.
@@ -420,6 +421,14 @@ public class LoopManiaWorldController {
 
     public void terminate(){
         pause();
+    }
+
+    public void setGameMode(Mode mode) {
+        world.setGameMode(mode);
+    }
+
+    public Mode getGameMode() {
+        return world.getGameMode();
     }
 
     /**
@@ -1226,7 +1235,6 @@ public class LoopManiaWorldController {
         System.out.println("current method = "+currentMethodLabel);
         System.out.println("In application thread? = "+Platform.isFxApplicationThread());
         System.out.println("Current system time = "+java.time.LocalDateTime.now().toString().replace('T', ' '));
-    
     }
 
 }
