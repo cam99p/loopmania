@@ -829,7 +829,7 @@ public class LoopManiaWorld {
             spawnedEnemies.add(newDoggie);
         }
 
-        if (cycle % 40 == 0 && !elanDefeated){
+        if (cycle % 40 == 0 && !elanDefeated && exp >= 10000){
             BasicEnemy newElan = new Elan(getBossSpawnPosition());
             enemies.add(newElan);
             spawnedEnemies.add(newElan);
