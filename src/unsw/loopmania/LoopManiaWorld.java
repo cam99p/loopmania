@@ -812,6 +812,9 @@ public class LoopManiaWorld {
                 }
             }
         }
+
+        //TODO: this may be a good place to put Doggie/Elan
+
         return spawnedEnemies;
     }
 
