@@ -49,6 +49,10 @@ public class LoopManiaWorld {
 
     private int gold;
 
+    private boolean doggieDefeated;
+
+    private boolean elanDefeated;
+
     private Goal goal;
 
     // TODO = add more lists for other entities, for equipped inventory items, etc...
@@ -756,6 +760,22 @@ public class LoopManiaWorld {
 
     public void setGold(int gold) {
         this.gold = gold;
+    }
+
+    public boolean isDoggieDefeated() {
+        return doggieDefeated;
+    }
+
+    public void setDoggieDefeated(boolean doggieDefeated) {
+        this.doggieDefeated = doggieDefeated;
+    }
+
+    public boolean isElanDefeated() {
+        return elanDefeated;
+    }
+
+    public void setElanDefeated(boolean elanDefeated) {
+        this.elanDefeated = elanDefeated;
     }
 
     public Goal getGoal() {

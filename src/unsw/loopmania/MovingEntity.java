@@ -16,6 +16,7 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     protected Boolean canRevive;
     protected Boolean tranced;
     protected int tranceTimer;
+    protected Boolean stunned;
 
     /**
      * object holding position in the path
@@ -160,6 +161,12 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
 
     //Used when the MovingEntity takes damage
     public void damageHealth(int value) {
+
+        //Prevent negative damage
+        if (value < 0){
+            value = 0;
+        }
+
         health -= value;
     }
 
