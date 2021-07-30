@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 /**
  * Defines the behaviour of Health Potion when used
  */
-public class HealthPotion extends Item {
+public class HealthPotion extends Item implements Consumable{
     public HealthPotion(SimpleIntegerProperty x, SimpleIntegerProperty y)
     {
         super(x,y, "Health Potion", Slot.POTION);

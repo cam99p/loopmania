@@ -15,6 +15,7 @@ public class Ally extends MovingEntity{
         this.canRevive = false;
         this.zombified = false;
         this.tranced = false;
+        this.stunned = false;
     }
     
     //Attacks the specified target

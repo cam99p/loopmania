@@ -14,6 +14,7 @@ public class TowerAlly extends MovingEntity{
         this.canBlock = false;
         this.canRevive = false;
         this.tranced = false;
+        this.stunned = false;
     }
     
     //Attacks the specified target

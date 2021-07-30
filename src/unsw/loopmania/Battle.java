@@ -25,6 +25,8 @@ public class Battle {
         this.hero = Hero;
         this.allies = Allies;
         this.enemies = Enemies;
+        //TODO: if Elan is in battle, move him to index 0, 
+        //so that he can heal without being attacked during the boss fight
         participants = new ArrayList<MovingEntity>();
         defeated = new ArrayList<MovingEntity>();
         participants.addAll(Allies);
@@ -164,7 +166,6 @@ public class Battle {
         else{
             return hero.getAllies().get(0);
         }
-        
         
     }
 

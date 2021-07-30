@@ -180,6 +180,10 @@ public class LoopManiaWorldController {
     private Image helmetImage;
     private Image healthPotionImage;
     private Image theOneRingImage;
+    private Image doggieCoin;
+    private Image anduril;
+    private Image treeStump;
+    //ITEM//
     private Image basicBuildingImage;
     private Image heartImage;
     private Image goldImage;
@@ -277,8 +281,12 @@ public class LoopManiaWorldController {
         shieldImage = new Image((new File("src/images/shield.png")).toURI().toString());
         theOneRingImage = new Image((new File("src/images/the_one_ring.png")).toURI().toString());
         helmetImage = new Image((new File("src/images/helmet.png")).toURI().toString());
-        heartImage = new Image((new File("src/images/heart.png")).toURI().toString());
         goldImage = new Image((new File("src/images/gold_pile.png")).toURI().toString());
+        doggieCoin = new Image((new File("src/images/doggieCoin.png")).toURI().toString());
+        anduril = new Image((new File("src/images/anduril_flame_of_the_west.png")).toURI().toString());
+        treeStump = new Image((new File("src/images/tree_stump.png")).toURI().toString());
+        //ITEM//
+        heartImage = new Image((new File("src/images/heart.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
         soundtrack = new Media((new File("src/music/dungeon.mp3")).toURI().toString());
@@ -686,8 +694,20 @@ public class LoopManiaWorldController {
             case "Health Potion":
                 view = new ImageView(healthPotionImage);
                 break;
+            case "Doggie Coin":
+                view = new ImageView(doggieCoin);
+                break;
             case "The One Ring":
                 view = new ImageView(theOneRingImage);
+                break;
+            case "Anduril, Flame of the West":
+                view = new ImageView(anduril);
+                break;
+            case "Tree Stump":
+                view = new ImageView(treeStump);
+                break;
+            default:
+                view = null;
                 break;
         }
         if(view != null) {

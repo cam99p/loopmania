@@ -1,26 +1,24 @@
 package unsw.loopmania;
 
-import java.util.Random;
-
 import unsw.loopmania.Item.Slot;
 
-public class Zombie extends BasicEnemy{
+public class Doggie extends BasicEnemy{
     //Construct enemy at certain position, and set all attributes
-    public Zombie(PathPosition position) {
+    public Doggie(PathPosition position) {
         super(position);
         //Set radii
-        this.setBattleRadius(2);
-        this.setSupportRadius(2);
-        //Set stats
-        this.setAttack(10);
+        this.setBattleRadius(1);
+        this.setSupportRadius(1);
+        //set stats
+        this.setAttack(50);
         this.setDefense(0);
-        this.setHealth(100);
-        this.setSpeed(5);
+        this.setHealth(500);
+        this.setSpeed(12);
         //Set other
         this.tranced = false;
-        this.canBlock = false;
         this.stunned = false;
-        this.isBoss = false;
+        this.canBlock = false;
+        this.isBoss = true;
     }
 
     //Attacks the specified target
@@ -35,39 +33,26 @@ public class Zombie extends BasicEnemy{
             }
         }
 
-        //If the target entity (currently only main character) successfully blocks, reduce damage to 0
+        //If the target enityt (currently only main character) successfully blocks, reduce damage to 0
         if (target.tryBlock(seed)){
             damage = 0;
         }
 
         target.damageHealth(damage);
 
-        //Critical
-        if (seed == 20 && target instanceof Ally){
-            Ally ally = (Ally)target;
-            ally.setZombified(true);
-            ally.setHealth(0); 
+        //Critical, so stun target
+        if (seed == 20 && target instanceof Character){
+            Character character = (Character)target;
+            character.stunned = true; 
         }
 
-        //Handle tarnce
+        //Handle trance
         if (getTranceTimer() == 0){
             setTranced(false);
         }
         else if (tranced){
             deincrementTranceTimer();
         }
-    }
-
-    /**
-     * move a vampire (20% up path, 20% down path, 60% not moving)
-     */
-    public void move(){
-        int directionChoice = (new Random()).nextInt(5);
-        if (directionChoice == 1){
-            moveUpPath();
-        }
-        else if (directionChoice == 3){
-            moveDownPath();
-        }
+          
     }
 }
