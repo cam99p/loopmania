@@ -86,3 +86,13 @@ Attendees:
 Topics of Discussion:
 •	Milesone 2 presentation
 •	Milesone 3 discussion: current progress, fourth pattern ideas, minor bug fix to-dos, etc.
+Date - 30/07/2021
+Attendees:
+-	Cameron
+-	Jackson
+-	Sam
+-	Amon
+Topics of Discussion:
+•	Milesone 3 project check in with Ivan
+•	Further discussion of possible additional pattern, progress on M3 features and extensions
+•	Worked on adding Image views of Elan and Doggie
