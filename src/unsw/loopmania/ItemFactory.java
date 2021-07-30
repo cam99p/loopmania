@@ -14,7 +14,10 @@ public class ItemFactory {
         SHIELD,
         HELMET,
         HEALTH_POTION,
-        THE_ONE_RING
+        THE_ONE_RING,
+        ANDURIL,
+        TREE_STUMP,
+        DOGGIE_COIN
     }
 
     public static final int size;
@@ -41,6 +44,12 @@ public class ItemFactory {
                 return new HealthPotion(x, y);
             case THE_ONE_RING:
                 return new TheOneRing(x, y);
+            case ANDURIL:
+                return new Anduril(x,y);
+            case TREE_STUMP:
+                return new TreeStump(x,y);
+            case DOGGIE_COIN:
+                return new DoggieCoin(x,y);
         }
         return null;
     }
