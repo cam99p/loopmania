@@ -62,7 +62,7 @@ public class Zombie extends BasicEnemy{
      * move a vampire (20% up path, 20% down path, 60% not moving)
      */
     public void move(){
-        int directionChoice = (new Random()).nextInt(4);
+        int directionChoice = (new Random()).nextInt(5);
         if (directionChoice == 1){
             moveUpPath();
         }

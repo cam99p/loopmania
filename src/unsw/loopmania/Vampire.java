@@ -107,7 +107,7 @@ public class Vampire extends BasicEnemy{
      * move a vampire (10% up path, 10% down path, 80% not moving)
      */
     public void move(){
-        int directionChoice = (new Random()).nextInt(9);
+        int directionChoice = (new Random()).nextInt(10);
         if (directionChoice == 3){
             moveUpPath();
         }

@@ -56,7 +56,7 @@ public class Slug extends BasicEnemy{
      * slug will always move
      */
     public void move(){
-        int directionChoice = (new Random()).nextInt(1);
+        int directionChoice = (new Random()).nextInt(2);
         if (directionChoice == 0){
             moveUpPath();
         }
