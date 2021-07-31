@@ -7,6 +7,7 @@ import java.util.Map;
 import org.javatuples.Pair;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import unsw.loopmania.GameMode.Mode;
 import unsw.loopmania.Item.Slot;
 import unsw.loopmania.ItemFactory.ItemType;
 
@@ -55,6 +56,8 @@ public class LoopManiaWorld {
 
     private Goal goal;
 
+    private Mode gameMode;
+
     // TODO = add more lists for other entities, for equipped inventory items, etc...
 
     // TODO = expand the range of enemies
@@ -96,6 +99,7 @@ public class LoopManiaWorld {
         cycle = 0;
         exp = 0;
         gold = 0;
+        this.gameMode = null;
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
@@ -126,6 +130,14 @@ public class LoopManiaWorld {
     public void setCastle(HerosCastle castle) {
         this.castle = castle;
         buildingEntities.add(castle);
+    }
+
+    public void setGameMode(Mode mode) {
+        this.gameMode = mode;
+    }
+
+    public Mode getGameMode() {
+        return gameMode;
     }
 
     public Character getCharacter() {
@@ -403,6 +415,7 @@ public class LoopManiaWorld {
 
     public Item moveFromUnequippedToEquipped(int x, int y, int x2, int y2) {
         Item item = getUnequippedInventoryItemEntityByCoordinates(x, y);
+        if (gameMode.equals(Mode.CONFUSING)) addExtendedProperties(item);
         equipItem(item);
         item.setX(x2);
         item.setY(y2);
@@ -663,6 +676,23 @@ public class LoopManiaWorld {
             goldOrPotion.getValue1().addAll(gold);
         }
         return goldOrPotion;
+    }
+
+    
+    /**
+     * For confusing mode only. Adds the property of another random rare item 
+     */
+    private void addExtendedProperties(Item item) {
+        if (item instanceof TheOneRing) {
+            TheOneRing theOneRing = (TheOneRing)item;
+            theOneRing.extendProperty(character);
+        } else if (item instanceof Anduril) {
+            Anduril anduril = (Anduril)item;
+            anduril.extendProperty(character);
+        }  else if (item instanceof TreeStump) {
+            TreeStump treeStump = (TreeStump)item;
+            treeStump.extendProperty(character);
+        } 
     }
 
     /**
@@ -960,7 +990,7 @@ public class LoopManiaWorld {
         }
         
         // No reward given if number is bigger than 10
-        if (int_random >= 10)
+        if (int_random >= 10)          
             return null;
         // Passes 10% chance
         else
@@ -968,6 +998,7 @@ public class LoopManiaWorld {
             return createRandomWeapon();
         }
     }
+
     
     /**
      * Creates a random item based on rng
