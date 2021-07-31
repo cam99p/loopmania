@@ -23,6 +23,20 @@ public class GoalTest {
     }
 
     @Test
+    public void TestGoalSINGLEBosses(){
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+        LoopManiaWorld d = new LoopManiaWorld(3, 3, dummyPath);
+        GoalSINGLE goal = new GoalSINGLE("bosses", 1000);
+        d.setGoal(goal);
+        d.setDoggieDefeated(true);
+        assertTrue(!goal.checkCompleted(d));
+        d.setElanDefeated(true);
+        assertTrue(goal.checkCompleted(d));
+
+    }
+
+    @Test
     public void TestGoalAND(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
                                                                 new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));

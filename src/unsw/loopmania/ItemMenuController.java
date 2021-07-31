@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import unsw.loopmania.GameMode.Mode;
+import javafx.scene.layout.Pane;
 import unsw.loopmania.ItemFactory.ItemType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -58,6 +59,24 @@ public class ItemMenuController {
     @FXML
     private GridPane inventoryGridPane;
 
+    @FXML
+    private Pane potionPane;
+    @FXML
+    private Pane shieldPane;
+    @FXML
+    private Pane armourPane;
+    @FXML
+    private Pane helmetPane;
+    @FXML
+    private Pane stakePane;
+    @FXML
+    private Pane swordPane;
+    @FXML
+    private Pane staffPane;
+    @FXML
+    private Pane sellPane;
+
+
     private MenuSwitcher gameSwitcher;
 
     private LoopManiaWorldController mainController;
@@ -78,6 +97,18 @@ public class ItemMenuController {
 
     public void setGameSwitcher(MenuSwitcher gameSwitcher) {
         this.gameSwitcher = gameSwitcher;
+    }
+
+    @FXML
+    public void initialize() {
+        potionPane.setVisible(false);
+        shieldPane.setVisible(false);
+        armourPane.setVisible(false);
+        helmetPane.setVisible(false);
+        stakePane.setVisible(false);
+        swordPane.setVisible(false);
+        staffPane.setVisible(false);
+        sellPane.setVisible(false);
     }
 
     @FXML
@@ -185,6 +216,87 @@ public class ItemMenuController {
         setShopInventory();
     }
 
+    @FXML
+    public void enterPotion() {
+        potionPane.setVisible(true);
+    }
+
+    @FXML
+    public void exitPotion() {
+        potionPane.setVisible(false);
+    }
+
+    @FXML
+    public void enterShield() {
+        shieldPane.setVisible(true);
+    }
+
+    @FXML
+    public void exitShield() {
+        shieldPane.setVisible(false);
+    }
+
+    @FXML
+    public void enterArmour() {
+        armourPane.setVisible(true);
+    }
+
+    @FXML
+    public void exitArmour() {
+        armourPane.setVisible(false);
+    }
+
+    @FXML
+    public void enterHelmet() {
+        helmetPane.setVisible(true);
+    }
+
+    @FXML
+    public void exitHelmet() {
+        helmetPane.setVisible(false);
+    }
+
+    @FXML
+    public void enterStake() {
+        stakePane.setVisible(true);
+    }
+
+    @FXML
+    public void exitStake() {
+        stakePane.setVisible(false);
+    }
+
+    @FXML
+    public void enterSword() {
+        swordPane.setVisible(true);
+    }
+
+    @FXML
+    public void exitSword() {
+        swordPane.setVisible(false);
+    }
+
+    @FXML
+    public void enterStaff() {
+        staffPane.setVisible(true);
+    }
+
+    @FXML
+    public void exitStaff() {
+        staffPane.setVisible(false);
+    }
+
+    @FXML
+    public void enterSell() {
+        sellPane.setVisible(true);
+    }
+
+    @FXML
+    public void exitSell() {
+        sellPane.setVisible(false);
+    }
+
+
     public void setGoldValue() {
         this.goldValue.setText(mainController.getGoldString());
     }
@@ -197,6 +309,7 @@ public class ItemMenuController {
         this.cycleValue.setText(mainController.getCycleString());
     }
 
+    // Check if the player is able to purchase the item in the current game mode
     public Boolean canPurchaseInMode(ItemType item) {
         if (mainController.getGameMode().equals(Mode.SURVIVAL)) {
             if (purchasedItems.contains(ItemType.HEALTH_POTION) && item.equals(ItemType.HEALTH_POTION)) {

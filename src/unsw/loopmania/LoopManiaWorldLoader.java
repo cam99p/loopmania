@@ -74,6 +74,9 @@ public abstract class LoopManiaWorldLoader {
         if (type.equals("experience") || type.equals("gold") || type.equals("cycles")) {
             return new GoalSINGLE(type, json.getInt("quantity"));
         } 
+        else if (type.equals("bosses")){
+            return new GoalSINGLE(type, 0); //Amount is unneccesary for bosses
+        }
         else if (type.equals("AND")) {
             //Get subgoals
             JSONArray subgoals = json.getJSONArray("subgoals");

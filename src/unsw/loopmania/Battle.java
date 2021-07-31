@@ -25,6 +25,8 @@ public class Battle {
         this.hero = Hero;
         this.allies = Allies;
         this.enemies = Enemies;
+        //TODO: if Elan is in battle, move him to index 0, 
+        //so that he can heal without being attacked during the boss fight
         participants = new ArrayList<MovingEntity>();
         defeated = new ArrayList<MovingEntity>();
         participants.addAll(Allies);
@@ -109,8 +111,11 @@ public class Battle {
     public void heroDefeated(Character hero) {
         if (hero.canRevive){
             //Set heros hp back to max
-            hero.setHealth(200); 
-            Item reviveItem = hero.getEquipment(Slot.SPECIAL);
+            hero.setHealth(200);
+            
+            // In confusing mode, the 'revival item' can be any of the rare items. 
+            Item reviveItem = getRevivalItem();
+
             hero.DeequipItem(reviveItem);
             reviveItem.destroy();
         }
@@ -142,6 +147,21 @@ public class Battle {
         return result;
     }
 
+    // In confusing mode, the 'revival item' can be any of the rare items. 
+    // If the hero has all three rare items which each contain the one ring property, 
+    // then the 'revival' will first come from the one ring, followed by anduril then treestump.  
+    public Item getRevivalItem() {
+        Item revivalItem = null;
+        if (hero.getEquipment(Slot.SPECIAL) != null) {
+            revivalItem = hero.getEquipment(Slot.SPECIAL); 
+        } else if (hero.getEquipment(Slot.RIGHT_ARM) instanceof Anduril)  {
+            revivalItem = hero.getEquipment(Slot.RIGHT_ARM); 
+        } else if (hero.getEquipment(Slot.LEFT_ARM) instanceof TreeStump) {
+            revivalItem = hero.getEquipment(Slot.LEFT_ARM); 
+        }
+        return revivalItem;
+    }
+
     //Removes an enemy from participants and enemies and adds it to defeated
     //Ally gets handled differently, and hero leads to a game over, no need to resolve anything else
     public void defeatEntity(MovingEntity defeatedEnemy){
@@ -164,7 +184,6 @@ public class Battle {
         else{
             return hero.getAllies().get(0);
         }
-        
         
     }
 

@@ -12,11 +12,6 @@ public class Stake extends Item {
         setValue(7);
     }
 
-    public void useItem(Character target)
-    {
-        
-    }
-
     public void onEquip(Stats stats)
     {
         stats.modifyAttack(getValue());
