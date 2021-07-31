@@ -53,3 +53,5 @@
 - Bosses cannot be tranced
 
 - Doggie's stun effect on character lasts 1 turn
+
+- Vampire avoids campfires with the same radius that it has for the buff characters
