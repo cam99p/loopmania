@@ -11,6 +11,8 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -30,6 +32,9 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.control.Slider;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
@@ -39,6 +44,7 @@ import java.io.File;
 import java.io.IOException;
 
 import unsw.loopmania.ItemFactory.ItemType;
+import unsw.loopmania.GameMode.Mode;
 /**
  * the draggable types.
  * If you add more draggable types, add an enum value here.
@@ -132,6 +138,9 @@ public class LoopManiaWorldController {
     @FXML
     private Pane pausePane;
 
+    @FXML 
+    private Slider volumeSlider;
+
     private boolean isPaused;
     private LoopManiaWorld world;
 
@@ -162,6 +171,8 @@ public class LoopManiaWorldController {
     private Image slugImage;
     private Image vampireImage;
     private Image zombieImage;
+    private Image doggieImage;
+    private Image elanImage;
     private Image allyImage;
     //ITEM//
     private Image swordImage;
@@ -180,6 +191,12 @@ public class LoopManiaWorldController {
     private Image heartImage;
     private Image goldImage;
 
+    private Media soundtrack;
+    private MediaPlayer soundtrackMP;
+    private Media gameover;
+    private MediaPlayer gameoverMP;
+    private Media victory;
+    private MediaPlayer victoryMP;
 
     /**
      * the image currently being dragged, if there is one, otherwise null.
@@ -250,6 +267,8 @@ public class LoopManiaWorldController {
         slugImage = new Image((new File("src/images/slug.png")).toURI().toString());
         vampireImage = new Image((new File("src/images/vampire.png")).toURI().toString());
         zombieImage = new Image((new File("src/images/zombie.png")).toURI().toString());
+        doggieImage = new Image((new File("src/images/doggie.png")).toURI().toString());
+        elanImage = new Image((new File("src/images/ElanMuske.png")).toURI().toString());
         basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
         allyImage = new Image((new File("src/images/deep_elf_master_archer.png")).toURI().toString());
         //ITEM//
@@ -275,6 +294,12 @@ public class LoopManiaWorldController {
         heartImage = new Image((new File("src/images/heart.png")).toURI().toString());
         currentlyDraggedImage = null;
         currentlyDraggedType = null;
+        soundtrack = new Media((new File("src/music/dungeon.mp3")).toURI().toString());
+        soundtrackMP = new MediaPlayer(soundtrack);
+        gameover = new Media((new File("src/music/gameover.mp3")).toURI().toString());
+        gameoverMP = new MediaPlayer(gameover);
+        victory = new Media((new File("src/music/victory.mp3")).toURI().toString());
+        victoryMP = new MediaPlayer(victory);
 
         // initialize them all...
         gridPaneSetOnDragDropped = new EnumMap<DRAGGABLE_TYPE, EventHandler<DragEvent>>(DRAGGABLE_TYPE.class);
@@ -343,6 +368,26 @@ public class LoopManiaWorldController {
         anchorPaneRoot.getChildren().add(draggedEntity);
 
         pausePane.setVisible(false);
+
+        // Loop the music (even though it's 12 min long)
+        soundtrackMP.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                soundtrackMP.seek(Duration.ZERO);
+            }
+        });
+        // Initialise the soundtracks
+        soundtrackMP.play();
+        gameoverMP.stop();
+        victoryMP.stop();
+
+        // Volume Slider
+        volumeSlider.setValue(soundtrackMP.getVolume()*100);
+        volumeSlider.valueProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                soundtrackMP.setVolume(volumeSlider.getValue()/100);
+            }
+        });
     }
 
     /**
@@ -427,6 +472,14 @@ public class LoopManiaWorldController {
 
     public void terminate(){
         pause();
+    }
+
+    public void setGameMode(Mode mode) {
+        world.setGameMode(mode);
+    }
+
+    public Mode getGameMode() {
+        return world.getGameMode();
     }
 
     /**
@@ -709,9 +762,15 @@ public class LoopManiaWorldController {
         } else if(enemy instanceof Vampire) {
             view = new ImageView(vampireImage);
             addEntity(((Vampire) enemy), view);
-        } else {
+        } else if(enemy instanceof Zombie) {
             view = new ImageView(zombieImage);
             addEntity(((Zombie) enemy), view);
+        } else if (enemy instanceof Doggie){
+            view = new ImageView(doggieImage);
+            addEntity(((Doggie) enemy), view);
+        } else {
+            view = new ImageView(elanImage);
+            addEntity(((Elan) enemy), view);
         }
         squares.getChildren().add(view);
     }
@@ -1029,11 +1088,13 @@ public class LoopManiaWorldController {
                 pausePane.setVisible(false);
                 changeOpacity(1.0);
                 startTimer();
+                soundtrackMP.play();
             }
             else{
                 pausePane.setVisible(true);
                 changeOpacity(0.5);
                 pause();
+                soundtrackMP.pause();
             }
             break;
         case P:
@@ -1076,6 +1137,9 @@ public class LoopManiaWorldController {
     @FXML
     private void switchToMainMenu() throws IOException {
         pause();
+        soundtrackMP.play();
+        gameoverMP.stop();
+        victoryMP.stop();
         mainMenuSwitcher.switchMenu();
     }
 
@@ -1115,6 +1179,8 @@ public class LoopManiaWorldController {
      */
     public void switchToDeathMenu() {
         timeline.stop();
+        soundtrackMP.stop();
+        gameoverMP.play();
         deathMenuSwitcher.switchMenu();
     }
 
@@ -1123,6 +1189,8 @@ public class LoopManiaWorldController {
      */
     public void switchToWonMenu() {
         timeline.stop();
+        soundtrackMP.stop();
+        victoryMP.play();
         wonMenuSwitcher.switchMenu();
     }
 
@@ -1145,6 +1213,9 @@ public class LoopManiaWorldController {
         setGold();
         setXP();
         setHealth();
+        soundtrackMP.play();
+        gameoverMP.stop();
+        victoryMP.stop();
     }
 
     /**
@@ -1245,7 +1316,6 @@ public class LoopManiaWorldController {
         System.out.println("current method = "+currentMethodLabel);
         System.out.println("In application thread? = "+Platform.isFxApplicationThread());
         System.out.println("Current system time = "+java.time.LocalDateTime.now().toString().replace('T', ' '));
-    
     }
 
 }

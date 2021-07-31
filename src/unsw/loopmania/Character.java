@@ -27,6 +27,7 @@ public class Character extends MovingEntity{
         this.canRevive = false;
         this.doubleDamage = false;
         this.tranced = false;
+        this.stunned = false;
         this.allies = new ArrayList<>();
         initialiseEquipment();
     }
@@ -42,8 +43,12 @@ public class Character extends MovingEntity{
 
         //Trancing an enemy case
         if (this.getEquipment(Slot.RIGHT_ARM) instanceof Staff && seed >= 20){
-            target.setTranced(true);
-            target.setTranceTimer(3);
+            //If it isnt a boss, trance it
+            BasicEnemy enemy = (BasicEnemy)target;
+            if (!enemy.isBoss){
+                target.setTranced(true);
+                target.setTranceTimer(3);
+            }
         }
 
         //Near campfire damage adjustment
@@ -51,7 +56,16 @@ public class Character extends MovingEntity{
             damage = damage * 2;
         }
 
-        target.damageHealth(damage);
+        //If not stunned, attack, 
+        if (!stunned){
+            target.damageHealth(damage);
+        } 
+        //otherwise, deal no damage, but recover from stunned
+        else {
+            this.stunned = false;
+        }
+
+        
     }
 
     public void setDoubleDamage(boolean bool) {
@@ -78,7 +92,7 @@ public class Character extends MovingEntity{
     }
 
     public Item getEquipment(Slot slot)
-    {
+    {   
         return equipment.get(slot);
     }
 

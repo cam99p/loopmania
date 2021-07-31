@@ -37,6 +37,11 @@ public class GoalSINGLE extends Goal{
                     return true;
                 }
                 return false;
+            case "bosses":
+                if (world.isDoggieDefeated() && world.isElanDefeated()){
+                    return true;
+                }
+                return false;
             default:
                 return false;
         }
