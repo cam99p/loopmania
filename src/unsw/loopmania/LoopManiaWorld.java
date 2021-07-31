@@ -972,7 +972,6 @@ public class LoopManiaWorld {
             int_random = rand.nextInt(3);
             switch(int_random){
                 case 0:
-            //    TheOneRing theOneRing = (TheOneRing)addUnequippedItem(ItemType.THE_ONE_RING);
                     return addUnequippedItem(ItemType.THE_ONE_RING);
                 case 1:
                     return addUnequippedItem(ItemType.ANDURIL);
@@ -982,15 +981,8 @@ public class LoopManiaWorld {
         }
         
         // No reward given if number is bigger than 10
-        if (int_random >= 50) {
-        //    TheOneRing theOneRing = (TheOneRing)addUnequippedItem(ItemType.THE_ONE_RING);
-          //  theOneRing.extendProperty(character);
-          //  return theOneRing;
-           // return addUnequippedItem(ItemType.TREE_STUMP);
+        if (int_random >= 10)             
             return null;
-        }
-            
-            //return null;
         // Passes 10% chance
         else
         {
