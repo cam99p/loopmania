@@ -83,7 +83,7 @@ public class Battle {
                         if (hero.getHealth() <= 0){
                             break; //Ends battle
                         }
-                    } else{
+                    } else if (allies.contains(target)){
                         //Ally dies, remove from hero's list
                         hero.getAllies().remove(target);
                         //Then check for zombification and react accordinly
@@ -99,6 +99,9 @@ public class Battle {
                             participants.sort(Comparator.comparingInt(MovingEntity::getSpeed)); //Sorts by attack speed, lowest to highest
                             Collections.reverse(participants); //reverses list to get highest to lowest
                         }
+                    } else {
+                        //In this case, it is an tranced enemy killing another enemy
+                        defeatEntity(target);
                     }
                 }
             }
