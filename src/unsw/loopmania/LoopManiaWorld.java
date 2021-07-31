@@ -527,7 +527,6 @@ public class LoopManiaWorld {
      * get a randomly generated position which could be used to spawn an enemy
      * @return null if random choice is that wont be spawning an enemy or it isn't possible, or random coordinate pair if should go ahead
      */
-    // I'm guessing this is to randomly spawn a slug
     private Pair<Integer, Integer> possiblyGetBasicEnemySpawnPosition(){
         // TODO = modify this
         
@@ -554,6 +553,17 @@ public class LoopManiaWorld {
     }
 
     /**
+     * get a randomly generated position which can be used to spawn a Boss
+     * @return random position on the path
+     */
+    private PathPosition getBossSpawnPosition() {
+        var rand = new Random();
+        int pos = rand.nextInt(orderedPath.size());
+
+        return new PathPosition(pos, orderedPath);
+    }
+
+    /**
      * Grabs potential spawning coordinates for the gold
      * @return list of spawn positions for the gold to be spawned
      */
@@ -575,7 +585,7 @@ public class LoopManiaWorld {
         }
         return null;
     }
-
+    
     /**
      * spawns gold if the conditions warrant it, adds to world
      * @return list of the gold to be displayed on screen
@@ -842,6 +852,19 @@ public class LoopManiaWorld {
                 }
             }
         }
+
+        if (cycle % 20 == 0 && !doggieDefeated){
+            BasicEnemy newDoggie = new Doggie(getBossSpawnPosition());
+            enemies.add(newDoggie);
+            spawnedEnemies.add(newDoggie);
+        }
+
+        if (cycle % 40 == 0 && !elanDefeated && exp >= 10000){
+            BasicEnemy newElan = new Elan(getBossSpawnPosition());
+            enemies.add(newElan);
+            spawnedEnemies.add(newElan);
+        }
+
         return spawnedEnemies;
     }
 
