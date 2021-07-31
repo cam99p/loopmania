@@ -1306,8 +1306,6 @@ public class LoopManiaWorldController {
         System.out.println("current method = "+currentMethodLabel);
         System.out.println("In application thread? = "+Platform.isFxApplicationThread());
         System.out.println("Current system time = "+java.time.LocalDateTime.now().toString().replace('T', ' '));
-        System.out.println(world.getCharacter().getDefense());
-        System.out.println(world.getCharacter().getAttack());
     }
 
 }

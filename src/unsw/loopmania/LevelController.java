@@ -2,6 +2,7 @@ package unsw.loopmania;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import unsw.loopmania.GameMode.Mode;
 
 /**
@@ -14,6 +15,18 @@ public class LevelController {
     private MenuSwitcher gameSwitcher;
 
     private Mode gameMode;
+
+    @FXML
+    private TextArea survivalText;
+
+    @FXML
+    private TextArea berserkerText;
+
+    @FXML
+    private TextArea confusingText;
+
+    @FXML
+    private TextArea standardText;
 
     public void setGameSwitcher(MenuSwitcher gameSwitcher){
         this.gameSwitcher = gameSwitcher;
@@ -46,6 +59,47 @@ public class LevelController {
         this.gameMode = Mode.CONFUSING;
         gameSwitcher.switchMenu();     
     }
+
+    @FXML
+    public void enterStandard() {
+        standardText.setVisible(true);
+    }
+
+    @FXML
+    public void exitStandard() {
+        standardText.setVisible(false);
+    }
+
+    @FXML
+    public void enterSurvival() {
+        survivalText.setVisible(true);
+    }
+
+    @FXML
+    public void exitSurvival() {
+        survivalText.setVisible(false);
+    }
+
+    @FXML
+    public void enterBerserker() {
+        berserkerText.setVisible(true);
+    }
+
+    @FXML
+    public void exitBerserker() {
+        berserkerText.setVisible(false);
+    }
+
+    @FXML
+    public void enterConfusing() {
+        confusingText.setVisible(true);
+    }
+
+    @FXML
+    public void exitConfusing() {
+        confusingText.setVisible(false);
+    }
+
 
     public Mode getGameMode() {
         return gameMode;

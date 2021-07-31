@@ -425,7 +425,6 @@ public class LoopManiaWorld {
     
     public Item moveFromEquippedToUnequipped(int x, int y, int x2, int y2) {
         Item item = character.DeequipItemByCoordinate(x, y);
-        if (gameMode.equals(Mode.CONFUSING)) removeExtendedProperties(item);
         item.setX(x2);
         item.setY(y2);
         unequippedInventoryItems.add(item);
@@ -438,36 +437,6 @@ public class LoopManiaWorld {
     private void equipItem(Item item){
         character.equipItem(item);
         unequippedInventoryItems.remove(item);
-    }
-
-
-    /**
-     * For confusing mode only. Adds the property of another random rare item 
-     */
-    private void addExtendedProperties(Item item) {
-        if (item instanceof TheOneRing) {
-            TheOneRing theOneRing = (TheOneRing)item;
-            theOneRing.extendProperty(character);
-        } else if (item instanceof Anduril) {
-            Anduril anduril = (Anduril)item;
-            anduril.extendProperty(character);
-        }  else if (item instanceof TreeStump) {
-            TreeStump treeStump = (TreeStump)item;
-            treeStump.extendProperty(character);
-        } 
-    }
-
-    private void removeExtendedProperties(Item item) {
-        if (item instanceof TheOneRing) {
-            TheOneRing theOneRing = (TheOneRing)item;
-            theOneRing.removeExtendedProperty(character);
-        } else if (item instanceof Anduril) {
-            Anduril anduril = (Anduril)item;
-            anduril.removeExtendedProperty(character);
-        }  else if (item instanceof TreeStump) {
-            TreeStump treeStump = (TreeStump)item;
-            treeStump.removeExtendedProperty(character);
-        } 
     }
 
     /**
@@ -697,6 +666,23 @@ public class LoopManiaWorld {
             goldOrPotion.getValue1().addAll(gold);
         }
         return goldOrPotion;
+    }
+
+    
+    /**
+     * For confusing mode only. Adds the property of another random rare item 
+     */
+    private void addExtendedProperties(Item item) {
+        if (item instanceof TheOneRing) {
+            TheOneRing theOneRing = (TheOneRing)item;
+            theOneRing.extendProperty(character);
+        } else if (item instanceof Anduril) {
+            Anduril anduril = (Anduril)item;
+            anduril.extendProperty(character);
+        }  else if (item instanceof TreeStump) {
+            TreeStump treeStump = (TreeStump)item;
+            treeStump.extendProperty(character);
+        } 
     }
 
     /**
@@ -981,7 +967,7 @@ public class LoopManiaWorld {
         }
         
         // No reward given if number is bigger than 10
-        if (int_random >= 10)             
+        if (int_random >= 10)          
             return null;
         // Passes 10% chance
         else
