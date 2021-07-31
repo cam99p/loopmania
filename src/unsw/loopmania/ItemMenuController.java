@@ -311,7 +311,9 @@ public class ItemMenuController {
 
     // Check if the player is able to purchase the item in the current game mode
     public Boolean canPurchaseInMode(ItemType item) {
-        if (mainController.getGameMode().equals(Mode.SURVIVAL)) {
+        if  (mainController.getGameMode().equals(Mode.STANDARD)) {
+            return true;
+        } else if (mainController.getGameMode().equals(Mode.SURVIVAL)) {
             if (purchasedItems.contains(ItemType.HEALTH_POTION) && item.equals(ItemType.HEALTH_POTION)) {
                 return false;
             } 
