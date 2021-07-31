@@ -224,7 +224,8 @@ public class LoopManiaWorld {
             if (building instanceof TowerBuilding){
                 //Check distance
                 //Radius of tower support is 8 tiles 8^2 = 64
-                if (Math.pow((character.getX()-building.getX()), 2) + Math.pow((character.getY()-building.getY()), 2) <= 64){
+                if (Math.pow((character.getX()-building.getX()), 2) + Math.pow((character.getY()-building.getY()), 2) <= 
+                    Math.pow(((TowerBuilding) building).getSupportRadius(), 2)){
                     TowerAlly tempTower = new TowerAlly(null);
                     allies.add(tempTower);
                 }
@@ -506,6 +507,31 @@ public class LoopManiaWorld {
      */
     private void moveBasicEnemies() {
         for (BasicEnemy e: enemies){
+            // Changes the direction of movement of the vampires first
+            if(e instanceof Vampire) {
+                for(Building b : buildingEntities) {
+                    if(b instanceof CampfireBuilding) {
+                        if(Math.pow((e.getX()-b.getX()), 2) + Math.pow((e.getY()-b.getY()), 2) <= Math.pow(((CampfireBuilding) b).getBuffRadius(), 2)) {
+                            int downPos = (e.getPositionInPath() + 1)%orderedPath.size();
+                            int upPos = (e.getPositionInPath() - 1 + orderedPath.size())%orderedPath.size();
+
+                            int xDown = orderedPath.get(downPos).getValue0();
+                            int yDown = orderedPath.get(downPos).getValue1();
+                            int xUp = orderedPath.get(upPos).getValue0();
+                            int yUp = orderedPath.get(upPos).getValue1();
+
+                            if(Math.pow(xDown - b.getX(), 2) + Math.pow(yDown - b.getY(), 2) > Math.pow(((CampfireBuilding) b).getBuffRadius(), 2) && 
+                                ((Vampire) e).getDirection() == false) {
+                                    ((Vampire) e).changeDirection();
+                            } else if (Math.pow(xUp - b.getX(), 2) + Math.pow(yUp - b.getY(), 2) > Math.pow(((CampfireBuilding) b).getBuffRadius(), 2) && 
+                                        ((Vampire) e).getDirection() == true) {
+                                            ((Vampire) e).changeDirection();
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
             e.move();
         }
     }

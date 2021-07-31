@@ -72,11 +72,84 @@ public class VampireMovementTest {
             assertTrue(((Vampire) vamp).getDirection() == false);
         }
 
-        world.runTickMoves();
+        for(int i = 0; i < 8; i++) {
+            world.runTickMoves();
+        }
 
         assertTrue(((Vampire) vamp).getDirection() == true);
 
-        world.runTickMoves();
+        for(int i = 0; i < 12; i++) {
+            world.runTickMoves();
+        }
+
+        assertTrue(((Vampire) vamp).getDirection() == false);
+    }
+
+    @Test
+    public void testMoreVampireMovement() {
+        List<Pair<Integer, Integer>> dummyPath = new ArrayList<>();
+        dummyPath.add(new Pair<>(0, 0));
+        dummyPath.add(new Pair<>(0, 1));
+        dummyPath.add(new Pair<>(0, 2));
+        dummyPath.add(new Pair<>(0, 3));
+        dummyPath.add(new Pair<>(0, 4));
+        dummyPath.add(new Pair<>(0, 5));
+        dummyPath.add(new Pair<>(1, 5));
+        dummyPath.add(new Pair<>(2, 5));
+        dummyPath.add(new Pair<>(3, 5));
+        dummyPath.add(new Pair<>(4, 5));
+        dummyPath.add(new Pair<>(5, 5));
+        dummyPath.add(new Pair<>(5, 4));
+        dummyPath.add(new Pair<>(5, 3));
+        dummyPath.add(new Pair<>(5, 2));
+        dummyPath.add(new Pair<>(5, 1));
+        dummyPath.add(new Pair<>(5, 0));
+        dummyPath.add(new Pair<>(4, 0));
+        dummyPath.add(new Pair<>(3, 0));
+        dummyPath.add(new Pair<>(2, 0));
+        dummyPath.add(new Pair<>(1, 0));
+
+        LoopManiaWorld world = new LoopManiaWorld(6, 6, dummyPath);
+        PathPosition pos = new PathPosition(0, dummyPath);
+        Character character = new Character(pos);
+        HerosCastle castle = new HerosCastle(new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+        world.setCharacter(character);
+        world.setCastle(castle);
+        
+        Card vampCard = world.loadCard(VampireCastleCard.class).getValue0();;
+        world.convertCardToBuildingByCoordinates(vampCard.getX(), vampCard.getY(), 1, 1);
+
+        for(int i = 0; i < 100; i++) {
+            world.runTickMoves();
+        }
+
+        world.spawnEnemies();
+
+        assertEquals(1, world.getEnemy().size());
+        assertEquals(5, world.getCycle());
+
+        Card campfireCard = world.loadCard(CampfireCard.class).getValue0();
+        world.convertCardToBuildingByCoordinates(campfireCard.getX(), campfireCard.getY(), 3, 3);
+        Card campfireCard1= world.loadCard(CampfireCard.class).getValue0();
+        world.convertCardToBuildingByCoordinates(campfireCard1.getX(), campfireCard.getY(), 4, 4);
+
+        assertEquals(4, world.getBuildings().size());
+
+        BasicEnemy vamp = world.getEnemy().get(0);
+
+        if(vamp instanceof Vampire) {
+            assertTrue(((Vampire) vamp).getDirection() == false);
+        }
+
+        for(int i = 0; i < 10; i++) {
+            world.runTickMoves();
+        }
+
+        assertTrue(((Vampire) vamp).getDirection() == true);
+
+        for(int i = 0; i < 16; i++) {
+            world.runTickMoves();
+        }
 
         assertTrue(((Vampire) vamp).getDirection() == false);
     }

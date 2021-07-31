@@ -23,4 +23,12 @@ public class CampfireBuilding extends Building {
                     character.setAttack(character.getAttack()/2);
         }
     }
+
+    /**
+     * The radius that keeps vampires away
+     * @return radius that vampire cannot come into
+     */
+    public int getBuffRadius() {
+        return buffRadius;
+    }
 }
