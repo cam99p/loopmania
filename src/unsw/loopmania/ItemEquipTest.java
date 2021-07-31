@@ -152,6 +152,43 @@ public class ItemEquipTest {
     }
 
     @Test
+    public void TestEquipAnduril(){
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
+        Character dummyChar = new Character(dummyPos);
+        Item dummyItem = itemFactory.createItem(ItemType.ANDURIL, new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+        assertTrue(dummyItem instanceof Sword);
+        
+        int preAttack = dummyChar.getAttack();
+        dummyChar.equipItem(dummyItem);
+        int afterAttack = dummyChar.getAttack();
+
+        assertTrue(dummyChar.getEquipment(dummyItem.getSlot()).equals(dummyItem));
+        assertTrue(afterAttack - preAttack == dummyItem.getValue());
+    }
+    
+    @Test
+    public void TestEquipTreeStump(){
+        ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
+                                                                new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));
+        PathPosition dummyPos = new PathPosition(0, dummyPath);
+        Character dummyChar = new Character(dummyPos);
+        Item dummyItem = itemFactory.createItem(ItemType.TREE_STUMP, new SimpleIntegerProperty(0), new SimpleIntegerProperty(0));
+
+        assertTrue(dummyItem instanceof Shield);
+        int preDefense = dummyChar.getDefense();
+        assertTrue(!dummyChar.getBlockingStatus());
+        dummyChar.equipItem(dummyItem);
+        assertTrue(dummyChar.getBlockingStatus());
+        int afterDefense = dummyChar.getDefense();
+
+        assertTrue(dummyChar.getEquipment(dummyItem.getSlot()).equals(dummyItem));
+        assertTrue(afterDefense - preDefense == dummyItem.getValue());
+    }
+
+    @Test
     public void TestDeequipItem(){
         ArrayList<Pair<Integer, Integer>> dummyPath = new ArrayList<>(Arrays.asList(new Pair<>(0,0), new Pair<>(0,1), new Pair<>(0,2), new Pair<>(1,2),
                                                                 new Pair<>(2,2), new Pair<>(2,1), new Pair<>(2,0), new Pair<>(1,0)));

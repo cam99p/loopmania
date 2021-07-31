@@ -49,6 +49,10 @@ public class LoopManiaWorld {
 
     private int gold;
 
+    private boolean doggieDefeated;
+
+    private boolean elanDefeated;
+
     private Goal goal;
 
     // TODO = add more lists for other entities, for equipped inventory items, etc...
@@ -91,7 +95,7 @@ public class LoopManiaWorld {
         castle = null;
         cycle = 0;
         exp = 0;
-        gold = 10000;
+        gold = 0;
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
         unequippedInventoryItems = new ArrayList<>();
@@ -341,7 +345,7 @@ public class LoopManiaWorld {
     }
 
     public Boolean usingPotion() {
-        Item healthPotion = character.getEquipment(Slot.POTION);
+        HealthPotion healthPotion = (HealthPotion)character.getEquipment(Slot.POTION);
         if (healthPotion != null && character.getHealth() < 200) {
             healthPotion.useItem(character);
             character.DeequipItem(healthPotion);
@@ -758,6 +762,22 @@ public class LoopManiaWorld {
         this.gold = gold;
     }
 
+    public boolean isDoggieDefeated() {
+        return doggieDefeated;
+    }
+
+    public void setDoggieDefeated(boolean doggieDefeated) {
+        this.doggieDefeated = doggieDefeated;
+    }
+
+    public boolean isElanDefeated() {
+        return elanDefeated;
+    }
+
+    public void setElanDefeated(boolean elanDefeated) {
+        this.elanDefeated = elanDefeated;
+    }
+
     public Goal getGoal() {
         return goal;
     }
@@ -904,7 +924,17 @@ public class LoopManiaWorld {
         
         // If it passes the 1% chance spawn rare item
         if(int_random == 0)
-            return addUnequippedItem(ItemType.THE_ONE_RING);
+        {
+            int_random = rand.nextInt(3);
+            switch(int_random){
+                case 0:
+                    return addUnequippedItem(ItemType.THE_ONE_RING);
+                case 1:
+                    return addUnequippedItem(ItemType.ANDURIL);
+                case 2:
+                    return addUnequippedItem(ItemType.TREE_STUMP);
+            }
+        }
         
         // No reward given if number is bigger than 10
         if (int_random >= 10)

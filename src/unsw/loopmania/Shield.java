@@ -12,11 +12,6 @@ public class Shield extends Item {
         setValue(5);
     }
 
-    public void useItem(Character target)
-    {
-        
-    }
-
     public void onEquip(Stats stats)
     {
         stats.modifyDefense(getValue());
