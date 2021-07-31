@@ -94,7 +94,7 @@ public class LoopManiaWorld {
         character = null;
         castle = null;
         cycle = 0;
-        exp = 0;
+        exp = 10000;
         gold = 0;
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();
@@ -347,7 +347,7 @@ public class LoopManiaWorld {
 
     public Boolean usingPotion() {
         HealthPotion healthPotion = (HealthPotion)character.getEquipment(Slot.POTION);
-        if (healthPotion != null && character.getHealth() < 200) {
+        if (healthPotion != null && character.getHealth() < character.getMaxHealth()) {
             healthPotion.useItem(character);
             character.DeequipItem(healthPotion);
             healthPotion.destroy();
@@ -1029,6 +1029,7 @@ public class LoopManiaWorld {
      */
     public void restartGame() {
         character.setHealth(200);
+        character.setMaxHealth(200);
         character.unsetBlocking();
         character.setDefense(0);
         character.setSpeed(8);

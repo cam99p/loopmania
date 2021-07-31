@@ -11,6 +11,7 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     private int defense;
     private int health;
     private int speed;
+    private int maxHealth;
     private PathPosition position;
     protected Boolean canBlock;
     protected Boolean canRevive;
@@ -93,6 +94,18 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
         this.health = health;
     }
 
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void modifyMaxHealth(int health) {
+        maxHealth += health;
+    }
+
     public int getSpeed() {
         return speed;
     }
@@ -113,6 +126,10 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     // Modifies value to character defense stat
     public void modifyDefense(int value) {
         defense += value;
+    }
+
+    public void modifySpeed(int value) {
+        speed += value;
     }
     
     public boolean getBlockingStatus(){

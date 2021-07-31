@@ -394,8 +394,8 @@ public class LoopManiaWorldController {
         isPaused = false;
         // trigger adding code to process main game logic to queue. JavaFX will target framerate of 0.3 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
-            switchToMenu();
             world.runTickMoves();
+            switchToMenu();
             loadGoldAndPotion();
             loadTrapDamage();
             world.buffCharacter();
@@ -574,16 +574,21 @@ public class LoopManiaWorldController {
         goldValue.setText(newGold.toString());
     }
 
-    // public void addCycle() {
-    //     Integer newCycle = Integer.parseInt(cycle.getText()) + 1;
-    //     cycle.setText(newCycle.toString());
-    // }
+    public void minusXp(int xp) {
+        Integer newXp = world.getExp() - xp;
+        world.setExp(newXp);
+        xpValue.setText(newXp.toString());
+    }
+
+    public int getXp() {
+        return world.getExp();
+    }
 
     public void setHealth() {
         int newHealth = world.getCharacter().getHealth();
-        healthBar.setWidth((double)newHealth/2);
-        //healthBar.setWidth(((double)newHealth*100/fullHealth));
-        
+        int maxHealth = world.getCharacter().getMaxHealth();
+        double ratio = maxHealth/100;
+        healthBar.setWidth((double)newHealth/ratio);
     }
 
     public void setGold() {
@@ -626,6 +631,10 @@ public class LoopManiaWorldController {
 
     public List<Item> getWorldUnequippedInventory() {
         return world.getUnequippedInventoryItems();
+    }
+
+    public Character getCharacter() {
+        return world.getCharacter();
     }
     /**
      * load a vampire castle card into the GUI.
