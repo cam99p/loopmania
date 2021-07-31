@@ -556,6 +556,8 @@ public class LoopManiaWorldController {
         setXP();
         setGold();
         setHealth();
+        if(enemy instanceof Doggie)
+            loadItem(ItemType.DOGGIE_COIN);
         loadItem(null);
         loadCard();
     }
