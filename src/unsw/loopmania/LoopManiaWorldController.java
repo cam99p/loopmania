@@ -558,6 +558,8 @@ public class LoopManiaWorldController {
         setHealth();
         if(enemy instanceof Doggie)
             loadItem(ItemType.DOGGIE_COIN);
+        if(enemy instanceof Elan)
+            fluctuateDoggieCoin();
         loadItem(null);
         loadCard();
     }
@@ -961,6 +963,11 @@ public class LoopManiaWorldController {
      */
     public void removeItemByCoordinates(int nodeX, int nodeY) {
         world.removeUnequippedInventoryItemByCoordinates(nodeX, nodeY);
+    }
+
+    // Calls method that fluctuates the value of Doggie coins the player has
+    private void fluctuateDoggieCoin() {
+        world.fluctuateDoggieCoin();
     }
 
     /*

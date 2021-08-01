@@ -210,8 +210,12 @@ public class ItemMenuController {
             removedItems.add(i);
         }
         for(Item i : removedItems) {
+            if(i instanceof DoggieCoin)
+                mainController.addGold(i.getValue());
+            else
+                mainController.addGold(50);
+
             mainController.removeItemByCoordinates(i.getX(), i.getY());
-            mainController.addGold(50);
         }
         setShopInventory();
     }
