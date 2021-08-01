@@ -1005,6 +1005,17 @@ public class LoopManiaWorld {
     public List<Item> getUnequippedInventoryItems() {
         return unequippedInventoryItems;
     }
+    
+    public void fluctuateDoggieCoin() {
+        for(Item item: unequippedInventoryItems)
+        {
+            if(item instanceof DoggieCoin)
+            {
+                Random rand = new Random(System.currentTimeMillis());
+                item.setValue(rand.nextInt(1000));
+            }
+        }
+    }
 
     /**
      * Creates a random item based on rng
