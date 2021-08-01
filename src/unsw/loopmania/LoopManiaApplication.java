@@ -103,6 +103,11 @@ public class LoopManiaApplication extends Application {
             levelMenuController.setGoldValue();
             levelMenuController.setCycleValue();
             levelMenuController.setExpValue();
+            levelMenuController.setAttackStat();
+            levelMenuController.setDefenseStat();
+            levelMenuController.setSpeedStat();
+            levelMenuController.setCurrHealthStat();
+            levelMenuController.setMaxHealthStat();
         });
 
 
