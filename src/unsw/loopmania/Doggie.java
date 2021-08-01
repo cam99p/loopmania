@@ -5,6 +5,10 @@ import java.util.Random;
 import unsw.loopmania.Item.Slot;
 
 public class Doggie extends BasicEnemy{
+
+    private int gold = 1000;
+    private int experience = 2000;
+
     //Construct enemy at certain position, and set all attributes
     public Doggie(PathPosition position) {
         super(position);
@@ -76,4 +80,14 @@ public class Doggie extends BasicEnemy{
             moveUpPath();
         }
     }
+
+    @Override
+     public int getGold() {
+         return gold;
+     }
+
+     @Override
+     public int getXp() {
+         return experience;
+     }
 }
