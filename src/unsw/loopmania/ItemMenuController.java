@@ -77,14 +77,6 @@ public class ItemMenuController {
 
     private LoopManiaWorldController mainController;
 
-    ImageView healthPotionImage = new ImageView(new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString()));
-    ImageView swordImage =  new ImageView(new Image((new File("src/images/basic_sword.png")).toURI().toString()));
-    ImageView stakeImage = new ImageView(new Image((new File("src/images/stake.png")).toURI().toString()));
-    ImageView staffImage = new ImageView(new Image((new File("src/images/staff.png")).toURI().toString()));
-    ImageView armourImage = new ImageView(new Image((new File("src/images/armour.png")).toURI().toString()));
-    ImageView shieldImage = new ImageView(new Image((new File("src/images/shield.png")).toURI().toString()));
-    ImageView theOneRingImage = new ImageView(new Image((new File("src/images/the_one_ring.png")).toURI().toString()));
-    ImageView helmetImage = new ImageView(new Image((new File("src/images/helmet.png")).toURI().toString()));
     List<ItemType> purchasedItems = new ArrayList<>();
 
     public ItemMenuController (LoopManiaWorldController mainController) {
