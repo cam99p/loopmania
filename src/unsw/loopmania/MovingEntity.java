@@ -11,11 +11,13 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     private int defense;
     private int health;
     private int speed;
+    private int maxHealth;
     private PathPosition position;
     protected Boolean canBlock;
     protected Boolean canRevive;
     protected Boolean tranced;
     protected int tranceTimer;
+    protected Boolean stunned;
 
     /**
      * object holding position in the path
@@ -63,6 +65,10 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     public PathPosition getPosition() {
         return position;
     }
+
+    public int getPositionInPath() {
+        return position.getPosition();
+    }
     
     public int getAttack() {
         return attack;
@@ -88,6 +94,18 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
         this.health = health;
     }
 
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void modifyMaxHealth(int health) {
+        maxHealth += health;
+    }
+
     public int getSpeed() {
         return speed;
     }
@@ -108,6 +126,10 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
     // Modifies value to character defense stat
     public void modifyDefense(int value) {
         defense += value;
+    }
+
+    public void modifySpeed(int value) {
+        speed += value;
     }
     
     public boolean getBlockingStatus(){
@@ -160,6 +182,12 @@ public abstract class MovingEntity extends Entity implements Attack, Stats{
 
     //Used when the MovingEntity takes damage
     public void damageHealth(int value) {
+
+        //Prevent negative damage
+        if (value < 0){
+            value = 0;
+        }
+
         health -= value;
     }
 

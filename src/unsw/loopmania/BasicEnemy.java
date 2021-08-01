@@ -10,7 +10,8 @@ public abstract class BasicEnemy extends MovingEntity{
     //Attributes
     private int battleRadius;
     private int supportRadius;
-    private int tranceTimer;
+    //Removed tranced timer, since its already in moving entity
+    protected boolean isBoss;
 
     // TODO = modify this, and add additional forms of enemy
     public BasicEnemy(PathPosition position) {
@@ -56,5 +57,15 @@ public abstract class BasicEnemy extends MovingEntity{
         this.tranceTimer = tranceTimer;
     }
 
+    public boolean isBoss() {
+        return isBoss;
+    }
     
+    public int getGold() {
+        return 0;
+    }
+
+    public int getXp() {
+        return 0;
+    }
 }

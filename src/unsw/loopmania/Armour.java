@@ -12,11 +12,6 @@ public class Armour extends Item {
         setValue(10);
     }
 
-    public void useItem(Character target)
-    {
-        
-    }
-
     public void onEquip(Stats stats)
     {
         stats.modifyDefense(getValue());

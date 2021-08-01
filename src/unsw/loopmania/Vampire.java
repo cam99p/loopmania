@@ -2,9 +2,14 @@ package unsw.loopmania;
 
 import java.util.Random;
 
+import unsw.loopmania.Item.Slot;
+
 public class Vampire extends BasicEnemy{
     //Unique Attributes
     private int frenzyTimer;
+    private boolean direction = false;
+    private int gold = 100;
+    private int experience = 200;
 
     //Construct enemy at certain position, and set all attributes
     public Vampire(PathPosition position) {
@@ -19,11 +24,22 @@ public class Vampire extends BasicEnemy{
         this.setSpeed(10);
         //Set other
         this.tranced = false;
+        this.canBlock = false;
+        this.stunned = false;
+        this.isBoss = false;
     }
 
     //Attacks the specified target
     public void AttackTarget(MovingEntity target, int seed){
         int damage = this.getAttack() - target.getDefense();
+
+        //If the target entity (currently only main character) is wearing armor, halve damage
+        if (target instanceof Character){
+            Character hero = (Character)target;
+            if (hero.getEquipment(Slot.CHEST) instanceof Armour){
+                damage = damage/2;
+            }
+        }
 
         //If the target enityt (currently only main character) successfully blocks, reduce damage to 0
         if (target.tryBlock(seed)){
@@ -94,12 +110,36 @@ public class Vampire extends BasicEnemy{
      * move a vampire (10% up path, 10% down path, 80% not moving)
      */
     public void move(){
-        int directionChoice = (new Random()).nextInt(9);
-        if (directionChoice == 3){
+        if(direction == false) {
             moveUpPath();
-        }
-        else if (directionChoice == 6){
+        } else {
             moveDownPath();
         }
     }
+
+    /**
+     * Gets the direction of the vampire. Initially, vampires will move
+     * counter-clock wise and once in range of the campfire it will change
+     * direction to clockwise and repeat
+     */
+    public boolean getDirection() {
+        return direction;
+    }
+
+    /**
+     * Changes the direction to the opposite way
+     */
+     public void changeDirection() {
+        direction = !direction;
+     }
+
+     @Override
+     public int getGold() {
+         return gold;
+     }
+
+     @Override
+     public int getXp() {
+         return experience;
+     }
 }

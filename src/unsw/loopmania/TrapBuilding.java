@@ -1,6 +1,7 @@
 package unsw.loopmania;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import org.javatuples.Pair;
 
 import java.util.List;
 
@@ -12,24 +13,24 @@ public class TrapBuilding extends Building {
         super(x, y);
     }
 
-    public Building damage(List<BasicEnemy> enemies, List<Building> buildings) {
+    public Pair<BasicEnemy, Boolean> damage(List<BasicEnemy> enemies, List<Building> buildings) {
         BasicEnemy potentialDeadEnemy = null;
+        boolean check = false;
         for(BasicEnemy e : enemies) {
             if(e.getX() == this.getX() && e.getY() == this.getY()) {
                 e.damageHealth(TRAP_DAMAGE);
+                potentialDeadEnemy = e;
                 if(e.getHealth() <= 0) {
-                    potentialDeadEnemy = e;
+                    check = true;
                 }
-
+                break;
             }
         }
         // Remove all enemies killed off by traps
-        if(potentialDeadEnemy != null) {
+        if(check) {
             enemies.remove(potentialDeadEnemy);
             potentialDeadEnemy.destroy();
-            return this;
-        } else {
-            return null;
         }
+        return new Pair<BasicEnemy, Boolean>(potentialDeadEnemy, check);
     }
 }
