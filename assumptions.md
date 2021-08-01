@@ -26,7 +26,7 @@
 
 - The campfire has a buff radius of 2 tiles, if the Character engages in a battle within the two tiles of the campfire, the Character will deal double damage
 
-- The Character gains 50G upon defeating an enemy, 50G when replacing an old item
+- The Character gains 50G when replacing an old item
 
 - The Character gains 100 experience points when an old item is replaced
 
@@ -55,3 +55,11 @@
 - Doggie's stun effect on character lasts 1 turn
 
 - Vampire avoids campfires with the same radius that it has for the buff characters
+
+- Enemies, Gold and Potions cannot spawn on building locations
+
+- Character gains 20G, 50G, 100G when defeating a Slug, Zombie and Vampire respectively
+
+- Character gains 30Exp, 100Exp, 200Exp when defeating a Slug, Zombie and Vampire respectively
+
+- Trap buildings do not give a card when defeating an enemy, only experience and gold
