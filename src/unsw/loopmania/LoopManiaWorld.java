@@ -236,7 +236,8 @@ public class LoopManiaWorld {
             if (building instanceof TowerBuilding){
                 //Check distance
                 //Radius of tower support is 8 tiles 8^2 = 64
-                if (Math.pow((character.getX()-building.getX()), 2) + Math.pow((character.getY()-building.getY()), 2) <= 64){
+                if (Math.pow((character.getX()-building.getX()), 2) + Math.pow((character.getY()-building.getY()), 2) <= 
+                    Math.pow(((TowerBuilding) building).getSupportRadius(), 2)){
                     TowerAlly tempTower = new TowerAlly(null);
                     allies.add(tempTower);
                 }
@@ -282,8 +283,8 @@ public class LoopManiaWorld {
      */
     public void GainBattleRewards(List<BasicEnemy> enemies){
         for (BasicEnemy basicEnemy : enemies) {
-            setExp(getExp() + 50);
-            setGold(getGold() + 50);
+            setExp(getExp() + basicEnemy.getXp());
+            setGold(getGold() + basicEnemy.getGold());
         }
 
     }
@@ -358,7 +359,7 @@ public class LoopManiaWorld {
 
     public Boolean usingPotion() {
         HealthPotion healthPotion = (HealthPotion)character.getEquipment(Slot.POTION);
-        if (healthPotion != null && character.getHealth() < 200) {
+        if (healthPotion != null && character.getHealth() < character.getMaxHealth()) {
             healthPotion.useItem(character);
             character.DeequipItem(healthPotion);
             healthPotion.destroy();
@@ -519,6 +520,31 @@ public class LoopManiaWorld {
      */
     private void moveBasicEnemies() {
         for (BasicEnemy e: enemies){
+            // Changes the direction of movement of the vampires first
+            if(e instanceof Vampire) {
+                for(Building b : buildingEntities) {
+                    if(b instanceof CampfireBuilding) {
+                        if(Math.pow((e.getX()-b.getX()), 2) + Math.pow((e.getY()-b.getY()), 2) <= Math.pow(((CampfireBuilding) b).getBuffRadius(), 2)) {
+                            int downPos = (e.getPositionInPath() + 1)%orderedPath.size();
+                            int upPos = (e.getPositionInPath() - 1 + orderedPath.size())%orderedPath.size();
+
+                            int xDown = orderedPath.get(downPos).getValue0();
+                            int yDown = orderedPath.get(downPos).getValue1();
+                            int xUp = orderedPath.get(upPos).getValue0();
+                            int yUp = orderedPath.get(upPos).getValue1();
+
+                            if(Math.pow(xDown - b.getX(), 2) + Math.pow(yDown - b.getY(), 2) > Math.pow(((CampfireBuilding) b).getBuffRadius(), 2) && 
+                                ((Vampire) e).getDirection() == false) {
+                                    ((Vampire) e).changeDirection();
+                            } else if (Math.pow(xUp - b.getX(), 2) + Math.pow(yUp - b.getY(), 2) > Math.pow(((CampfireBuilding) b).getBuffRadius(), 2) && 
+                                        ((Vampire) e).getDirection() == true) {
+                                            ((Vampire) e).changeDirection();
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
             e.move();
         }
     }
@@ -528,8 +554,6 @@ public class LoopManiaWorld {
      * @return null if random choice is that wont be spawning an enemy or it isn't possible, or random coordinate pair if should go ahead
      */
     private Pair<Integer, Integer> possiblyGetBasicEnemySpawnPosition(){
-        // TODO = modify this
-        
         // has a chance spawning a basic enemy on a tile the character isn't on or immediately before or after (currently space required = 2)...
         Random rand = new Random();
         int choice = rand.nextInt(11);
@@ -542,6 +566,12 @@ public class LoopManiaWorld {
             // note terminating condition has to be != rather than < since wrap around...
             for (int i=endNotAllowed; i!=startNotAllowed; i=(i+1)%orderedPath.size()){
                 orderedPathSpawnCandidates.add(orderedPath.get(i));
+            }
+
+            // Can't spawn on buildings
+            for(Building b: buildingEntities) {
+                Pair<Integer, Integer> buildingPos = new Pair<Integer, Integer>(b.getX(), b.getY());
+                orderedPathSpawnCandidates.remove(buildingPos);
             }
 
             // choose random choice
@@ -577,6 +607,12 @@ public class LoopManiaWorld {
             int endNotAllowed = (indexPosition + 3)%orderedPath.size();
             for (int i=endNotAllowed; i!=startNotAllowed; i=(i+1)%orderedPath.size()){
                 orderedPathSpawnCandidates.add(orderedPath.get(i));
+            }
+
+            // Can't spawn on buildings
+            for(Building b: buildingEntities) {
+                Pair<Integer, Integer> buildingPos = new Pair<Integer, Integer>(b.getX(), b.getY());
+                orderedPathSpawnCandidates.remove(buildingPos);
             }
 
             Pair<Integer, Integer> spawnPosition = orderedPathSpawnCandidates.get(rand.nextInt(orderedPathSpawnCandidates.size()));
@@ -901,10 +937,13 @@ public class LoopManiaWorld {
         List<Building> buildingsToRemove = new ArrayList<>();
         for(Building b : buildingEntities) {
             if(b instanceof TrapBuilding) {
-                if(b.damage(enemies, buildingEntities) != null) {
+                Pair<BasicEnemy, Boolean> enemy = b.damage(enemies, buildingEntities);
+                if(enemy.getValue0() != null) {
                     buildingsToRemove.add(b);
-                    setGold(getGold() + 50);
-                    setExp(getExp() + 50);
+                }
+                if(enemy.getValue1() == true) {
+                    setGold(getGold() + enemy.getValue0().getGold());
+                    setExp(getExp() + enemy.getValue0().getXp());
                 }
             }
         }
@@ -1057,6 +1096,7 @@ public class LoopManiaWorld {
      */
     public void restartGame() {
         character.setHealth(200);
+        character.setMaxHealth(200);
         character.unsetBlocking();
         character.setDefense(0);
         character.setSpeed(8);

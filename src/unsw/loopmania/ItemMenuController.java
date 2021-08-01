@@ -5,7 +5,6 @@ import java.io.IOException;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.List;
-import org.javatuples.Pair;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -14,10 +13,6 @@ import javafx.scene.layout.GridPane;
 import unsw.loopmania.GameMode.Mode;
 import javafx.scene.layout.Pane;
 import unsw.loopmania.ItemFactory.ItemType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.io.File;
 
 public class ItemMenuController {
     @FXML 
@@ -76,19 +71,12 @@ public class ItemMenuController {
     @FXML
     private Pane sellPane;
 
+    private MenuSwitcher levelSwitcher;
 
     private MenuSwitcher gameSwitcher;
 
     private LoopManiaWorldController mainController;
 
-    ImageView healthPotionImage = new ImageView(new Image((new File("src/images/brilliant_blue_new.png")).toURI().toString()));
-    ImageView swordImage =  new ImageView(new Image((new File("src/images/basic_sword.png")).toURI().toString()));
-    ImageView stakeImage = new ImageView(new Image((new File("src/images/stake.png")).toURI().toString()));
-    ImageView staffImage = new ImageView(new Image((new File("src/images/staff.png")).toURI().toString()));
-    ImageView armourImage = new ImageView(new Image((new File("src/images/armour.png")).toURI().toString()));
-    ImageView shieldImage = new ImageView(new Image((new File("src/images/shield.png")).toURI().toString()));
-    ImageView theOneRingImage = new ImageView(new Image((new File("src/images/the_one_ring.png")).toURI().toString()));
-    ImageView helmetImage = new ImageView(new Image((new File("src/images/helmet.png")).toURI().toString()));
     List<ItemType> purchasedItems = new ArrayList<>();
 
     public ItemMenuController (LoopManiaWorldController mainController) {
@@ -98,6 +86,10 @@ public class ItemMenuController {
     public void setGameSwitcher(MenuSwitcher gameSwitcher) {
         this.gameSwitcher = gameSwitcher;
     }
+
+    public void setLevelSwitcher(MenuSwitcher levelSwitcher) {
+        this.levelSwitcher = levelSwitcher;
+    } 
 
     @FXML
     public void initialize() {
@@ -115,6 +107,11 @@ public class ItemMenuController {
     public void switchToGame() throws IOException {
         gameSwitcher.switchMenu();
         purchasedItems.clear();
+    }
+
+    @FXML
+    public void switchToLevelShop() throws IOException {
+        levelSwitcher.switchMenu();
     }
 
     @FXML 
@@ -212,6 +209,7 @@ public class ItemMenuController {
         for(Item i : removedItems) {
             mainController.removeItemByCoordinates(i.getX(), i.getY());
             mainController.addGold(50);
+            goldValue.setText(mainController.getGoldString());
         }
         setShopInventory();
     }

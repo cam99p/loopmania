@@ -5,6 +5,10 @@ import java.util.Random;
 import unsw.loopmania.Item.Slot;
 
 public class Slug extends BasicEnemy{
+
+    private int gold = 20;
+    private int experience = 30;
+
     //Construct enemy at certain position, and set all attributes
     public Slug(PathPosition position) {
         super(position);
@@ -63,5 +67,15 @@ public class Slug extends BasicEnemy{
         else if (directionChoice == 1){
             moveDownPath();
         }
+    }
+
+    @Override
+    public int getGold() {
+        return gold;
+    }
+
+    @Override
+    public int getXp() {
+        return experience;
     }
 }

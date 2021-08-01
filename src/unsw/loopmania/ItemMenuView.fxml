@@ -256,5 +256,6 @@
             </TextField>
          </children>
       </Pane>
+      <Button fx:id="goLevelShop" layoutX="363.0" layoutY="44.0" mnemonicParsing="false" onAction="#switchToLevelShop" text="Go Level Shop" />
    </children>
 </Pane>

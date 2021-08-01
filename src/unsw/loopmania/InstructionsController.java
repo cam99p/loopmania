@@ -2,7 +2,6 @@ package unsw.loopmania;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
-import unsw.loopmania.GameMode.Mode;
 
 /**
  * controller for the level selection.
