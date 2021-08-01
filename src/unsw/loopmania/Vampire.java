@@ -8,6 +8,8 @@ public class Vampire extends BasicEnemy{
     //Unique Attributes
     private int frenzyTimer;
     private boolean direction = false;
+    private int gold = 100;
+    private int experience = 200;
 
     //Construct enemy at certain position, and set all attributes
     public Vampire(PathPosition position) {
@@ -129,5 +131,15 @@ public class Vampire extends BasicEnemy{
      */
      public void changeDirection() {
         direction = !direction;
+     }
+
+     @Override
+     public int getGold() {
+         return gold;
+     }
+
+     @Override
+     public int getXp() {
+         return experience;
      }
 }

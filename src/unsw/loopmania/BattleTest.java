@@ -3,7 +3,6 @@ package unsw.loopmania;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayNameGenerator.Simple;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.loopmania.ItemFactory.ItemType;

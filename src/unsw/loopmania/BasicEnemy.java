@@ -61,4 +61,11 @@ public abstract class BasicEnemy extends MovingEntity{
         return isBoss;
     }
     
+    public int getGold() {
+        return 0;
+    }
+
+    public int getXp() {
+        return 0;
+    }
 }

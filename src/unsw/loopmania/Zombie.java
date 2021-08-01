@@ -5,6 +5,10 @@ import java.util.Random;
 import unsw.loopmania.Item.Slot;
 
 public class Zombie extends BasicEnemy{
+
+    private int gold = 50;
+    private int experience = 100;
+
     //Construct enemy at certain position, and set all attributes
     public Zombie(PathPosition position) {
         super(position);
@@ -69,5 +73,15 @@ public class Zombie extends BasicEnemy{
         else if (directionChoice == 3){
             moveDownPath();
         }
+    }
+
+    @Override
+    public int getGold() {
+        return gold;
+    }
+
+    @Override
+    public int getXp() {
+        return experience;
     }
 }
