@@ -41,12 +41,18 @@ public class LoopManiaApplication extends Application {
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("MainMenuView.fxml"));
         menuLoader.setController(mainMenuController);
         Parent mainMenuRoot = menuLoader.load();
-    
+
         // load the level selection screen
         LevelController levelController = new LevelController();
         FXMLLoader levelLoader = new FXMLLoader(getClass().getResource("LevelView.fxml"));
         levelLoader.setController(levelController);
         Parent LevelRoot = levelLoader.load();
+    
+        // load the instructions screen
+        InstructionsController instructionsController = new InstructionsController();
+        FXMLLoader instructionsLoader = new FXMLLoader(getClass().getResource("InstructionsView.fxml"));
+        instructionsLoader.setController(instructionsController);
+        Parent instructionsRoot = instructionsLoader.load();
         
         // Load the item menu
         ItemMenuController itemMenuController = new ItemMenuController(mainController);
@@ -123,13 +129,19 @@ public class LoopManiaApplication extends Application {
         mainMenuController.setLevelSwitcher(() -> {
             switchToRoot(scene, LevelRoot, primaryStage);
         });
+        mainMenuController.setInstructionsSwitcher(() -> {
+            switchToRoot(scene, instructionsRoot, primaryStage);
+        });
 
         levelController.setGameSwitcher(() -> {
-            switchToRoot(scene, gameRoot, primaryStage);
+            switchToRoot(scene, gameRoot, primaryStage);  
+            mainController.setGameMode(levelController.getGameMode());
             mainController.startTimer();
         });
 
-
+        instructionsController.setGameSwitcher(() -> {
+            switchToRoot(scene, mainMenuRoot, primaryStage);  
+        });
 
         mainController.setDeathMenuSwitcher(() -> {
             switchToRoot(deathScene, deathMenuRoot, primaryStage);

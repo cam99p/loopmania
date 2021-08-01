@@ -93,7 +93,7 @@ public class Character extends MovingEntity{
     }
 
     public Item getEquipment(Slot slot)
-    {
+    {   
         return equipment.get(slot);
     }
 

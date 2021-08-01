@@ -44,6 +44,7 @@ import java.io.File;
 import java.io.IOException;
 
 import unsw.loopmania.ItemFactory.ItemType;
+import unsw.loopmania.GameMode.Mode;
 /**
  * the draggable types.
  * If you add more draggable types, add an enum value here.
@@ -170,6 +171,8 @@ public class LoopManiaWorldController {
     private Image slugImage;
     private Image vampireImage;
     private Image zombieImage;
+    private Image doggieImage;
+    private Image elanImage;
     private Image allyImage;
     //ITEM//
     private Image swordImage;
@@ -264,6 +267,8 @@ public class LoopManiaWorldController {
         slugImage = new Image((new File("src/images/slug.png")).toURI().toString());
         vampireImage = new Image((new File("src/images/vampire.png")).toURI().toString());
         zombieImage = new Image((new File("src/images/zombie.png")).toURI().toString());
+        doggieImage = new Image((new File("src/images/doggie.png")).toURI().toString());
+        elanImage = new Image((new File("src/images/ElanMuske.png")).toURI().toString());
         basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
         allyImage = new Image((new File("src/images/deep_elf_master_archer.png")).toURI().toString());
         //ITEM//
@@ -469,6 +474,14 @@ public class LoopManiaWorldController {
         pause();
     }
 
+    public void setGameMode(Mode mode) {
+        world.setGameMode(mode);
+    }
+
+    public Mode getGameMode() {
+        return world.getGameMode();
+    }
+
     /**
      * pair the entity an view so that the view copies the movements of the entity.
      * add view to list of entity images
@@ -543,6 +556,8 @@ public class LoopManiaWorldController {
         setXP();
         setGold();
         setHealth();
+        if(enemy instanceof Doggie)
+            loadItem(ItemType.DOGGIE_COIN);
         loadItem(null);
         loadCard();
     }
@@ -758,9 +773,15 @@ public class LoopManiaWorldController {
         } else if(enemy instanceof Vampire) {
             view = new ImageView(vampireImage);
             addEntity(((Vampire) enemy), view);
-        } else {
+        } else if(enemy instanceof Zombie) {
             view = new ImageView(zombieImage);
             addEntity(((Zombie) enemy), view);
+        } else if (enemy instanceof Doggie){
+            view = new ImageView(doggieImage);
+            addEntity(((Doggie) enemy), view);
+        } else {
+            view = new ImageView(elanImage);
+            addEntity(((Elan) enemy), view);
         }
         squares.getChildren().add(view);
     }
@@ -1306,7 +1327,6 @@ public class LoopManiaWorldController {
         System.out.println("current method = "+currentMethodLabel);
         System.out.println("In application thread? = "+Platform.isFxApplicationThread());
         System.out.println("Current system time = "+java.time.LocalDateTime.now().toString().replace('T', ' '));
-    
     }
 
 }

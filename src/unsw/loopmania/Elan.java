@@ -26,4 +26,6 @@ public class Elan extends BasicEnemy{
         //We do not deincrement Elans trance timer
         target.modifyHealth(seed);
     }
+
+    //Elan uses default movement, waiting for the character to come to him
 }

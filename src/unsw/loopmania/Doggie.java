@@ -1,5 +1,7 @@
 package unsw.loopmania;
 
+import java.util.Random;
+
 import unsw.loopmania.Item.Slot;
 
 public class Doggie extends BasicEnemy{
@@ -54,5 +56,16 @@ public class Doggie extends BasicEnemy{
             deincrementTranceTimer();
         }
           
+    }
+
+    /**
+     * move a Doggie (50% chance to chase character down, 50% chance to get distracted and do nothing)
+     */
+    public void move(){
+        int directionChoice = (new Random()).nextInt(2);
+        if (directionChoice == 1){
+            moveUpPath();
+            moveUpPath();
+        }
     }
 }
