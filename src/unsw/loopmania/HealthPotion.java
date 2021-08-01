@@ -14,7 +14,7 @@ public class HealthPotion extends Item implements Consumable{
 
     public void useItem(Character target)
     { 
-        target.setHealth(200);
+        target.setHealth(target.getMaxHealth());
     }
 
     public void onEquip(Stats stats)

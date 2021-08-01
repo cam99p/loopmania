@@ -15,7 +15,8 @@
             <Image url="@../../images/grass.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="startGameButton" layoutX="142.0" layoutY="352.0" mnemonicParsing="false" onAction="#switchToLevel" prefHeight="34.0" prefWidth="96.0" text="Start Game" />
+      <Button fx:id="startGameButton" layoutX="140.0" layoutY="298.0" mnemonicParsing="false" onAction="#switchToLevel" prefHeight="34.0" prefWidth="96.0" text="Start Game" />
+      <Button fx:id="instructionsButton" layoutX="140.0" layoutY="343.0" mnemonicParsing="false" onAction="#switchToInstructions" prefHeight="34.0" prefWidth="96.0" text="Instructions" />
       <ImageView fitHeight="179.0" fitWidth="380.0" layoutX="-2.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/title.png" />

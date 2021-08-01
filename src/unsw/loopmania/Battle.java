@@ -83,7 +83,7 @@ public class Battle {
                         if (hero.getHealth() <= 0){
                             break; //Ends battle
                         }
-                    } else{
+                    } else if (allies.contains(target)){
                         //Ally dies, remove from hero's list
                         hero.getAllies().remove(target);
                         //Then check for zombification and react accordinly
@@ -99,6 +99,9 @@ public class Battle {
                             participants.sort(Comparator.comparingInt(MovingEntity::getSpeed)); //Sorts by attack speed, lowest to highest
                             Collections.reverse(participants); //reverses list to get highest to lowest
                         }
+                    } else {
+                        //In this case, it is an tranced enemy killing another enemy
+                        defeatEntity(target);
                     }
                 }
             }
@@ -111,8 +114,11 @@ public class Battle {
     public void heroDefeated(Character hero) {
         if (hero.canRevive){
             //Set heros hp back to max
-            hero.setHealth(200); 
-            Item reviveItem = hero.getEquipment(Slot.SPECIAL);
+            hero.setHealth(200);
+            
+            // In confusing mode, the 'revival item' can be any of the rare items. 
+            Item reviveItem = getRevivalItem();
+
             hero.DeequipItem(reviveItem);
             reviveItem.destroy();
         }
@@ -142,6 +148,21 @@ public class Battle {
             result.add((BasicEnemy)e);
         }
         return result;
+    }
+
+    // In confusing mode, the 'revival item' can be any of the rare items. 
+    // If the hero has all three rare items which each contain the one ring property, 
+    // then the 'revival' will first come from the one ring, followed by anduril then treestump.  
+    public Item getRevivalItem() {
+        Item revivalItem = null;
+        if (hero.getEquipment(Slot.SPECIAL) != null) {
+            revivalItem = hero.getEquipment(Slot.SPECIAL); 
+        } else if (hero.getEquipment(Slot.RIGHT_ARM) instanceof Anduril)  {
+            revivalItem = hero.getEquipment(Slot.RIGHT_ARM); 
+        } else if (hero.getEquipment(Slot.LEFT_ARM) instanceof TreeStump) {
+            revivalItem = hero.getEquipment(Slot.LEFT_ARM); 
+        }
+        return revivalItem;
     }
 
     //Removes an enemy from participants and enemies and adds it to defeated
