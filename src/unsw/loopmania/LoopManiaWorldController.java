@@ -138,6 +138,9 @@ public class LoopManiaWorldController {
     @FXML
     private Pane pausePane;
 
+    @FXML
+    private Pane cardHelpPane;
+
     @FXML 
     private Slider volumeSlider;
 
@@ -386,6 +389,9 @@ public class LoopManiaWorldController {
         anchorPaneRoot.getChildren().add(draggedEntity);
 
         pausePane.setVisible(false);
+
+        cardHelpPane.setStyle("-fx-background-color: white;");
+        cardHelpPane.setVisible(false);
 
         // Loop the music (even though it's 12 min long)
         soundtrackMP.setOnEndOfMedia(new Runnable() {
@@ -1193,6 +1199,18 @@ public class LoopManiaWorldController {
         stats.setOpacity(opacity);
     }
 
+    public void showCardHelp() {
+        cardHelpPane.setVisible(true);
+        changeOpacity(0.5);
+        pause();
+    }
+
+    public void hideCardHelp() {
+        cardHelpPane.setVisible(false);
+        changeOpacity(1.0);
+        startTimer();
+    }
+
     public void setMainMenuSwitcher(MenuSwitcher mainMenuSwitcher){
         this.mainMenuSwitcher = mainMenuSwitcher;
     }
@@ -1216,6 +1234,7 @@ public class LoopManiaWorldController {
     @FXML
     private void switchToMainMenu() throws IOException {
         pause();
+        soundtrackMP.stop();
         soundtrackMP.play();
         gameoverMP.stop();
         victoryMP.stop();

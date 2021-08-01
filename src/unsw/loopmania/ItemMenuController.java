@@ -1,5 +1,6 @@
 package unsw.loopmania;
 
+import java.io.File;
 import java.io.IOException;
 
 import javafx.collections.ObservableList;
@@ -9,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import unsw.loopmania.GameMode.Mode;
 import javafx.scene.layout.Pane;
