@@ -22,6 +22,7 @@ public class Character extends MovingEntity{
         setAttack(5);
         setDefense(0);
         setHealth(200);
+        setMaxHealth(200);
         setSpeed(8);
         this.canBlock = false;
         this.canRevive = false;
@@ -92,7 +93,7 @@ public class Character extends MovingEntity{
     }
 
     public Item getEquipment(Slot slot)
-    {
+    {   
         return equipment.get(slot);
     }
 

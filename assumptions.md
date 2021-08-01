@@ -6,8 +6,6 @@
 
 - The player will receive a maximum of 1 card when defeating an enemy. 
 
-- There can only be one enemy per tile. 
-
 - A battle commences when the Character is in the range of the battle radius of the enemy regardless of whether the Character and monster are along the same section of the path. 
 
 - Gold, Potion and Slug spawns are rolled every time the character moves 
@@ -24,7 +22,7 @@
 
 - All items can be sold for 50G at the Hero's Castle
 
-- Tower has a support radius of 3 tiles
+- Tower has a support radius of 8 tiles
 
 - The campfire has a buff radius of 2 tiles, if the Character engages in a battle within the two tiles of the campfire, the Character will deal double damage
 
@@ -32,7 +30,7 @@
 
 - The Character gains 100 experience points when an old item is replaced
 
-- The Character consumes a health potion when pressing the button P
+- The Character consumes a health potion when pressing the button P, restoring their health to full
 
 - The Vampire and Zombie spawns in order left tile, up tile, right tile and down tile. If no tiles are satisfied, it will then spawn left up tile, right up tile, down right tile and then left down tile.
 
@@ -41,3 +39,19 @@
 - Health potions like other misc items have a 10% of spawning upon defeating an enemy, instead of the forementioned 20%
 
 - Cannot purchase items from shop if inventory is full
+
+- Upon death, accomplishing the goal and winning the game, resetting back to main menu, a new game is started
+
+- Shields and Helmets boosts character defense by 5
+
+- Armours boosts character defene by 10
+
+- Random chance of getting an item when card is disposed or reward from battles is equal across all types of item except for The One Ring
+
+- Player character can only equip one equipment for each Slot type
+
+- Bosses cannot be tranced
+
+- Doggie's stun effect on character lasts 1 turn
+
+- Vampire avoids campfires with the same radius that it has for the buff characters

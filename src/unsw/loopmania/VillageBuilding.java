@@ -13,10 +13,11 @@ public class VillageBuilding extends Building {
     @Override
     public void buff(Character character) {
         if(character.getX() == this.getX() && character.getY() == this.getY()) {
-            if(character.getHealth() < 140) {
+            if(character.getHealth() < character.getMaxHealth() - VILLAGE_HEAL) {
                 character.modifyHealth(VILLAGE_HEAL);
             } else {
-                character.setHealth(200);
+                int maxHealth = character.getMaxHealth();
+                character.setHealth(maxHealth);
             }
         }
     }
