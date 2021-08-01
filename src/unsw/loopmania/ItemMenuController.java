@@ -5,7 +5,6 @@ import java.io.IOException;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.List;
-import org.javatuples.Pair;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -14,10 +13,6 @@ import javafx.scene.layout.GridPane;
 import unsw.loopmania.GameMode.Mode;
 import javafx.scene.layout.Pane;
 import unsw.loopmania.ItemFactory.ItemType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.io.File;
 
 public class ItemMenuController {
     @FXML 
@@ -76,6 +71,7 @@ public class ItemMenuController {
     @FXML
     private Pane sellPane;
 
+    private MenuSwitcher levelSwitcher;
 
     private MenuSwitcher gameSwitcher;
 
@@ -99,6 +95,10 @@ public class ItemMenuController {
         this.gameSwitcher = gameSwitcher;
     }
 
+    public void setLevelSwitcher(MenuSwitcher levelSwitcher) {
+        this.levelSwitcher = levelSwitcher;
+    } 
+
     @FXML
     public void initialize() {
         potionPane.setVisible(false);
@@ -115,6 +115,11 @@ public class ItemMenuController {
     public void switchToGame() throws IOException {
         gameSwitcher.switchMenu();
         purchasedItems.clear();
+    }
+
+    @FXML
+    public void switchToLevelShop() throws IOException {
+        levelSwitcher.switchMenu();
     }
 
     @FXML 
@@ -212,6 +217,7 @@ public class ItemMenuController {
         for(Item i : removedItems) {
             mainController.removeItemByCoordinates(i.getX(), i.getY());
             mainController.addGold(50);
+            goldValue.setText(mainController.getGoldString());
         }
         setShopInventory();
     }

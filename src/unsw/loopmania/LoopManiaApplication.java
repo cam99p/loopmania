@@ -60,6 +60,12 @@ public class LoopManiaApplication extends Application {
         itemLoader.setController(itemMenuController);
         Parent itemMenuRoot = itemLoader.load();
 
+        // Load the level menu
+        LevelMenuController levelMenuController = new LevelMenuController(mainController);
+        FXMLLoader levelMenuLoader = new FXMLLoader(getClass().getResource("LevelMenuView.fxml"));
+        levelMenuLoader.setController(levelMenuController);
+        Parent levelMenuRoot = levelMenuLoader.load();
+
         // Load the death menu
         DeathMenuController deathMenuController = new DeathMenuController();
         FXMLLoader deathLoader = new FXMLLoader(getClass().getResource("DeathMenuView.fxml"));
@@ -76,6 +82,8 @@ public class LoopManiaApplication extends Application {
         Scene deathScene = new Scene(deathMenuRoot);
 
         Scene itemScene = new Scene(itemMenuRoot);
+
+        Scene levelScene = new Scene(levelMenuRoot);
         
         // create new scene with the main menu (so we start with the main menu)
         Scene scene = new Scene(mainMenuRoot);
@@ -91,6 +99,25 @@ public class LoopManiaApplication extends Application {
             itemMenuController.setUneqippedInventory();
             switchToRoot(scene, gameRoot, primaryStage);
             mainController.startTimer();
+        });
+        itemMenuController.setLevelSwitcher(() -> {
+            switchToRoot(levelScene, levelMenuRoot, primaryStage);
+            levelMenuController.setGoldValue();
+            levelMenuController.setCycleValue();
+            levelMenuController.setExpValue();
+        });
+
+
+        levelMenuController.setGameSwitcher(() -> {
+            itemMenuController.setUneqippedInventory();
+            switchToRoot(scene, gameRoot, primaryStage);
+            mainController.startTimer();
+        });
+        levelMenuController.setItemSwitcher(() -> {
+            switchToRoot(itemScene, itemMenuRoot, primaryStage);
+            itemMenuController.setGoldValue();
+            itemMenuController.setCycleValue();
+            itemMenuController.setExpValue();
         });
         
         // set functions which are activated when button click to switch menu is pressed
@@ -165,7 +192,7 @@ public class LoopManiaApplication extends Application {
         stage.show();
     }
 
-     public static void main(String[] args) {
+    public static void main(String[] args) {
         launch(args);
     }
 }
