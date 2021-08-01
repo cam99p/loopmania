@@ -57,6 +57,10 @@ public abstract class BasicEnemy extends MovingEntity{
         this.tranceTimer = tranceTimer;
     }
 
+    public boolean isBoss() {
+        return isBoss;
+    }
+    
     public int getGold() {
         return 0;
     }
