@@ -1,6 +1,10 @@
 package unsw.loopmania;
 
 public class Elan extends BasicEnemy{
+
+    private int gold = 5000;
+    private int experience = 10000;
+
     //Construct enemy at certain position, and set all attributes
     public Elan(PathPosition position) {
         super(position);
@@ -28,4 +32,13 @@ public class Elan extends BasicEnemy{
     }
 
     //Elan uses default movement, waiting for the character to come to him
+    @Override
+     public int getGold() {
+         return gold;
+     }
+
+     @Override
+     public int getXp() {
+         return experience;
+     }
 }
