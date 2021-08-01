@@ -141,6 +141,24 @@ public class LoopManiaWorldController {
     @FXML 
     private Slider volumeSlider;
 
+    @FXML
+    private Label currentGold;
+
+    @FXML
+    private Label goalGold;
+
+    @FXML
+    private Label currentXp;
+
+    @FXML
+    private Label goalXp;
+
+    @FXML
+    private Label currentCycle;
+
+    @FXML
+    private Label goalCycle;
+
     private boolean isPaused;
     private LoopManiaWorld world;
 
@@ -569,14 +587,6 @@ public class LoopManiaWorldController {
         }
     }
 
-    /**
-     * Do not use these as it is not synced up to backend
-     */
-    // public void addXP(int xp) {
-    //     Integer newXp = Integer.parseInt(xpValue.getText()) + xp;  
-    //     xpValue.setText(newXp.toString());
-    // }
-
     public void minusGold(int gold) {
         Integer newGold = world.getGold() - gold;
         world.setGold(newGold);
@@ -619,6 +629,61 @@ public class LoopManiaWorldController {
     public void setCycle() {
         Integer newCycle = world.getCycle();
         cycle.setText(newCycle.toString());
+    }
+
+    public void setGoalGold() {
+        Integer currGold = world.getGold();
+        currentGold.setText(currGold.toString());
+
+        Integer goal = recurse(world.getGoal(), 0, "gold");
+        goalGold.setText(goal.toString());
+    }
+
+    public void setGoalXp() {
+        Integer currXp = world.getExp();
+        currentXp.setText(currXp.toString());
+
+        Integer goal = recurse(world.getGoal(), 0, "experience");
+        goalXp.setText(goal.toString());
+    }
+
+    public void setGoalCycle() {
+        Integer currCycle = world.getCycle();
+        currentCycle.setText(currCycle.toString());
+
+        Integer goal = recurse(world.getGoal(), 0, "cycle");
+        goalCycle.setText(goal.toString());
+    }
+
+    /**
+     * Recursive function to get the goals of experience, cycles and gold
+     * @param goal the goal
+     * @param amount the amount of the goal
+     * @param type type of the goal
+     * @return the amount of the goal
+     */
+    public int recurse(Goal goal, int amount, String type) {
+        if(goal instanceof GoalSINGLE) {
+           if(((GoalSINGLE) goal).getType().equals(type)) {
+               amount = ((GoalSINGLE) goal).getAmount();
+               return amount;
+           }
+        } else {
+            if(goal instanceof GoalAND) {
+                if(recurse(((GoalAND) goal).getG1(), amount, type) == 0) {
+                    return recurse(((GoalAND) goal).getG2(), amount, type);
+                } else {
+                    return recurse(((GoalAND) goal).getG1(), amount, type);
+                }
+            } else {
+                if(recurse(((GoalOR) goal).getG1(), amount, type) == 0) {
+                    return recurse(((GoalOR) goal).getG2(), amount, type);
+                } else {
+                    return recurse(((GoalOR) goal).getG1(), amount, type);
+                }
+            }
+        }
+        return 0;
     }
 
     public int getGold() {
@@ -1106,6 +1171,9 @@ public class LoopManiaWorldController {
                 changeOpacity(0.5);
                 pause();
                 soundtrackMP.pause();
+                setGoalGold();
+                setGoalXp();
+                setGoalCycle();
             }
             break;
         case P:
