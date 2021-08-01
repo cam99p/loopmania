@@ -212,6 +212,7 @@ public class ItemMenuController {
             else
                 mainController.addGold(50);
             mainController.removeItemByCoordinates(i.getX(), i.getY());
+            goldValue.setText(mainController.getGoldString());
         }
         setShopInventory();
     }
