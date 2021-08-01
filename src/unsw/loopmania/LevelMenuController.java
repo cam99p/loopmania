@@ -16,6 +16,21 @@ public class LevelMenuController {
     @FXML
     private Label cycleValue1;
 
+    @FXML
+    private Label attackStat;
+
+    @FXML
+    private Label defenseStat;
+
+    @FXML
+    private Label speedStat;
+
+    @FXML
+    private Label currentHealthStat;
+
+    @FXML
+    private Label maxHealthStat;
+
     private MenuSwitcher itemSwitcher;
 
     private MenuSwitcher gameSwitcher;
@@ -50,6 +65,7 @@ public class LevelMenuController {
             mainController.getCharacter().modifyAttack(1);
             mainController.minusXp(1000);
             xpValue1.setText(mainController.getXpString());
+            setAttackStat();
         }
     }
 
@@ -59,6 +75,7 @@ public class LevelMenuController {
             mainController.getCharacter().modifySpeed(1);
             mainController.minusXp(1000);
             xpValue1.setText(mainController.getXpString());
+            setSpeedStat();
         }
     }
 
@@ -68,6 +85,7 @@ public class LevelMenuController {
             mainController.getCharacter().modifyDefense(1);
             mainController.minusXp(1000);
             xpValue1.setText(mainController.getXpString());
+            setDefenseStat();
         }
     }
 
@@ -78,6 +96,8 @@ public class LevelMenuController {
             mainController.getCharacter().modifyHealth(25);
             mainController.minusXp(1000);
             xpValue1.setText(mainController.getXpString());
+            setCurrHealthStat();
+            setMaxHealthStat();
         }
     }
 
@@ -91,5 +111,25 @@ public class LevelMenuController {
 
     public void setCycleValue() {
         this.cycleValue1.setText(mainController.getCycleString());
+    }
+
+    public void setAttackStat() {
+        this.attackStat.setText(mainController.getAttackString());
+    }
+
+    public void setDefenseStat() {
+        this.defenseStat.setText(mainController.getDefenseString());
+    }
+
+    public void setSpeedStat() {
+        this.speedStat.setText(mainController.getSpeedString());
+    }
+
+    public void setCurrHealthStat() {
+        this.currentHealthStat.setText(mainController.getCurrentHealthString());
+    }
+
+    public void setMaxHealthStat() {
+        this.maxHealthStat.setText(mainController.getMaxHealthString());
     }
 }

@@ -97,8 +97,8 @@ public class LoopManiaWorld {
         character = null;
         castle = null;
         cycle = 0;
-        exp = 0;
-        gold = 0;
+        exp = 10000;
+        gold = 10000;
         this.gameMode = null;
         enemies = new ArrayList<>();
         cardEntities = new ArrayList<>();

@@ -702,6 +702,36 @@ public class LoopManiaWorldController {
         return tempCycle.toString();
     }
 
+    public String getAttackString() {
+        Character character = world.getCharacter();
+        Integer tempAttack = character.getAttack();
+        return tempAttack.toString();
+    }
+
+    public String getDefenseString() {
+        Character character = world.getCharacter();
+        Integer tempDefense = character.getDefense();
+        return tempDefense.toString();
+    }
+
+    public String getSpeedString() {
+        Character character = world.getCharacter();
+        Integer tempSpeed = character.getSpeed();
+        return tempSpeed.toString();
+    }
+
+    public String getCurrentHealthString() {
+        Character character = world.getCharacter();
+        Integer tempCurrHealth = character.getHealth();
+        return tempCurrHealth.toString();
+    }
+
+    public String getMaxHealthString() {
+        Character character = world.getCharacter();
+        Integer tempMaxHealth = character.getMaxHealth();
+        return tempMaxHealth.toString();
+    }
+
     public GridPane getUneqippedInventory() {
         return unequippedInventory;
     }
