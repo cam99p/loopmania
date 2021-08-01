@@ -7,6 +7,9 @@ import unsw.loopmania.Item.Slot;
 public class Vampire extends BasicEnemy{
     //Unique Attributes
     private int frenzyTimer;
+    private boolean direction = false;
+    private int gold = 100;
+    private int experience = 200;
 
     //Construct enemy at certain position, and set all attributes
     public Vampire(PathPosition position) {
@@ -107,12 +110,36 @@ public class Vampire extends BasicEnemy{
      * move a vampire (10% up path, 10% down path, 80% not moving)
      */
     public void move(){
-        int directionChoice = (new Random()).nextInt(10);
-        if (directionChoice == 3){
+        if(direction == false) {
             moveUpPath();
-        }
-        else if (directionChoice == 6){
+        } else {
             moveDownPath();
         }
     }
+
+    /**
+     * Gets the direction of the vampire. Initially, vampires will move
+     * counter-clock wise and once in range of the campfire it will change
+     * direction to clockwise and repeat
+     */
+    public boolean getDirection() {
+        return direction;
+    }
+
+    /**
+     * Changes the direction to the opposite way
+     */
+     public void changeDirection() {
+        direction = !direction;
+     }
+
+     @Override
+     public int getGold() {
+         return gold;
+     }
+
+     @Override
+     public int getXp() {
+         return experience;
+     }
 }

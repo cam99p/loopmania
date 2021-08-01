@@ -22,6 +22,7 @@ public class Character extends MovingEntity{
         setAttack(5);
         setDefense(0);
         setHealth(200);
+        setMaxHealth(200);
         setSpeed(8);
         this.canBlock = false;
         this.canRevive = false;
@@ -39,6 +40,14 @@ public class Character extends MovingEntity{
         //Attacking Vampire with a stake case
         if (this.getEquipment(Slot.RIGHT_ARM) instanceof Stake && target instanceof Vampire){
             damage+=30;
+        }
+
+        //Attacking Boss with Anduril case
+        if (this.getEquipment(Slot.RIGHT_ARM) instanceof Anduril){
+            BasicEnemy possibleBoss = (BasicEnemy)target;
+            if (possibleBoss.isBoss()){
+                damage = damage * 3;
+            }
         }
 
         //Trancing an enemy case

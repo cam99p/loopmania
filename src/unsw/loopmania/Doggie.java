@@ -5,6 +5,10 @@ import java.util.Random;
 import unsw.loopmania.Item.Slot;
 
 public class Doggie extends BasicEnemy{
+
+    private int gold = 1000;
+    private int experience = 2000;
+
     //Construct enemy at certain position, and set all attributes
     public Doggie(PathPosition position) {
         super(position);
@@ -32,6 +36,14 @@ public class Doggie extends BasicEnemy{
             Character hero = (Character)target;
             if (hero.getEquipment(Slot.CHEST) instanceof Armour){
                 damage = damage/2;
+            }
+        }
+
+        //If the target entity (currently only main character) is wearing wielding the tree stump, reduce damage by a further 10
+        if (target instanceof Character){
+            Character hero = (Character)target;
+            if (hero.getEquipment(Slot.LEFT_ARM) instanceof TreeStump){
+                damage = Math.max(0, damage - 10);
             }
         }
 
@@ -68,4 +80,14 @@ public class Doggie extends BasicEnemy{
             moveUpPath();
         }
     }
+
+    @Override
+     public int getGold() {
+         return gold;
+     }
+
+     @Override
+     public int getXp() {
+         return experience;
+     }
 }
