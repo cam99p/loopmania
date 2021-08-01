@@ -42,6 +42,14 @@ public class Character extends MovingEntity{
             damage+=30;
         }
 
+        //Attacking Boss with Anduril case
+        if (this.getEquipment(Slot.RIGHT_ARM) instanceof Anduril){
+            BasicEnemy possibleBoss = (BasicEnemy)target;
+            if (possibleBoss.isBoss()){
+                damage = damage * 3;
+            }
+        }
+
         //Trancing an enemy case
         if (this.getEquipment(Slot.RIGHT_ARM) instanceof Staff && seed >= 20){
             //If it isnt a boss, trance it

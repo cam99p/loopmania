@@ -35,6 +35,14 @@ public class Doggie extends BasicEnemy{
             }
         }
 
+        //If the target entity (currently only main character) is wearing wielding the tree stump, reduce damage by a further 10
+        if (target instanceof Character){
+            Character hero = (Character)target;
+            if (hero.getEquipment(Slot.LEFT_ARM) instanceof TreeStump){
+                damage = Math.max(0, damage - 10);
+            }
+        }
+
         //If the target enityt (currently only main character) successfully blocks, reduce damage to 0
         if (target.tryBlock(seed)){
             damage = 0;

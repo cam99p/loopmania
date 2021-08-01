@@ -57,5 +57,8 @@ public abstract class BasicEnemy extends MovingEntity{
         this.tranceTimer = tranceTimer;
     }
 
+    public boolean isBoss() {
+        return isBoss;
+    }
     
 }
