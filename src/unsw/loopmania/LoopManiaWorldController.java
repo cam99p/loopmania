@@ -13,7 +13,6 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -163,6 +162,7 @@ public class LoopManiaWorldController {
     private Label goalCycle;
 
     private boolean isPaused;
+    
     private LoopManiaWorld world;
 
     private int cycleCounter = 1;
@@ -174,6 +174,7 @@ public class LoopManiaWorldController {
      */
     private Timeline timeline;
 
+    //BUILDINGS//
     private Image vampireCastleCardImage;
     private Image vampireCastleImage;
     private Image towerCardImage;
@@ -188,7 +189,6 @@ public class LoopManiaWorldController {
     private Image barracksImage;
     private Image campfireCardImage;
     private Image campfireImage;
-    private Image basicEnemyImage;
     private Image slugImage;
     private Image vampireImage;
     private Image zombieImage;
@@ -207,11 +207,9 @@ public class LoopManiaWorldController {
     private Image doggieCoin;
     private Image anduril;
     private Image treeStump;
-    //ITEM//
-    private Image basicBuildingImage;
     private Image heartImage;
     private Image goldImage;
-
+    //MUSIC//
     private Media soundtrack;
     private MediaPlayer soundtrackMP;
     private Media gameover;
@@ -283,13 +281,11 @@ public class LoopManiaWorldController {
         barracksImage = new Image((new File("src/images/barracks.png")).toURI().toString());
         campfireCardImage = new Image((new File("src/images/campfire_card.png")).toURI().toString());
         campfireImage = new Image((new File("src/images/campfire.png")).toURI().toString());
-        basicEnemyImage = new Image((new File("src/images/slug.png")).toURI().toString());
         slugImage = new Image((new File("src/images/slug.png")).toURI().toString());
         vampireImage = new Image((new File("src/images/vampire.png")).toURI().toString());
         zombieImage = new Image((new File("src/images/zombie.png")).toURI().toString());
         doggieImage = new Image((new File("src/images/doggie.png")).toURI().toString());
         elanImage = new Image((new File("src/images/ElanMuske.png")).toURI().toString());
-        basicBuildingImage = new Image((new File("src/images/vampire_castle_building_purple_background.png")).toURI().toString());
         allyImage = new Image((new File("src/images/deep_elf_master_archer.png")).toURI().toString());
         //ITEM//
         swordImage = new Image((new File("src/images/basic_sword.png")).toURI().toString());
